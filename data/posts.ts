@@ -33,6 +33,6 @@ const posts = [
     authorId: 1,
     keywords: ['earn money'],
   },
-];
+]
 
-export default posts;
+export default posts

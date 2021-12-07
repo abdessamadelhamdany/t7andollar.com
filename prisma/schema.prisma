@@ -10,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
@@ -20,11 +25,6 @@ model User {
   role      Role     @default(USER)
   posts     Post[]
   profile   Profile?
-}
-
-enum Role {
-  ADMIN
-  USER
 }
 
 model Profile {
@@ -46,15 +46,9 @@ model Post {
   author     User       @relation(fields: [authorId], references: [id])
   authorId   Int
   keywords   String[]
-  tags       Tag[]      @relation(references: [id])
-  categories Category[] @relation(references: [id])
   comments   Comment[]
-}
-
-model Category {
-  id    Int    @id @default(autoincrement())
-  name  String
-  posts Post[] @relation(references: [id])
+  categories Category[] @relation(references: [id])
+  tags       Tag[]      @relation(references: [id])
 }
 
 model Comment {
@@ -63,6 +57,12 @@ model Comment {
   content String
   Post    Post?  @relation(fields: [postId], references: [id])
   postId  Int?
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  posts Post[] @relation(references: [id])
 }
 
 model Tag {
