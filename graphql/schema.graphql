@@ -2,6 +2,30 @@
 ### Do not make changes to this file directly
 
 
+type Post {
+  author: User
+  body: String
+  id: ID
+  image: String
+  keywords: [String]
+  slug: String
+  title: String
+}
+
 type Query {
   ok: Boolean!
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+type User {
+  email: String
+  id: ID
+  image: String
+  name: String
+  posts: [Post]
+  role: Role
 }
