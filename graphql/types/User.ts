@@ -1,4 +1,4 @@
-import { objectType, enumType } from 'nexus';
+import { objectType, enumType, extendType } from 'nexus';
 import { Post } from '.';
 
 const Role = enumType({ name: 'Role', members: ['USER', 'ADMIN'] });
@@ -6,7 +6,7 @@ const Role = enumType({ name: 'Role', members: ['USER', 'ADMIN'] });
 export const User = objectType({
   name: 'User',
   definition(t) {
-    t.id('id');
+    t.nonNull.int('id');
     t.string('name');
     t.string('email');
     t.string('image');
@@ -21,6 +21,18 @@ export const User = objectType({
             },
           })
           .posts();
+      },
+    });
+  },
+});
+
+export const UsersQuery = extendType({
+  type: 'Query',
+  definition(t) {
+    t.nonNull.list.field('users', {
+      type: 'User',
+      resolve(parent, _arg, ctx) {
+        return ctx.prisma.user.findMany();
       },
     });
   },

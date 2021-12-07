@@ -5,7 +5,7 @@
 type Post {
   author: User
   body: String
-  id: ID
+  id: Int!
   image: String
   keywords: [String]
   slug: String
@@ -13,7 +13,8 @@ type Post {
 }
 
 type Query {
-  ok: Boolean!
+  posts: [Post]!
+  users: [User]!
 }
 
 enum Role {
@@ -23,7 +24,7 @@ enum Role {
 
 type User {
   email: String
-  id: ID
+  id: Int!
   image: String
   name: String
   posts: [Post]
