@@ -4,17 +4,28 @@ import styles from '../styles/Home.module.css';
 import { gql, useQuery } from '@apollo/client';
 
 const AllPostsQuery = gql`
-  query {
-    posts {
-      id
-      title
-      slug
+  query allPostsQuery($first: Int!, $after: Int) {
+    posts(first: $first, after: $after) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        cursor
+        node {
+          id
+          title
+          slug
+        }
+      }
     }
   }
 `;
 
 const Home: NextPage = () => {
-  const { data, error, loading } = useQuery(AllPostsQuery);
+  const { data, error, loading, fetchMore } = useQuery(AllPostsQuery, {
+    variables: { first: 1 },
+  });
 
   if (loading) {
     return <p>Loading...</p>;
@@ -23,6 +34,8 @@ const Home: NextPage = () => {
   if (error) {
     return <p>Something went wrong.</p>;
   }
+
+  const { endCursor, hasNextPage } = data.posts.pageInfo;
 
   return (
     <div className={styles.container}>
@@ -33,12 +46,33 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <h1>T7andollar</h1>
+
         <h2>Posts</h2>
         <ul>
-          {data.posts.map((post) => (
-            <li key={post.id}>{post.title}</li>
+          {data.posts.edges.map(({ node }, idx) => (
+            <li key={node.id}>{node.title}</li>
           ))}
         </ul>
+        {hasNextPage ? (
+          <button
+            onClick={() => {
+              fetchMore({
+                variables: { after: endCursor },
+                updateQuery: (prevResult, { fetchMoreResult }) => {
+                  fetchMoreResult.posts.edges = [
+                    ...prevResult.posts.edges,
+                    ...fetchMoreResult.posts.edges,
+                  ];
+                  return fetchMoreResult;
+                },
+              });
+            }}
+          >
+            Load More
+          </button>
+        ) : (
+          <p>You\'ve reached the end!</p>
+        )}
       </main>
     </div>
   );
