@@ -1,27 +1,14 @@
 import posts from '../data/posts'
+import prisma from '../lib/prisma'
+import { Context } from './context'
 
 export const resolvers = {
   Query: {
-    user() {
-      return {
-        id: 1,
-        name: 'admin',
-        email: 'admin@gmail.com',
-        role: 'ADMIN',
-      }
+    users: async (_parent, _args, ctx: Context, _info) => {
+      return await ctx.prisma.user.findMany()
     },
-    users() {
-      return [
-        {
-          id: 1,
-          name: 'admin',
-          email: 'admin@gmail.com',
-          role: 'ADMIN',
-        },
-      ]
-    },
-    posts() {
-      return posts
+    posts: async (_parent, _args, ctx: Context, _info) => {
+      return await ctx.prisma.post.findMany()
     },
   },
 }
