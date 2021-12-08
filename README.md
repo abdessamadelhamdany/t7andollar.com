@@ -17,3 +17,9 @@
 
 - [Reading Time](https://www.npmjs.com/package/reading-time)
 - [Slugify](https://www.npmjs.com/package/slugify)
+
+### Notes
+
+#### Track featured posts
+
+featured_posts (ended_at)
