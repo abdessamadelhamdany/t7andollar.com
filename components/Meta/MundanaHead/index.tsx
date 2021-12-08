@@ -9,10 +9,19 @@ const index: FC = () => {
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
         name="viewport"
       />
+
       <link
         href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Source+Sans+Pro:400,600,700"
         rel="stylesheet"
       />
+
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap"
+        rel="stylesheet"
+      />
+
       <link
         rel="stylesheet"
         href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"

@@ -41,7 +41,6 @@
   display: inline-block;
   padding-top: $navbar-brand-padding-y;
   padding-bottom: $navbar-brand-padding-y;
-  margin-right: $navbar-padding-x;
   font-size: $navbar-brand-font-size;
   line-height: inherit;
   white-space: nowrap;
@@ -62,7 +61,7 @@
 .navbar-nav {
   display: flex;
   flex-direction: column; // cannot use `inherit` to get the `.navbar`s value
-  padding-left: 0;
+  padding: 0;
   margin-bottom: 0;
   list-style: none;
 
