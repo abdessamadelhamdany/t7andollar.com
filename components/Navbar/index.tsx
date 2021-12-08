@@ -5,9 +5,11 @@ const index: FC = () => {
   return (
     <nav className="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top">
       <div className="container">
-        <a className="navbar-brand" href="./index.html">
-          <img src="/images/brand/logo.png" alt="شعار طحن الدولار" />
-        </a>
+        <Link href="/" passHref>
+          <a className="navbar-brand">
+            <img src="/images/brand/logo.png" alt="شعار طحن الدولار" />
+          </a>
+        </Link>
         <button
           className="navbar-toggler collapsed"
           type="button"
@@ -23,7 +25,7 @@ const index: FC = () => {
           <ul className="navbar-nav mr-auto d-flex align-items-center">
             <li className="nav-item">
               <Link href="/category/freelancing" passHref>
-                <a className="nav-link">العمل على الانترنت</a>
+                <a className="nav-link active">العمل على الانترنت</a>
               </Link>
             </li>
             <li className="nav-item">
