@@ -27,6 +27,9 @@ const post: Post = {
   <p>Ipsos هو موقع ويب خاص بأبحاث السوق حيث يمكنك ملء استطلاعات الرأي للحصول على مكافآت مثل بطاقات الهدايا لتجار التجزئة المشهورين مثل Walmart و Starbucks و Target.</p>
   <p>أو يمكنك الحصول على بطاقات هدايا Paypal وهي نفس النقود عند تحويل رصيد Paypal إلى حسابك المصرفي!</p>
   <p>ما عليك سوى الاشتراك في Ipsos والحصول على أموال في كل مرة تكمل فيها استطلاعًا.</p>
+  
+  <h2>2. مقولة</h2>
+  <blockquote>ما عليك سوى الاشتراك في Ipsos والحصول على أموال في كل مرة تكمل فيها استطلاعًا.</blockquote>
   `,
   author: {
     name: 'عبد الصمد الحمداني',
@@ -47,21 +50,7 @@ const Article: NextPage = () => {
     <>
       <div className="container">
         <div className="row mb-3 justify-content-center">
-          <div className="col-10">
-            <img
-              className="post-thumbnail"
-              src={post.thumbnail}
-              alt={post.title}
-              width="770"
-            />
-            <style jsx>{`
-              .post-thumbnail {
-                width: 100%;
-                object-fit: cover;
-              }
-            `}</style>
-          </div>
-          <div className="col-10 py-3 pb-6 align-self-center">
+          <div className="col-12 py-4 align-self-center">
             <p className="text-uppercase font-weight-bold">
               <a className="text-brand" href={post.category.slug}>
                 {post.category.name}
@@ -87,43 +76,25 @@ const Article: NextPage = () => {
         </div>
       </div>
 
-      <div className="container pt-4 pb-4">
+      <div className="container py-4">
         <div className="row justify-content-center">
-          <div className="col-lg-2 pl-lg-4 mt-4 mt-lg-0 order-1 order-lg-0">
-            <div className="sticky-top">
-              <div className="text-muted text-center mb-3">شارك المقالة</div>
-              <div className="sharethis-inline-share-buttons"></div>
-            </div>
+          <div className="col-lg-10 col-xl-8">
+            <img
+              className="mb-3"
+              src={post.thumbnail}
+              alt={post.title}
+              width="100%"
+            />
           </div>
-          <div className="col-lg-8 order-0 order-lg-1">
-            <article className="article-post">
-              <p>
-                Holy grail funding non-disclosure agreement advisor ramen
-                bootstrapping ecosystem. Beta crowdfunding iteration assets
-                business plan paradigm shift stealth mass market seed money
-                rockstar niche market marketing buzz market.
-              </p>
-              <p>
-                Burn rate release facebook termsheet equity technology.
-                Interaction design rockstar network effects handshake creative
-                startup direct mailing. Technology influencer direct mailing
-                deployment return on investment seed round.
-              </p>
-              <p>
-                Termsheet business model canvas user experience churn rate low
-                hanging fruit backing iteration buyer seed money. Virality
-                release launch party channels validation learning curve paradigm
-                shift hypotheses conversion. Stealth leverage freemium venture
-                startup business-to-business accelerator market.
-              </p>
-              <p>
-                Freemium non-disclosure agreement lean startup bootstrapping
-                holy grail ramen MVP iteration accelerator. Strategy market
-                ramen leverage paradigm shift seed round entrepreneur
-                crowdfunding social proof angel investor partner network
-                virality.
-              </p>
-            </article>
+          <div className="col-lg-8">
+            <article
+              className="article-post"
+              dangerouslySetInnerHTML={{ __html: post.body }}
+            ></article>
+          </div>
+          <div className="col-lg-8 mt-4">
+            <div className="text-muted text-center mb-3">شارك المقالة</div>
+            <div className="sharethis-inline-share-buttons"></div>
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ interface Props {
 const index: FC<Props> = ({ post }) => {
   return (
     <div className="col-lg-6">
-      <div className="card border-0 mb-4 box-shadow h-xl-300">
+      <div className="card border-0 mb-4 box-shadow">
         <div
           style={{
             height: '150px',
