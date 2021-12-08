@@ -1,30 +1,27 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
-const index: FC = () => (
-  <div className="container mt-5">
-    <footer className="bg-white border-top p-3 text-muted small">
-      <div className="row align-items-center justify-content-between">
-        <div>
-          <span className="navbar-brand mr-2">
-            <strong>Mundana</strong>
-          </span>
-          Copyright &copy;
-          {new Date().getFullYear()}. All rights reserved.
+const index: FC = () => {
+  const [currentYear] = useState(new Date().getFullYear());
+
+  return (
+    <div className="container mt-5">
+      <footer className="bg-white border-top p-3 text-muted small">
+        <div className="row">
+          <div className="col-12">
+            <p>
+              لا يعتبر موقع طحن الدولار في أي حال من الأحوال بديلا لاستشارة
+              المهنية في المجالات التي نتكلم عنها. المرجو استخدم هذه المعلومات
+              على مسؤليتك الخاصة. موقع طحن الدولار قد يحتوي على روابط الإحالة من
+              المواقع المدكورة بالموقع.
+            </p>
+          </div>
+          <div className="col-12">
+            <p>جميع الحقوق محفوظة &copy; t7andollar.com {currentYear}</p>
+          </div>
         </div>
-        <div>
-          Made with
-          <a
-            target="_blank"
-            className="text-secondary font-weight-bold"
-            href="https://www.wowthemes.net/mundana-free-html-bootstrap-template/"
-          >
-            Mundana Theme
-          </a>
-          by WowThemes.net.
-        </div>
-      </div>
-    </footer>
-  </div>
-);
+      </footer>
+    </div>
+  );
+};
 
 export default index;
