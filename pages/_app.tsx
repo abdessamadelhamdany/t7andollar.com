@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import { ApolloProvider } from '@apollo/client';
 import apolloClient from '../lib/apollo';
 import Layout from '@/components/Layout';
-import MundanaScripts from '@/components/MundanaScripts';
+import MundanaScripts from '@/components/Meta/MundanaScripts';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

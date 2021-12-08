@@ -8,3 +8,7 @@
 ### Youtube Videos
 
 - [Intro to Apollo Client 3.0](https://www.youtube.com/watch?v=ou0fEW1eRjc&ab_channel=ApolloGraphQL)
+
+### Content refercences
+
+- [Ait News](https://aitnews.com/latest-it-news/)

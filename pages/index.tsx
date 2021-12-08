@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import { gql, useQuery } from '@apollo/client';
+import { title } from 'lib/helpers';
 
 const AllPostsQuery = gql`
   query allPostsQuery($first: Int!, $after: Int) {
@@ -39,10 +40,10 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>طحن الدولار - تعرف على طرق الربح من الانترنت</title>
+        <title>{title('تعرف على طرق الربح من الانترنت')}</title>
         <meta
           name="description"
-          content="شرح طرق دليل قائمة كيفية الربح من الانترنت، جوجل ادسينس والتسويق بالعمولة واستطلاع الرأي ومجالات اخرى، قائمة بأهم طريقة للربح من النت وتحصيل الثروة والمال. طرق"
+          content="طحن الدولار هو موقع إلكتروني لتعلم طرق العمل على الإنترنت في شتى المجالات كما تعليم الأدوات مثل ووردبريس، بلوجر، تطوير مواقع الويب والعديد من المصادر التعليمية."
         />
       </Head>
 

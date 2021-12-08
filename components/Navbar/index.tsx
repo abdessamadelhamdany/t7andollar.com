@@ -6,7 +6,7 @@ const index: FC = () => {
     <nav className="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top">
       <div className="container">
         <a className="navbar-brand" href="./index.html">
-          <strong>Mundana</strong>
+          <img src="/images/brand/logo.png" alt="شعار طحن الدولار" />
         </a>
         <button
           className="navbar-toggler collapsed"
@@ -22,54 +22,34 @@ const index: FC = () => {
         <div className="navbar-collapse collapse" id="navbarColor02">
           <ul className="navbar-nav mr-auto d-flex align-items-center">
             <li className="nav-item">
-              <a className="nav-link" href="./index.html">
-                Intro <span className="sr-only">(current)</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <Link href="/category/seo" passHref>
-                <a className="nav-link">SEO</a>
+              <Link href="/category/freelancing" passHref>
+                <a className="nav-link">العمل على الانترنت</a>
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="./article.html">
-                Tech
-              </a>
+              <Link href="/category/make-money-online" passHref>
+                <a className="nav-link">ربح المال من الانترنت</a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="./article.html">
-                Politics
-              </a>
+              <Link href="/category/search-engine-optimization" passHref>
+                <a className="nav-link">تحسين محركات البحث</a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="./article.html">
-                Health
-              </a>
+              <Link href="/category/how-to-make-websites" passHref>
+                <a className="nav-link">انشاء المواقع الالكترونية</a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="./article.html">
-                Collections
-              </a>
+              <Link href="/category/latest-tech-news" passHref>
+                <a className="nav-link">أخبار تقنية</a>
+              </Link>
             </li>
             <li className="nav-item">
               <Link href="/about" passHref>
-                <a className="nav-link">About</a>
+                <a className="nav-link">من نحن؟</a>
               </Link>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="./docs.html">
-                Template <span className="badge badge-secondary">docs</span>
-              </a>
-            </li>
-          </ul>
-          <ul className="navbar-nav ml-auto d-flex align-items-center">
-            <li className="nav-item highlight">
-              <a
-                className="nav-link"
-                href="https://www.wowthemes.net/mundana-free-html-bootstrap-template/"
-              >
-                Get this Theme
-              </a>
             </li>
           </ul>
         </div>

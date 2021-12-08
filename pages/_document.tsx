@@ -5,7 +5,8 @@ import Document, {
   NextScript,
   DocumentContext,
 } from 'next/document';
-import MundanaHead from '@/components/MundanaHead';
+import Favicon from '@/components/Meta/Favicon';
+import MundanaHead from '@/components/Meta/MundanaHead';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -16,10 +17,10 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="en" dir="ltr">
+      <Html lang="ar" dir="rtl">
         <Head>
-          <link rel="icon" href="/favicon.ico" />
           <MundanaHead />
+          <Favicon />
         </Head>
         <body>
           <Main />
