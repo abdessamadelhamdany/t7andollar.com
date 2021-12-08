@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import Link from 'next/link';
 
 const index: FC = () => {
   return (
@@ -26,9 +27,9 @@ const index: FC = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="./article.html">
-                Culture
-              </a>
+              <Link href="/category/seo" passHref>
+                <a className="nav-link">SEO</a>
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="./article.html">
@@ -51,9 +52,9 @@ const index: FC = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="./about.html">
-                About
-              </a>
+              <Link href="/about" passHref>
+                <a className="nav-link">About</a>
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="./docs.html">

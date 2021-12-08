@@ -6,21 +6,21 @@ const index = () => {
     <>
       <Script
         strategy="beforeInteractive"
-        src="assets/js/vendor/jquery.min.js"
+        src="/assets/js/vendor/jquery.min.js"
       />
       <Script
         strategy="beforeInteractive"
-        src="assets/js/vendor/popper.min.js"
+        src="/assets/js/vendor/popper.min.js"
         type="text/javascript"
       />
       <Script
         strategy="beforeInteractive"
-        src="assets/js/vendor/bootstrap.min.js"
+        src="/assets/js/vendor/bootstrap.min.js"
         type="text/javascript"
       />
       <Script
         strategy="beforeInteractive"
-        src="assets/js/functions.js"
+        src="/assets/js/functions.js"
         type="text/javascript"
       />
     </>

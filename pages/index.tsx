@@ -69,7 +69,7 @@ const Home: NextPage = () => {
                 className="col-md-6 d-none d-md-block pr-0"
                 style={{
                   backgroundSize: 'cover',
-                  backgroundImage: 'url(./assets/img/demo/home.jpg)',
+                  backgroundImage: 'url(/assets/img/demo/home.jpg)',
                 }}
               ></div>
             </div>
@@ -84,7 +84,7 @@ const Home: NextPage = () => {
               <div
                 style={{
                   height: '150px',
-                  backgroundImage: 'url(./assets/img/demo/1.jpg)',
+                  backgroundImage: 'url(/assets/img/demo/1.jpg)',
                   backgroundSize: 'cover',
                   backgroundRepeat: 'no-repeat',
                 }}
@@ -116,7 +116,7 @@ const Home: NextPage = () => {
           <div className="col-lg-6">
             <div className="flex-md-row mb-4 box-shadow h-xl-300">
               <div className="mb-3 d-flex align-items-center">
-                <img height="80" src="./assets/img/demo/blog4.jpg" />
+                <img height="80" src="/assets/img/demo/blog4.jpg" />
                 <div className="pl-3">
                   <h2 className="mb-2 h6 font-weight-bold">
                     <a className="text-dark" href="./article.html">
@@ -132,7 +132,7 @@ const Home: NextPage = () => {
                 </div>
               </div>
               <div className="mb-3 d-flex align-items-center">
-                <img height="80" src="./assets/img/demo/blog5.jpg" />
+                <img height="80" src="/assets/img/demo/blog5.jpg" />
                 <div className="pl-3">
                   <h2 className="mb-2 h6 font-weight-bold">
                     <a className="text-dark" href="./article.html">
@@ -148,7 +148,7 @@ const Home: NextPage = () => {
                 </div>
               </div>
               <div className="mb-3 d-flex align-items-center">
-                <img height="80" src="./assets/img/demo/blog6.jpg" />
+                <img height="80" src="/assets/img/demo/blog6.jpg" />
                 <div className="pl-3">
                   <h2 className="mb-2 h6 font-weight-bold">
                     <a className="text-dark" href="./article.html">
@@ -191,7 +191,7 @@ const Home: NextPage = () => {
                 </div>
                 <small className="text-muted">Dec 12 &middot; 5 min read</small>
               </div>
-              <img height="120" src="./assets/img/demo/blog8.jpg" />
+              <img height="120" src="/assets/img/demo/blog8.jpg" />
             </div>
             <div className="mb-3 d-flex justify-content-between">
               <div className="pr-3">
@@ -209,7 +209,7 @@ const Home: NextPage = () => {
                 </div>
                 <small className="text-muted">Dec 12 &middot; 5 min read</small>
               </div>
-              <img height="120" src="./assets/img/demo/1.jpg" />
+              <img height="120" src="/assets/img/demo/1.jpg" />
             </div>
             <div className="mb-3 d-flex justify-content-between">
               <div className="pr-3">
@@ -227,7 +227,7 @@ const Home: NextPage = () => {
                 </div>
                 <small className="text-muted">Dec 12 &middot; 5 min read</small>
               </div>
-              <img height="120" src="./assets/img/demo/5.jpg" />
+              <img height="120" src="/assets/img/demo/5.jpg" />
             </div>
           </div>
           <div className="col-md-4 pl-4">
