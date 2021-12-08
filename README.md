@@ -23,3 +23,7 @@
 #### Track featured posts
 
 featured_posts (ended_at)
+
+### Google Adsense
+
+- [Vignette ads](https://support.google.com/adsense/answer/9305577?hl=en)

@@ -2,7 +2,9 @@ import Head from 'next/head';
 import type { NextPage } from 'next';
 import { gql, useQuery } from '@apollo/client';
 import { title } from 'lib/helpers';
-import Link from 'next/link';
+import PostPreview from '@/components/PostPreview';
+import FeaturedPost from '@/components/FeaturedPost';
+import { Post } from 'interfaces';
 
 const AllPostsQuery = gql`
   query allPostsQuery($first: Int!, $after: Int) {
@@ -23,18 +25,33 @@ const AllPostsQuery = gql`
   }
 `;
 
-const featuredPost = {
+const featuredPost: Post = {
+  id: 1,
   title: 'مجموعة تطبيقات ستمكنك من ربح المال من الانترنت',
-  category: 'make-money-online',
+  category: {
+    name: 'ربح المال من الانترنت',
+    slug: 'ربح-المال-من-الانترنت',
+  },
   slug: 'مجموعة-تطبيقات-ستمكنك-من-ربح-المال-من-الانترنت',
   excerpt:
     'هل تبحث عن تطبيقات تساعدك على جني المال من الانترنت؟ هذه التطبيقات ستمكنك من ربح المال من الانترنت في اوقات الفراغ، يمكنك استعمالها عندما تكون جالس ولا تفعل اي شئ او وانت تنتظر في مكان ما. انها سهلة الإستعمال وسريعة التحميل.',
   thumbnail: '/images/blog/01-01-2022/make-money-apps.jpg',
   source: 'https://dopedollar.com/apps-that-pay-you-money/',
   body: '',
+  author: {
+    name: 'عبد الصمد الحمداني',
+    username: 'عبد-الصمد-الحمداني',
+  },
+  readingTime: '5 دقائق',
+  publishedAt: 'السبت 1 يناير 2022',
 };
 
-const allPosts = [featuredPost, featuredPost, featuredPost, featuredPost];
+const allPosts = [
+  { ...featuredPost, id: 2 },
+  { ...featuredPost, id: 3 },
+  { ...featuredPost, id: 4 },
+  { ...featuredPost, id: 5 },
+];
 
 const Home: NextPage = () => {
   const { data, error, loading, fetchMore } = useQuery(AllPostsQuery, {
@@ -62,34 +79,7 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="container mb-3 homepage">
-        <div className="pl-0 pr-0 pr-md-4 h-100 tofront">
-          <div className="row justify-content-between">
-            <div className="col-lg-6 py-3 py-md-6 align-self-center">
-              <Link href={`/${featuredPost.slug}`} passHref>
-                <a>
-                  <h1 className="secondfont mb-3 font-weight-bold">
-                    {featuredPost.title}
-                  </h1>
-                  <img
-                    className="mb-3 w-100 d-block d-lg-none"
-                    src={featuredPost.thumbnail}
-                  />
-                </a>
-              </Link>
-              <p className="text-justify m-0">{featuredPost.excerpt}</p>
-            </div>
-            <div className="d-none d-lg-block col-lg-6">
-              <Link href={`/${featuredPost.slug}`} passHref>
-                <a>
-                  <img
-                    className="t7-img-fit-thumbnail"
-                    src={featuredPost.thumbnail}
-                  />
-                </a>
-              </Link>
-            </div>
-          </div>
-        </div>
+        <FeaturedPost post={featuredPost} />
       </div>
 
       <div className="container py-4 mb-3">
@@ -111,113 +101,14 @@ const Home: NextPage = () => {
 
       <div className="container">
         <div className="row justify-content-between">
-          <div className="col-md-8">
+          <div className="col-md-12">
             <h5 className="font-weight-bold spanborder">
-              <span>All Stories</span>
+              <span>كل المقالات</span>
             </h5>
-            <div className="mb-3 d-flex justify-content-between">
-              <div className="pr-3">
-                <h2 className="mb-1 h4 font-weight-bold">
-                  <a className="text-dark" href="./article.html">
-                    Nearly 200 Great Barrier Reef coral species also live in the
-                    deep sea
-                  </a>
-                </h2>
-                <p>
-                  There are more coral species lurking in the deep ocean that
-                  previously thought.
-                </p>
-                <div className="card-text text-muted small">
-                  Jake Bittle in SCIENCE
-                </div>
-                <small className="text-muted">Dec 12 &middot; 5 min read</small>
-              </div>
-              <img height="120" src="/assets/img/demo/blog8.jpg" />
-            </div>
-            <div className="mb-3 d-flex justify-content-between">
-              <div className="pr-3">
-                <h2 className="mb-1 h4 font-weight-bold">
-                  <a className="text-dark" href="./article.html">
-                    East Antarctica's glaciers are stirring
-                  </a>
-                </h2>
-                <p>
-                  Nasa says it has detected the first signs of significant
-                  melting in a swathe of glaciers in East Antarctica.
-                </p>
-                <div className="card-text text-muted small">
-                  Jake Bittle in SCIENCE
-                </div>
-                <small className="text-muted">Dec 12 &middot; 5 min read</small>
-              </div>
-              <img height="120" src="/assets/img/demo/1.jpg" />
-            </div>
-            <div className="mb-3 d-flex justify-content-between">
-              <div className="pr-3">
-                <h2 className="mb-1 h4 font-weight-bold">
-                  <a className="text-dark" href="./article.html">
-                    50 years ago, armadillos hinted that DNA wasn’t destiny
-                  </a>
-                </h2>
-                <p>
-                  Nasa says it has detected the first signs of significant
-                  melting in a swathe of glaciers in East Antarctica.
-                </p>
-                <div className="card-text text-muted small">
-                  Jake Bittle in SCIENCE
-                </div>
-                <small className="text-muted">Dec 12 &middot; 5 min read</small>
-              </div>
-              <img height="120" src="/assets/img/demo/5.jpg" />
-            </div>
-          </div>
-          <div className="col-md-4 pl-4">
-            <h5 className="font-weight-bold spanborder">
-              <span>Popular</span>
-            </h5>
-            <ol className="list-featured">
-              <li>
-                <span>
-                  <h6 className="font-weight-bold">
-                    <a href="./article.html" className="text-dark">
-                      Did Supernovae Kill Off Large Ocean Animals?
-                    </a>
-                  </h6>
-                  <p className="text-muted">Jake Bittle in SCIENCE</p>
-                </span>
-              </li>
-              <li>
-                <span>
-                  <h6 className="font-weight-bold">
-                    <a href="./article.html" className="text-dark">
-                      Humans Reversing Climate Clock: 50 Million Years
-                    </a>
-                  </h6>
-                  <p className="text-muted">Jake Bittle in SCIENCE</p>
-                </span>
-              </li>
-              <li>
-                <span>
-                  <h6 className="font-weight-bold">
-                    <a href="./article.html" className="text-dark">
-                      Unprecedented Views of the Birth of Planets
-                    </a>
-                  </h6>
-                  <p className="text-muted">Jake Bittle in SCIENCE</p>
-                </span>
-              </li>
-              <li>
-                <span>
-                  <h6 className="font-weight-bold">
-                    <a href="./article.html" className="text-dark">
-                      Effective New Target for Mood-Boosting Brain Stimulation
-                      Found
-                    </a>
-                  </h6>
-                  <p className="text-muted">Jake Bittle in SCIENCE</p>
-                </span>
-              </li>
-            </ol>
+
+            {allPosts.map((post) => (
+              <PostPreview key={post.id} post={post} />
+            ))}
           </div>
         </div>
       </div>
