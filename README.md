@@ -12,3 +12,7 @@
 ### Content refercences
 
 - [Ait News](https://aitnews.com/latest-it-news/)
+
+### Pakcages for ideas
+
+- [Reading Time](https://www.npmjs.com/package/reading-time)
