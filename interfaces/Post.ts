@@ -13,6 +13,7 @@ export interface Post {
   author: {
     name: string;
     username: string;
+    avatar: string;
   };
   readingTime: string;
   publishedAt: string;

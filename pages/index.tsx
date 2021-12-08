@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import { title } from 'lib/helpers';
 import PostPreview from '@/components/PostPreview';
 import FeaturedPost from '@/components/FeaturedPost';
-import { Post } from 'interfaces';
+import { Post } from '../interfaces';
 
 const AllPostsQuery = gql`
   query allPostsQuery($first: Int!, $after: Int) {
@@ -41,6 +41,7 @@ const featuredPost: Post = {
   author: {
     name: 'عبد الصمد الحمداني',
     username: 'عبد-الصمد-الحمداني',
+    avatar: '/images/avatars/abdessamadelhamdany.jpg',
   },
   readingTime: '5 دقائق',
   publishedAt: 'السبت 1 يناير 2022',

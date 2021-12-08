@@ -18,9 +18,9 @@ const index: FC<Props> = ({ post }) => {
       />
       <div className="pt-3 pt-md-0 pr-md-3">
         <h2 className="mb-1 h4 font-weight-bold">
-          <a className="text-dark" href="./article.html">
-            {post.title}
-          </a>
+          <Link href={`/${post.slug}`}>
+            <a className="text-dark">{post.title}</a>
+          </Link>
         </h2>
         <p>{post.excerpt}</p>
         <div className="card-text text-muted small">
