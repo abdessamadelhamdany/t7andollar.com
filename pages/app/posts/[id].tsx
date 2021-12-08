@@ -11,7 +11,7 @@ const EditPost: NextPage = () => {
   return (
     <AppLayout>
       <div>
-        <RichText />
+        <RichText dir="RTL" />
       </div>
     </AppLayout>
   );
