@@ -1,216 +1,130 @@
 import React from 'react';
+import Link from 'next/link';
+import Head from 'next/head';
 import type { NextPage } from 'next';
+import { Post } from '../interfaces';
+import NextPost from '@/components/NextPost';
+import AdPlaceholder from '@/components/AdPlaceholder';
+import { title } from 'lib/helpers';
+
+const post: Post = {
+  id: 1,
+  title: 'مجموعة تطبيقات ستمكنك من ربح المال من الانترنت',
+  category: {
+    name: 'ربح المال من الانترنت',
+    slug: 'ربح-المال-من-الانترنت',
+  },
+  slug: 'مجموعة-تطبيقات-ستمكنك-من-ربح-المال-من-الانترنت',
+  excerpt:
+    'هل تبحث عن تطبيقات تساعدك على جني المال من الانترنت؟ هذه التطبيقات ستمكنك من ربح المال من الانترنت في اوقات الفراغ، يمكنك استعمالها عندما تكون جالس ولا تفعل اي شئ او وانت تنتظر في مكان ما. انها سهلة الإستعمال وسريعة التحميل.',
+  thumbnail: '/images/blog/01-01-2022/make-money-apps.jpg',
+  source: 'https://dopedollar.com/apps-that-pay-you-money/',
+  body: `
+  <p>هل تبحث عن تطبيقات تدفع لك المال؟</p>
+  <p>تعد تطبيقات كسب المال هذه ممتازة لكسب القليل من المال على الجانب أثناء الانتظار في الطابور أو بالملل في المنزل دون أن تفعل شيئًا.</p>
+  <p>إنها حقًا سهلة الاستخدام وسريعة التنزيل.</p>
+  <p>كيف تعمل تطبيقات كسب المال: ما عليك سوى تنزيل التطبيق ، والقيام بأشياء مختلفة داخل التطبيق لكسب أرصدة أو أموال مباشرة.</p>
+  <p>ستدفع لك معظم هذه التطبيقات أموالاً من خلال Paypal cash أو يمكنك استخدام أرصدةك المكتسبة لاسترداد بطاقات الهدايا.</p>
+  <p>لقد قمت بربط متجر تطبيقات Android لكل تطبيق مدرج هنا. لم أتحقق من أن متجر iTunes به التطبيق ، لكنني على استعداد للمراهنة على أنك ستتمكن من العثور عليه في متجر iTunes إذا كنت تبحث عن ما يعادله من Apple. هذه التطبيقات ليست أفكارًا تجارية من شأنها أن تجعلك ثريًا ، لكنها طرق ممتازة لكسب المال بسرعة!  </p>
+
+  <h2>1. موقع Ipsos</h2>
+  <p>Ipsos هو موقع ويب خاص بأبحاث السوق حيث يمكنك ملء استطلاعات الرأي للحصول على مكافآت مثل بطاقات الهدايا لتجار التجزئة المشهورين مثل Walmart و Starbucks و Target.</p>
+  <p>أو يمكنك الحصول على بطاقات هدايا Paypal وهي نفس النقود عند تحويل رصيد Paypal إلى حسابك المصرفي!</p>
+  <p>ما عليك سوى الاشتراك في Ipsos والحصول على أموال في كل مرة تكمل فيها استطلاعًا.</p>
+  
+  <h2>2. مقولة</h2>
+  <blockquote>ما عليك سوى الاشتراك في Ipsos والحصول على أموال في كل مرة تكمل فيها استطلاعًا.</blockquote>
+  `,
+  author: {
+    name: 'عبد الصمد الحمداني',
+    username: 'عبد-الصمد-الحمداني',
+    avatar: '/images/avatars/abdessamadelhamdany.jpg',
+  },
+  readingTime: '5 دقائق',
+  publishedAt: 'السبت 1 يناير 2022',
+};
+
+const readNextPost: Post[] = [
+  { ...post, id: 2 },
+  { ...post, id: 3 },
+];
 
 const Article: NextPage = () => {
   return (
     <>
+      <Head>
+        <title>{title(post.title)}</title>
+        <meta name="description" content={post.excerpt} />
+      </Head>
       <div className="container">
-        <div className="jumbotron jumbotron-fluid mb-3 pl-0 pt-0 pb-0 bg-white position-relative">
-          <div className="h-100 tofront">
-            <div className="row justify-content-between">
-              <div className="col-md-6 pt-6 pb-6 pr-6 align-self-center">
-                <p className="text-uppercase font-weight-bold">
-                  <a className="text-danger" href="./category.html">
-                    Stories
-                  </a>
-                </p>
-                <h1 className="display-4 secondfont mb-3 font-weight-bold">
-                  Sterling could jump 8% if Brexit deal gets approved by UK
-                  Parliament
-                </h1>
-                <p className="mb-3">
-                  Analysts told CNBC that the currency could hit anywhere
-                  between $1.35-$1.40 if the deal gets passed through the U.K.
-                  parliament.
-                </p>
-                <div className="d-flex align-items-center">
-                  <img
-                    className="rounded-circle"
-                    src="/assets/img/demo/avatar2.jpg"
-                    width="70"
-                  />
-                  <small className="ml-2">
-                    Jane Seymour{' '}
-                    <span className="text-muted d-block">
-                      A few hours ago &middot; 5 min. read
-                    </span>
-                  </small>
-                </div>
-              </div>
-              <div className="col-md-6 pr-0">
-                <img src="/assets/img/demo/intro.jpg" />
-              </div>
+        <div className="row mb-3 justify-content-center">
+          <div className="col-12 py-4 align-self-center">
+            <p className="text-uppercase font-weight-bold">
+              <Link href={`/category/${post.category.slug}`}>
+                <a className="text-brand">{post.category.name}</a>
+              </Link>
+            </p>
+            <h1 className="display-4 secondfont mb-3 font-weight-bold">
+              {post.title}
+            </h1>
+            <div className="d-flex align-items-center">
+              <img
+                className="rounded-circle"
+                src={post.author.avatar}
+                width="70"
+              />
+              <small className="mr-2">
+                <span>{post.author.name}</span>
+                <span className="text-muted d-block">
+                  {post.publishedAt} &middot; {post.readingTime}
+                </span>
+              </small>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container pt-4 pb-4">
+      <div className="container py-4">
         <div className="row justify-content-center">
-          <div className="col-lg-2 pr-4 mb-4 col-md-12">
-            <div className="sticky-top text-center">
-              <div className="text-muted">Share this</div>
-              <div className="share d-inline-block">
-                <div className="a2a_kit a2a_kit_size_32 a2a_default_style">
-                  <a
-                    className="a2a_dd"
-                    href="https://www.addtoany.com/share"
-                  ></a>
-                  <a className="a2a_button_facebook"></a>
-                  <a className="a2a_button_twitter"></a>
-                </div>
-                <script
-                  async
-                  src="https://static.addtoany.com/menu/page.js"
-                ></script>
-              </div>
+          <div className="col-lg-8 col-xl-7">
+            <img
+              className="mb-3"
+              src={post.thumbnail}
+              alt={post.title}
+              width="100%"
+            />
+
+            <article
+              className="article-post"
+              dangerouslySetInnerHTML={{ __html: post.body }}
+            ></article>
+            <div className="mt-4">
+              <div className="text-muted text-center mb-3">شارك المقالة</div>
+              <div className="sharethis-inline-share-buttons"></div>
             </div>
           </div>
-          <div className="col-md-12 col-lg-8">
-            <article className="article-post">
-              <p>
-                Holy grail funding non-disclosure agreement advisor ramen
-                bootstrapping ecosystem. Beta crowdfunding iteration assets
-                business plan paradigm shift stealth mass market seed money
-                rockstar niche market marketing buzz market.
-              </p>
-              <p>
-                Burn rate release facebook termsheet equity technology.
-                Interaction design rockstar network effects handshake creative
-                startup direct mailing. Technology influencer direct mailing
-                deployment return on investment seed round.
-              </p>
-              <p>
-                Termsheet business model canvas user experience churn rate low
-                hanging fruit backing iteration buyer seed money. Virality
-                release launch party channels validation learning curve paradigm
-                shift hypotheses conversion. Stealth leverage freemium venture
-                startup business-to-business accelerator market.
-              </p>
-              <p>
-                Freemium non-disclosure agreement lean startup bootstrapping
-                holy grail ramen MVP iteration accelerator. Strategy market
-                ramen leverage paradigm shift seed round entrepreneur
-                crowdfunding social proof angel investor partner network
-                virality.
-              </p>
-            </article>
-            <div className="border p-5 bg-lightblue">
-              <div className="row justify-content-between">
-                <div className="col-md-5 mb-2 mb-md-0">
-                  <h5 className="font-weight-bold secondfont">
-                    Become a member
-                  </h5>
-                  Get the latest news right in your inbox. We never spam!
-                </div>
-                <div className="col-md-7">
-                  <div className="row">
-                    <div className="col-md-12">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter your e-mail address"
-                      />
-                    </div>
-                    <div className="col-md-12 mt-2">
-                      <button
-                        type="submit"
-                        className="btn btn-success btn-block"
-                      >
-                        Subscribe
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="col-lg-4 col-xl-3 mb-3">
+            <AdPlaceholder width={224} height={600} />
+          </div>
+        </div>
+      </div>
+
+      <div className="container py-4 mb-3">
+        <div className="row">
+          <div className="col-lg-12">
+            <AdPlaceholder width={1170} height={280} />
           </div>
         </div>
       </div>
 
       <div className="container pt-4 pb-4">
         <h5 className="font-weight-bold spanborder">
-          <span>Read next</span>
+          <span>اقرأ المزيد</span>
         </h5>
         <div className="row">
-          <div className="col-lg-6">
-            <div className="card border-0 mb-4 box-shadow h-xl-300">
-              <div
-                style={{
-                  height: '150px',
-                  backgroundSize: 'cover',
-                  backgroundImage: 'url(/assets/img/demo/3.jpg)',
-                  backgroundRepeat: 'no-repeat',
-                }}
-              ></div>
-              <div className="card-body px-0 pb-0 d-flex flex-column align-items-start">
-                <h2 className="h4 font-weight-bold">
-                  <a className="text-dark" href="#">
-                    Brain Stimulation Relieves Depression Symptoms
-                  </a>
-                </h2>
-                <p className="card-text">
-                  Researchers have found an effective target in the brain for
-                  electrical stimulation to improve mood in people suffering
-                  from depression.
-                </p>
-                <div>
-                  <small className="d-block">
-                    <a className="text-muted" href="./author.html">
-                      Favid Rick
-                    </a>
-                  </small>
-                  <small className="text-muted">Dec 12 · 5 min read</small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-6">
-            <div className="flex-md-row mb-4 box-shadow h-xl-300">
-              <div className="mb-3 d-flex align-items-center">
-                <img height="80" src="/assets/img/demo/blog4.jpg" />
-                <div className="pl-3">
-                  <h2 className="mb-2 h6 font-weight-bold">
-                    <a className="text-dark" href="./article.html">
-                      Nasa's IceSat space laser makes height maps of Earth
-                    </a>
-                  </h2>
-                  <div className="card-text text-muted small">
-                    Jake Bittle in LOVE/HATE
-                  </div>
-                  <small className="text-muted">Dec 12 · 5 min read</small>
-                </div>
-              </div>
-              <div className="mb-3 d-flex align-items-center">
-                <img height="80" src="/assets/img/demo/blog5.jpg" />
-                <div className="pl-3">
-                  <h2 className="mb-2 h6 font-weight-bold">
-                    <a className="text-dark" href="./article.html">
-                      Underwater museum brings hope to Lake Titicaca
-                    </a>
-                  </h2>
-                  <div className="card-text text-muted small">
-                    Jake Bittle in LOVE/HATE
-                  </div>
-                  <small className="text-muted">Dec 12 · 5 min read</small>
-                </div>
-              </div>
-              <div className="mb-3 d-flex align-items-center">
-                <img height="80" src="/assets/img/demo/blog6.jpg" />
-                <div className="pl-3">
-                  <h2 className="mb-2 h6 font-weight-bold">
-                    <a className="text-dark" href="./article.html">
-                      Sun-skimming probe starts calling home
-                    </a>
-                  </h2>
-                  <div className="card-text text-muted small">
-                    Jake Bittle in LOVE/HATE
-                  </div>
-                  <small className="text-muted">Dec 12 · 5 min read</small>
-                </div>
-              </div>
-            </div>
-          </div>
+          {readNextPost.map((post) => (
+            <NextPost key={post.id} post={post} />
+          ))}
         </div>
       </div>
     </>

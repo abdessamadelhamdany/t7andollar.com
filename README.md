@@ -16,3 +16,14 @@
 ### Pakcages for ideas
 
 - [Reading Time](https://www.npmjs.com/package/reading-time)
+- [Slugify](https://www.npmjs.com/package/slugify)
+
+### Notes
+
+#### Track featured posts
+
+featured_posts (ended_at)
+
+### Google Adsense
+
+- [Vignette ads](https://support.google.com/adsense/answer/9305577?hl=en)

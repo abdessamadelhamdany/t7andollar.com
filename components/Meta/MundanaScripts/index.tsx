@@ -18,8 +18,18 @@ const index = () => {
         src="/assets/js/vendor/bootstrap.min.js"
         type="text/javascript"
       />
+
+      {process.env.NODE_ENV === 'production' && (
+        <Script
+          strategy="afterInteractive"
+          type="text/javascript"
+          src="https://platform-api.sharethis.com/js/sharethis.js#property=61b0b48f592e270019ffb6c3&product=inline-share-buttons"
+          async={true}
+        />
+      )}
+
       <Script
-        strategy="beforeInteractive"
+        strategy="afterInteractive"
         src="/assets/js/functions.js"
         type="text/javascript"
       />

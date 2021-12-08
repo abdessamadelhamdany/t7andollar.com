@@ -1,189 +1,74 @@
 import React from 'react';
 import type { NextPage } from 'next';
+import { title } from 'lib/helpers';
+import PostPreview from '@/components/PostPreview';
+import FeaturedPost from '@/components/FeaturedPost';
+import AdPlaceholder from '@/components/AdPlaceholder';
+import { Post } from '../../interfaces';
+
+const featuredPost: Post = {
+  id: 1,
+  title: 'مجموعة تطبيقات ستمكنك من ربح المال من الانترنت',
+  category: {
+    name: 'ربح المال من الانترنت',
+    slug: 'ربح-المال-من-الانترنت',
+  },
+  slug: 'مجموعة-تطبيقات-ستمكنك-من-ربح-المال-من-الانترنت',
+  excerpt:
+    'هل تبحث عن تطبيقات تساعدك على جني المال من الانترنت؟ هذه التطبيقات ستمكنك من ربح المال من الانترنت في اوقات الفراغ، يمكنك استعمالها عندما تكون جالس ولا تفعل اي شئ او وانت تنتظر في مكان ما. انها سهلة الإستعمال وسريعة التحميل.',
+  thumbnail: '/images/blog/01-01-2022/make-money-apps.jpg',
+  source: 'https://dopedollar.com/apps-that-pay-you-money/',
+  body: '',
+  author: {
+    name: 'عبد الصمد الحمداني',
+    username: 'عبد-الصمد-الحمداني',
+    avatar: '/images/avatars/abdessamadelhamdany.jpg',
+  },
+  readingTime: '5 دقائق',
+  publishedAt: 'السبت 1 يناير 2022',
+};
+
+const categoryPosts = [
+  { ...featuredPost, id: 2 },
+  { ...featuredPost, id: 3 },
+  { ...featuredPost, id: 4 },
+  { ...featuredPost, id: 5 },
+];
+
+const category = {
+  name: 'ربح المال من الانترنت',
+  slug: 'ربح-المال-من-الانترنت',
+};
 
 const Category: NextPage = () => {
   return (
     <>
-      <div className="container mt-5 mb-5">
+      <div className="container my-3 homepage">
+        <h5 className="font-weight-bold spanborder">
+          <span>مميزة في {category.name}</span>
+        </h5>
+
+        <FeaturedPost post={featuredPost} />
+      </div>
+
+      <div className="container py-4 mb-3">
         <div className="row">
-          <div className="col-md-8">
-            <h5 className="font-weight-bold spanborder">
-              <span>Featured in Science</span>
-            </h5>
-            <div className="card border-0 mb-5 box-shadow">
-              <div
-                style={{
-                  backgroundImage: 'url(/assets/img/demo/1.jpg)',
-                  height: '350px',
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
-                }}
-              ></div>
-              <div className="card-body px-0 pb-0 d-flex flex-column align-items-start">
-                <h2 className="h2 font-weight-bold">
-                  <a className="text-dark" href="./article.html">
-                    Brain Stimulation Relieves Depression Symptoms
-                  </a>
-                </h2>
-                <p className="card-text">
-                  Researchers have found an effective target in the brain for
-                  electrical stimulation to improve mood in people suffering
-                  from depression.
-                </p>
-                <div>
-                  <small className="d-block">
-                    <a className="text-muted" href="./author.html">
-                      Favid Rick
-                    </a>
-                  </small>
-                  <small className="text-muted">Dec 12 · 5 min read</small>
-                </div>
-              </div>
-            </div>
-            <h5 className="font-weight-bold spanborder">
-              <span>Latest</span>
-            </h5>
-            <div className="mb-3 d-flex justify-content-between">
-              <div className="pr-3">
-                <h2 className="mb-1 h4 font-weight-bold">
-                  <a className="text-dark" href="./article.html">
-                    Nearly 200 Great Barrier Reef coral species also live in the
-                    deep sea
-                  </a>
-                </h2>
-                <p>
-                  There are more coral species lurking in the deep ocean that
-                  previously thought.
-                </p>
-                <div className="card-text text-muted small">
-                  Jake Bittle in SCIENCE
-                </div>
-                <small className="text-muted">Dec 12 · 5 min read</small>
-              </div>
-              <img height="120" src="/assets/img/demo/blog8.jpg" />
-            </div>
-            <div className="mb-3 d-flex justify-content-between">
-              <div className="pr-3">
-                <h2 className="mb-1 h4 font-weight-bold">
-                  <a className="text-dark" href="./article.html">
-                    East Antarctica's glaciers are stirring
-                  </a>
-                </h2>
-                <p>
-                  Nasa says it has detected the first signs of significant
-                  melting in a swathe of glaciers in East Antarctica.
-                </p>
-                <div className="card-text text-muted small">
-                  Jake Bittle in SCIENCE
-                </div>
-                <small className="text-muted">Dec 12 · 5 min read</small>
-              </div>
-              <img height="120" src="/assets/img/demo/1.jpg" />
-            </div>
-            <div className="mb-3 d-flex justify-content-between">
-              <div className="pr-3">
-                <h2 className="mb-1 h4 font-weight-bold">
-                  <a className="text-dark" href="./article.html">
-                    50 years ago, armadillos hinted that DNA wasn’t destiny
-                  </a>
-                </h2>
-                <p>
-                  Nasa says it has detected the first signs of significant
-                  melting in a swathe of glaciers in East Antarctica.
-                </p>
-                <div className="card-text text-muted small">
-                  Jake Bittle in SCIENCE
-                </div>
-                <small className="text-muted">Dec 12 · 5 min read</small>
-              </div>
-              <img height="120" src="/assets/img/demo/5.jpg" />
-            </div>
-          </div>
-          <div className="col-md-4 pl-4">
-            <div className="sticky-top">
-              <h5 className="font-weight-bold spanborder">
-                <span>Popular in Science</span>
-              </h5>
-              <ol className="list-featured">
-                <li>
-                  <span>
-                    <h6 className="font-weight-bold">
-                      <a href="./article.html" className="text-dark">
-                        Did Supernovae Kill Off Large Ocean Animals?
-                      </a>
-                    </h6>
-                    <p className="text-muted">Jake Bittle in SCIENCE</p>
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    <h6 className="font-weight-bold">
-                      <a href="./article.html" className="text-dark">
-                        Humans Reversing Climate Clock: 50 Million Years
-                      </a>
-                    </h6>
-                    <p className="text-muted">Jake Bittle in SCIENCE</p>
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    <h6 className="font-weight-bold">
-                      <a href="./article.html" className="text-dark">
-                        Unprecedented Views of the Birth of Planets
-                      </a>
-                    </h6>
-                    <p className="text-muted">Jake Bittle in SCIENCE</p>
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    <h6 className="font-weight-bold">
-                      <a href="./article.html" className="text-dark">
-                        Effective New Target for Mood-Boosting Brain Stimulation
-                        Found
-                      </a>
-                    </h6>
-                    <p className="text-muted">Jake Bittle in SCIENCE</p>
-                  </span>
-                </li>
-              </ol>
-            </div>
+          <div className="col-lg-12">
+            <AdPlaceholder width={1170} height={280} />
           </div>
         </div>
       </div>
 
-      <div className="container pt-4 pb-4">
-        <div className="border p-5 bg-lightblue">
-          <div className="row justify-content-between">
-            <div className="col-md-6">
-              <h5 className="font-weight-bold secondfont">Become a member</h5>
-              Get the latest news right in your inbox. It's free and you can
-              unsubscribe at any time. We hate spam as much as we do, so we
-              never spam!
-            </div>
-            <div className="col-md-6">
-              <div className="row">
-                <div className="col-md-6">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="First name"
-                  />
-                </div>
-                <div className="col-md-6">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Last name"
-                  />
-                </div>
-                <div className="col-md-12 mt-3">
-                  <button type="submit" className="btn btn-success btn-block">
-                    Subscribe
-                  </button>
-                </div>
-              </div>
-            </div>
+      <div className="container">
+        <div className="row justify-content-between">
+          <div className="col-md-12">
+            <h5 className="font-weight-bold spanborder">
+              <span>كل المقالات في {category.name}</span>
+            </h5>
+
+            {categoryPosts.map((post) => (
+              <PostPreview key={post.id} post={post} />
+            ))}
           </div>
         </div>
       </div>

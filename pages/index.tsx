@@ -2,6 +2,10 @@ import Head from 'next/head';
 import type { NextPage } from 'next';
 import { gql, useQuery } from '@apollo/client';
 import { title } from 'lib/helpers';
+import PostPreview from '@/components/PostPreview';
+import FeaturedPost from '@/components/FeaturedPost';
+import AdPlaceholder from '@/components/AdPlaceholder';
+import { Post } from '../interfaces';
 
 const AllPostsQuery = gql`
   query allPostsQuery($first: Int!, $after: Int) {
@@ -21,6 +25,35 @@ const AllPostsQuery = gql`
     }
   }
 `;
+
+const featuredPost: Post = {
+  id: 1,
+  title: 'مجموعة تطبيقات ستمكنك من ربح المال من الانترنت',
+  category: {
+    name: 'ربح المال من الانترنت',
+    slug: 'ربح-المال-من-الانترنت',
+  },
+  slug: 'مجموعة-تطبيقات-ستمكنك-من-ربح-المال-من-الانترنت',
+  excerpt:
+    'هل تبحث عن تطبيقات تساعدك على جني المال من الانترنت؟ هذه التطبيقات ستمكنك من ربح المال من الانترنت في اوقات الفراغ، يمكنك استعمالها عندما تكون جالس ولا تفعل اي شئ او وانت تنتظر في مكان ما. انها سهلة الإستعمال وسريعة التحميل.',
+  thumbnail: '/images/blog/01-01-2022/make-money-apps.jpg',
+  source: 'https://dopedollar.com/apps-that-pay-you-money/',
+  body: '',
+  author: {
+    name: 'عبد الصمد الحمداني',
+    username: 'عبد-الصمد-الحمداني',
+    avatar: '/images/avatars/abdessamadelhamdany.jpg',
+  },
+  readingTime: '5 دقائق',
+  publishedAt: 'السبت 1 يناير 2022',
+};
+
+const allPosts = [
+  { ...featuredPost, id: 2 },
+  { ...featuredPost, id: 3 },
+  { ...featuredPost, id: 4 },
+  { ...featuredPost, id: 5 },
+];
 
 const Home: NextPage = () => {
   const { data, error, loading, fetchMore } = useQuery(AllPostsQuery, {
@@ -47,237 +80,28 @@ const Home: NextPage = () => {
         />
       </Head>
 
-      <div className="container">
-        <div className="jumbotron jumbotron-fluid mb-3 pt-0 pb-0 bg-lightblue position-relative">
-          <div className="pl-0 pr-4 h-100 tofront">
-            <div className="row justify-content-between">
-              <div className="col-md-6 pt-6 pb-6 align-self-center">
-                <h1 className="secondfont mb-3 font-weight-bold">
-                  Mundana is an HTML Bootstrap Template for Professional
-                  Blogging
-                </h1>
-                <p className="mb-3">
-                  Beautifully crafted with the latest technologies, SASS &
-                  Bootstrap 4.1.3, Mundana is the perfect design for your
-                  professional blog. Homepage, post article and category layouts
-                  available.
-                </p>
-                <a href="./article.html" className="btn btn-dark">
-                  Read More
-                </a>
-              </div>
-              <div
-                className="col-md-6 d-none d-md-block pl-0"
-                style={{
-                  backgroundSize: 'cover',
-                  backgroundImage: 'url(/assets/img/demo/home.jpg)',
-                }}
-              ></div>
-            </div>
-          </div>
-        </div>
+      <div className="container my-5 homepage">
+        <FeaturedPost post={featuredPost} />
       </div>
 
-      <div className="container pt-4 pb-4">
+      <div className="container py-4 mb-3">
         <div className="row">
-          <div className="col-lg-6">
-            <div className="card border-0 mb-4 box-shadow h-xl-300">
-              <div
-                style={{
-                  height: '150px',
-                  backgroundImage: 'url(/assets/img/demo/1.jpg)',
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
-                }}
-              ></div>
-              <div className="card-body px-0 pb-0 d-flex flex-column align-items-start">
-                <h2 className="h4 font-weight-bold">
-                  <a className="text-dark" href="./article.html">
-                    Brain Stimulation Relieves Depression Symptoms
-                  </a>
-                </h2>
-                <p className="card-text">
-                  Researchers have found an effective target in the brain for
-                  electrical stimulation to improve mood in people suffering
-                  from depression.
-                </p>
-                <div>
-                  <small className="d-block">
-                    <a className="text-muted" href="./author.html">
-                      Favid Rick
-                    </a>
-                  </small>
-                  <small className="text-muted">
-                    Dec 12 &middot; 5 min read
-                  </small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-6">
-            <div className="flex-md-row mb-4 box-shadow h-xl-300">
-              <div className="mb-3 d-flex align-items-center">
-                <img height="80" src="/assets/img/demo/blog4.jpg" />
-                <div className="pl-3">
-                  <h2 className="mb-2 h6 font-weight-bold">
-                    <a className="text-dark" href="./article.html">
-                      Nasa's IceSat space laser makes height maps of Earth
-                    </a>
-                  </h2>
-                  <div className="card-text text-muted small">
-                    Jake Bittle in LOVE/HATE
-                  </div>
-                  <small className="text-muted">
-                    Dec 12 &middot; 5 min read
-                  </small>
-                </div>
-              </div>
-              <div className="mb-3 d-flex align-items-center">
-                <img height="80" src="/assets/img/demo/blog5.jpg" />
-                <div className="pl-3">
-                  <h2 className="mb-2 h6 font-weight-bold">
-                    <a className="text-dark" href="./article.html">
-                      Underwater museum brings hope to Lake Titicaca
-                    </a>
-                  </h2>
-                  <div className="card-text text-muted small">
-                    Jake Bittle in LOVE/HATE
-                  </div>
-                  <small className="text-muted">
-                    Dec 12 &middot; 5 min read
-                  </small>
-                </div>
-              </div>
-              <div className="mb-3 d-flex align-items-center">
-                <img height="80" src="/assets/img/demo/blog6.jpg" />
-                <div className="pl-3">
-                  <h2 className="mb-2 h6 font-weight-bold">
-                    <a className="text-dark" href="./article.html">
-                      Sun-skimming probe starts calling home
-                    </a>
-                  </h2>
-                  <div className="card-text text-muted small">
-                    Jake Bittle in LOVE/HATE
-                  </div>
-                  <small className="text-muted">
-                    Dec 12 &middot; 5 min read
-                  </small>
-                </div>
-              </div>
-            </div>
+          <div className="col-lg-12">
+            <AdPlaceholder width={1170} height={280} />
           </div>
         </div>
       </div>
 
       <div className="container">
         <div className="row justify-content-between">
-          <div className="col-md-8">
+          <div className="col-md-12">
             <h5 className="font-weight-bold spanborder">
-              <span>All Stories</span>
+              <span>كل المقالات</span>
             </h5>
-            <div className="mb-3 d-flex justify-content-between">
-              <div className="pr-3">
-                <h2 className="mb-1 h4 font-weight-bold">
-                  <a className="text-dark" href="./article.html">
-                    Nearly 200 Great Barrier Reef coral species also live in the
-                    deep sea
-                  </a>
-                </h2>
-                <p>
-                  There are more coral species lurking in the deep ocean that
-                  previously thought.
-                </p>
-                <div className="card-text text-muted small">
-                  Jake Bittle in SCIENCE
-                </div>
-                <small className="text-muted">Dec 12 &middot; 5 min read</small>
-              </div>
-              <img height="120" src="/assets/img/demo/blog8.jpg" />
-            </div>
-            <div className="mb-3 d-flex justify-content-between">
-              <div className="pr-3">
-                <h2 className="mb-1 h4 font-weight-bold">
-                  <a className="text-dark" href="./article.html">
-                    East Antarctica's glaciers are stirring
-                  </a>
-                </h2>
-                <p>
-                  Nasa says it has detected the first signs of significant
-                  melting in a swathe of glaciers in East Antarctica.
-                </p>
-                <div className="card-text text-muted small">
-                  Jake Bittle in SCIENCE
-                </div>
-                <small className="text-muted">Dec 12 &middot; 5 min read</small>
-              </div>
-              <img height="120" src="/assets/img/demo/1.jpg" />
-            </div>
-            <div className="mb-3 d-flex justify-content-between">
-              <div className="pr-3">
-                <h2 className="mb-1 h4 font-weight-bold">
-                  <a className="text-dark" href="./article.html">
-                    50 years ago, armadillos hinted that DNA wasn’t destiny
-                  </a>
-                </h2>
-                <p>
-                  Nasa says it has detected the first signs of significant
-                  melting in a swathe of glaciers in East Antarctica.
-                </p>
-                <div className="card-text text-muted small">
-                  Jake Bittle in SCIENCE
-                </div>
-                <small className="text-muted">Dec 12 &middot; 5 min read</small>
-              </div>
-              <img height="120" src="/assets/img/demo/5.jpg" />
-            </div>
-          </div>
-          <div className="col-md-4 pl-4">
-            <h5 className="font-weight-bold spanborder">
-              <span>Popular</span>
-            </h5>
-            <ol className="list-featured">
-              <li>
-                <span>
-                  <h6 className="font-weight-bold">
-                    <a href="./article.html" className="text-dark">
-                      Did Supernovae Kill Off Large Ocean Animals?
-                    </a>
-                  </h6>
-                  <p className="text-muted">Jake Bittle in SCIENCE</p>
-                </span>
-              </li>
-              <li>
-                <span>
-                  <h6 className="font-weight-bold">
-                    <a href="./article.html" className="text-dark">
-                      Humans Reversing Climate Clock: 50 Million Years
-                    </a>
-                  </h6>
-                  <p className="text-muted">Jake Bittle in SCIENCE</p>
-                </span>
-              </li>
-              <li>
-                <span>
-                  <h6 className="font-weight-bold">
-                    <a href="./article.html" className="text-dark">
-                      Unprecedented Views of the Birth of Planets
-                    </a>
-                  </h6>
-                  <p className="text-muted">Jake Bittle in SCIENCE</p>
-                </span>
-              </li>
-              <li>
-                <span>
-                  <h6 className="font-weight-bold">
-                    <a href="./article.html" className="text-dark">
-                      Effective New Target for Mood-Boosting Brain Stimulation
-                      Found
-                    </a>
-                  </h6>
-                  <p className="text-muted">Jake Bittle in SCIENCE</p>
-                </span>
-              </li>
-            </ol>
+
+            {allPosts.map((post) => (
+              <PostPreview key={post.id} post={post} />
+            ))}
           </div>
         </div>
       </div>

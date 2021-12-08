@@ -49,6 +49,7 @@ $orange: #fbb500 !default;
 $yellow: #ffde03 !default;
 $green: #03a87c !default;
 $teal: #09ebaf !default;
+$brand: #5da731 !default;
 $cyan: #35bdff !default;
 $lila: #b2a5e4 !default;
 $salmon: #ff977a !default;
@@ -67,6 +68,7 @@ $colors: map-merge(
     'yellow': $yellow,
     'green': $green,
     'teal': $teal,
+    'brand': $brand,
     'cyan': $cyan,
     'white': $white,
     'gray': $gray-600,
@@ -80,6 +82,7 @@ $primary: $green !default;
 $secondary: $blue !default;
 $success: $green !default;
 $info: $teal !default;
+$brand: $brand !default;
 $warning: $yellow !default;
 $danger: $red !default;
 $light: $gray-100 !default;
@@ -95,6 +98,7 @@ $theme-colors: map-merge(
     'secondary': $secondary,
     'success': $success,
     'info': $info,
+    'brand': $brand,
     'warning': $warning,
     'danger': $danger,
     'light': $light,
@@ -275,8 +279,8 @@ $box-shadow-lg: 0 10px 25px 0 rgba($black, 0.3) !default;
 // // Font, line-height, and color for body text, headings, and more.
 //
 // // stylelint-disable value-keyword-case
-$font-family-sans-serif: 'Cairo', sans-serif !default;
-$font-secondary: 'Cairo', sans-serif !default;
+$font-family-sans-serif: 'Readex Pro', sans-serif !default;
+$font-secondary: $font-family-sans-serif;
 // $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 // $font-family-base:            $font-family-sans-serif !default;
 // // stylelint-enable value-keyword-case
@@ -303,7 +307,7 @@ $line-height-base: 1.6 !default;
 // $headings-margin-bottom:      ($spacer / 2) !default;
 $headings-font-family: inherit !default;
 $headings-font-weight: 500 !default;
-$headings-line-height: 1.2 !default;
+$headings-line-height: 1.25 !default;
 // $headings-color:              inherit !default;
 //
 // $display1-size:               6rem !default;

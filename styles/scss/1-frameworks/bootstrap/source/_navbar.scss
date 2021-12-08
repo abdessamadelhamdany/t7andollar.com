@@ -39,14 +39,12 @@
 
 .navbar-brand {
   display: inline-block;
-  padding-top: $navbar-brand-padding-y;
-  padding-bottom: $navbar-brand-padding-y;
-  font-size: $navbar-brand-font-size;
   line-height: inherit;
   white-space: nowrap;
+  font-size: $navbar-brand-font-size;
 
   & > img {
-    height: 32px;
+    height: 38px;
   }
 
   @include hover-focus {
@@ -66,8 +64,14 @@
   list-style: none;
 
   .nav-link {
-    padding-right: 0;
-    padding-left: 0;
+    padding-left: $font-size-base * 0.65;
+    padding-right: $font-size-base * 0.65;
+    font-size: $font-size-base * 0.875;
+
+    @include media-breakpoint-up(xl) {
+      padding-right: $navbar-nav-link-padding-x;
+      padding-left: $navbar-nav-link-padding-x;
+    }
   }
 
   .dropdown-menu {
@@ -158,11 +162,6 @@
 
           .dropdown-menu {
             position: absolute;
-          }
-
-          .nav-link {
-            padding-right: $navbar-nav-link-padding-x;
-            padding-left: $navbar-nav-link-padding-x;
           }
         }
 

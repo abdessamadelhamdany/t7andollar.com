@@ -1,0 +1,11 @@
+.sharethis-inline-share-buttons {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+
+  .st-btn {
+    width: 40px;
+    display: inline-block !important;
+  }
+}
