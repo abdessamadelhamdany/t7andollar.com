@@ -1,8 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
+import Head from 'next/head';
 import type { NextPage } from 'next';
 import { Post } from '../interfaces';
 import NextPost from '@/components/NextPost';
+import AdPlaceholder from '@/components/AdPlaceholder';
+import { title } from 'lib/helpers';
 
 const post: Post = {
   id: 1,
@@ -49,6 +52,10 @@ const readNextPost: Post[] = [
 const Article: NextPage = () => {
   return (
     <>
+      <Head>
+        <title>{title(post.title)}</title>
+        <meta name="description" content={post.excerpt} />
+      </Head>
       <div className="container">
         <div className="row mb-3 justify-content-center">
           <div className="col-12 py-4 align-self-center">
@@ -77,21 +84,8 @@ const Article: NextPage = () => {
         </div>
       </div>
 
-      {/* TODO: extract to component */}
       <div className="container py-4">
         <div className="row justify-content-center">
-          <div className="col-lg-4 col-xl-3 mb-3">
-            <img
-              className="d-none d-lg-block w-100"
-              src="/images/placeholders/ads/224x600.jpg"
-              alt="224x600 Ad placeholder"
-            />
-            <img
-              className="d-block d-lg-none w-100"
-              src="/images/placeholders/ads/224x224.jpg"
-              alt="224x224 Ad placeholder"
-            />
-          </div>
           <div className="col-lg-8 col-xl-7">
             <img
               className="mb-3"
@@ -109,23 +103,16 @@ const Article: NextPage = () => {
               <div className="sharethis-inline-share-buttons"></div>
             </div>
           </div>
+          <div className="col-lg-4 col-xl-3 mb-3">
+            <AdPlaceholder width={224} height={600} />
+          </div>
         </div>
       </div>
 
-      {/* TODO: extract to component */}
       <div className="container py-4 mb-3">
         <div className="row">
           <div className="col-lg-12">
-            <img
-              className="d-none d-md-block w-100"
-              src="/images/placeholders/ads/1170x280.jpg"
-              alt="1170x280 Ad placeholder"
-            />
-            <img
-              className="d-block d-md-none w-100"
-              src="/images/placeholders/ads/425x354.jpg"
-              alt="1170x280 Ad placeholder"
-            />
+            <AdPlaceholder width={1170} height={280} />
           </div>
         </div>
       </div>

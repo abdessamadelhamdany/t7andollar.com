@@ -3,13 +3,14 @@ import Link from 'next/link';
 
 const index: FC = () => {
   return (
-    <nav className="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <nav className="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom border-gray shadow-sm">
       <div className="container">
         <Link href="/">
           <a className="navbar-brand">
             <img src="/images/brand/logo.png" alt="شعار طحن الدولار" />
           </a>
         </Link>
+
         <button
           className="navbar-toggler collapsed"
           type="button"
@@ -46,11 +47,6 @@ const index: FC = () => {
             <li className="nav-item">
               <Link href="/category/latest-tech-news">
                 <a className="nav-link">أخبار تقنية</a>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href="/about">
-                <a className="nav-link">من نحن؟</a>
               </Link>
             </li>
           </ul>

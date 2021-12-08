@@ -4,6 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import { title } from 'lib/helpers';
 import PostPreview from '@/components/PostPreview';
 import FeaturedPost from '@/components/FeaturedPost';
+import AdPlaceholder from '@/components/AdPlaceholder';
 import { Post } from '../interfaces';
 
 const AllPostsQuery = gql`
@@ -79,24 +80,14 @@ const Home: NextPage = () => {
         />
       </Head>
 
-      <div className="container mb-3 homepage">
+      <div className="container my-5 homepage">
         <FeaturedPost post={featuredPost} />
       </div>
 
-      {/* TODO: extract to component */}
       <div className="container py-4 mb-3">
         <div className="row">
           <div className="col-lg-12">
-            <img
-              className="d-none d-md-block w-100"
-              src="/images/placeholders/ads/1170x280.jpg"
-              alt="1170x280 Ad placeholder"
-            />
-            <img
-              className="d-block d-md-none w-100"
-              src="/images/placeholders/ads/425x354.jpg"
-              alt="1170x280 Ad placeholder"
-            />
+            <AdPlaceholder width={1170} height={280} />
           </div>
         </div>
       </div>
