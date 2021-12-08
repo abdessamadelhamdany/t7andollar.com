@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
+    "@types/draft-js": "^0.11.7",
     "@types/node": "16.11.11",
     "@types/react": "17.0.37",
     "eslint": "8.4.0",

@@ -3,12 +3,16 @@ import { NextPage } from 'next';
 import AppLayout from '@/components/AppLayout';
 import dynamic from 'next/dynamic';
 
-const RichText = dynamic(() => import('@/components/RichText'));
+const RichText = dynamic(() => import('@/components/RichText'), {
+  ssr: false,
+});
 
 const EditPost: NextPage = () => {
   return (
     <AppLayout>
-      <RichText />
+      <div>
+        <RichText />
+      </div>
     </AppLayout>
   );
 };
