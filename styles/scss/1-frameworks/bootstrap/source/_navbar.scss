@@ -39,14 +39,12 @@
 
 .navbar-brand {
   display: inline-block;
-  padding-top: $navbar-brand-padding-y;
-  padding-bottom: $navbar-brand-padding-y;
-  font-size: $navbar-brand-font-size;
   line-height: inherit;
   white-space: nowrap;
+  font-size: $navbar-brand-font-size;
 
   & > img {
-    height: 35px;
+    height: 38px;
   }
 
   @include hover-focus {
@@ -71,7 +69,6 @@
     font-size: $font-size-base * 0.875;
 
     @include media-breakpoint-up(xl) {
-      font-size: $font-size-base;
       padding-right: $navbar-nav-link-padding-x;
       padding-left: $navbar-nav-link-padding-x;
     }

@@ -83,6 +83,7 @@ const Home: NextPage = () => {
         <FeaturedPost post={featuredPost} />
       </div>
 
+      {/* TODO: extract to component */}
       <div className="container py-4 mb-3">
         <div className="row">
           <div className="col-lg-12">

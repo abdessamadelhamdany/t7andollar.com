@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import type { NextPage } from 'next';
 import { Post } from '../interfaces';
 import NextPost from '@/components/NextPost';
@@ -52,9 +53,9 @@ const Article: NextPage = () => {
         <div className="row mb-3 justify-content-center">
           <div className="col-12 py-4 align-self-center">
             <p className="text-uppercase font-weight-bold">
-              <a className="text-brand" href={post.category.slug}>
-                {post.category.name}
-              </a>
+              <Link href={`/category/${post.category.slug}`}>
+                <a className="text-brand">{post.category.name}</a>
+              </Link>
             </p>
             <h1 className="display-4 secondfont mb-3 font-weight-bold">
               {post.title}
@@ -76,25 +77,55 @@ const Article: NextPage = () => {
         </div>
       </div>
 
+      {/* TODO: extract to component */}
       <div className="container py-4">
         <div className="row justify-content-center">
-          <div className="col-lg-10 col-xl-8">
+          <div className="col-lg-4 col-xl-3 mb-3">
+            <img
+              className="d-none d-lg-block w-100"
+              src="/images/placeholders/ads/224x600.jpg"
+              alt="224x600 Ad placeholder"
+            />
+            <img
+              className="d-block d-lg-none w-100"
+              src="/images/placeholders/ads/224x224.jpg"
+              alt="224x224 Ad placeholder"
+            />
+          </div>
+          <div className="col-lg-8 col-xl-7">
             <img
               className="mb-3"
               src={post.thumbnail}
               alt={post.title}
               width="100%"
             />
-          </div>
-          <div className="col-lg-8">
+
             <article
               className="article-post"
               dangerouslySetInnerHTML={{ __html: post.body }}
             ></article>
+            <div className="mt-4">
+              <div className="text-muted text-center mb-3">شارك المقالة</div>
+              <div className="sharethis-inline-share-buttons"></div>
+            </div>
           </div>
-          <div className="col-lg-8 mt-4">
-            <div className="text-muted text-center mb-3">شارك المقالة</div>
-            <div className="sharethis-inline-share-buttons"></div>
+        </div>
+      </div>
+
+      {/* TODO: extract to component */}
+      <div className="container py-4 mb-3">
+        <div className="row">
+          <div className="col-lg-12">
+            <img
+              className="d-none d-md-block w-100"
+              src="/images/placeholders/ads/1170x280.jpg"
+              alt="1170x280 Ad placeholder"
+            />
+            <img
+              className="d-block d-md-none w-100"
+              src="/images/placeholders/ads/425x354.jpg"
+              alt="1170x280 Ad placeholder"
+            />
           </div>
         </div>
       </div>
