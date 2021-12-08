@@ -16,3 +16,4 @@
 ### Pakcages for ideas
 
 - [Reading Time](https://www.npmjs.com/package/reading-time)
+- [Slugify](https://www.npmjs.com/package/slugify)

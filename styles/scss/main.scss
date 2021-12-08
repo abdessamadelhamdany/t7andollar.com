@@ -115,7 +115,7 @@ a.text-dark:hover {
   border-radius: $round-radius !important;
 }
 .btn {
-  font-family: Source Sans Pro;
+  font-family: $font-family-sans-serif;
   @include button-size(
     $btn-padding-y,
     $btn-padding-x,
@@ -444,7 +444,7 @@ ol.list-featured li:before {
   font-weight: bold;
   font-size: 3rem;
   margin-right: 0.5rem;
-  font-family: 'Abril Fatface', serif;
+  font-family: $font-family-sans-serif;
   line-height: 1;
 }
 
@@ -458,7 +458,7 @@ ol.list-featured li:before {
 
 // Article
 article {
-  font-family: 'sans-serif', 'Georgia';
+  font-family: $font-family-sans-serif;
   font-size: 20px;
   line-height: 1.7;
   p,
@@ -478,7 +478,7 @@ article {
   }
   blockquote:before {
     content: '“';
-    font-family: Georgia;
+    font-family: $font-family-sans-serif;
     font-size: 8rem;
     margin: -1rem 2rem 0 -3.9rem;
     position: absolute;

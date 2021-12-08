@@ -22,6 +22,17 @@ const AllPostsQuery = gql`
   }
 `;
 
+const featuredPost = {
+  title: 'مجموعة تطبيقات ستمكنك من ربح المال من الانترنت',
+  category: 'make-money-online',
+  slug: 'مجموعة-تطبيقات-ستمكنك-من-ربح-المال-من-الانترنت',
+  excerpt:
+    'هل تبحث عن تطبيقات تساعدك على جني المال من الانترنت؟ هذه التطبيقات ستمكنك من ربح المال من الانترنت في اوقات الفراغ، يمكنك استعمالها عندما تكون جالس ولا تفعل اي شئ او وانت تنتظر في مكان ما. انها سهلة الإستعمال وسريعة التحميل.',
+  thumbnail: '/images/blog/01-01-2022/make-money-apps.jpg',
+  source: 'https://dopedollar.com/apps-that-pay-you-money/',
+  body: '',
+};
+
 const Home: NextPage = () => {
   const { data, error, loading, fetchMore } = useQuery(AllPostsQuery, {
     variables: { first: 1 },
@@ -52,25 +63,16 @@ const Home: NextPage = () => {
           <div className="pl-0 pr-4 h-100 tofront">
             <div className="row justify-content-between">
               <div className="col-md-6 pt-6 pb-6 align-self-center">
-                <h1 className="secondfont mb-3 font-weight-bold">
-                  Mundana is an HTML Bootstrap Template for Professional
-                  Blogging
+                <h1 className="secondfont mb-4 font-weight-bold">
+                  {featuredPost.title}
                 </h1>
-                <p className="mb-3">
-                  Beautifully crafted with the latest technologies, SASS &
-                  Bootstrap 4.1.3, Mundana is the perfect design for your
-                  professional blog. Homepage, post article and category layouts
-                  available.
-                </p>
-                <a href="./article.html" className="btn btn-dark">
-                  Read More
-                </a>
+                <p className="mb-3">{featuredPost.excerpt}</p>
               </div>
               <div
                 className="col-md-6 d-none d-md-block pl-0"
                 style={{
                   backgroundSize: 'cover',
-                  backgroundImage: 'url(/assets/img/demo/home.jpg)',
+                  backgroundImage: `url(${featuredPost.thumbnail})`,
                 }}
               ></div>
             </div>
