@@ -19,20 +19,15 @@ const index = () => {
         type="text/javascript"
       />
 
-      <Script
-        strategy="afterInteractive"
-        type="text/javascript"
-        src="https://platform-api.sharethis.com/js/sharethis.js#property=61b0b48f592e270019ffb6c3&product=inline-share-buttons"
-        async={true}
-      />
-      <Script
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-        console.log("called")
-        `,
-        }}
-      />
+      {process.env.NODE_ENV === 'production' && (
+        <Script
+          strategy="afterInteractive"
+          type="text/javascript"
+          src="https://platform-api.sharethis.com/js/sharethis.js#property=61b0b48f592e270019ffb6c3&product=inline-share-buttons"
+          async={true}
+        />
+      )}
+
       <Script
         strategy="afterInteractive"
         src="/assets/js/functions.js"

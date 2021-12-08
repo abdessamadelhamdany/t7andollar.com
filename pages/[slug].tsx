@@ -1,6 +1,7 @@
 import React from 'react';
 import type { NextPage } from 'next';
 import { Post } from '../interfaces';
+import NextPost from '@/components/NextPost';
 
 const post: Post = {
   id: 1,
@@ -36,6 +37,11 @@ const post: Post = {
   publishedAt: 'السبت 1 يناير 2022',
 };
 
+const readNextPost: Post[] = [
+  { ...post, id: 2 },
+  { ...post, id: 3 },
+];
+
 const Article: NextPage = () => {
   return (
     <>
@@ -57,7 +63,7 @@ const Article: NextPage = () => {
           </div>
           <div className="col-10 py-3 pb-6 align-self-center">
             <p className="text-uppercase font-weight-bold">
-              <a className="text-danger" href={post.category.slug}>
+              <a className="text-brand" href={post.category.slug}>
                 {post.category.name}
               </a>
             </p>
@@ -118,122 +124,18 @@ const Article: NextPage = () => {
                 virality.
               </p>
             </article>
-            <div className="border p-5 bg-lightblue">
-              <div className="row justify-content-between">
-                <div className="col-md-5 mb-2 mb-md-0">
-                  <h5 className="font-weight-bold secondfont">
-                    Become a member
-                  </h5>
-                  Get the latest news right in your inbox. We never spam!
-                </div>
-                <div className="col-md-7">
-                  <div className="row">
-                    <div className="col-md-12">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter your e-mail address"
-                      />
-                    </div>
-                    <div className="col-md-12 mt-2">
-                      <button
-                        type="submit"
-                        className="btn btn-success btn-block"
-                      >
-                        Subscribe
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
       <div className="container pt-4 pb-4">
         <h5 className="font-weight-bold spanborder">
-          <span>Read next</span>
+          <span>اقرأ المزيد</span>
         </h5>
         <div className="row">
-          <div className="col-lg-6">
-            <div className="card border-0 mb-4 box-shadow h-xl-300">
-              <div
-                style={{
-                  height: '150px',
-                  backgroundSize: 'cover',
-                  backgroundImage: 'url(/assets/img/demo/3.jpg)',
-                  backgroundRepeat: 'no-repeat',
-                }}
-              ></div>
-              <div className="card-body px-0 pb-0 d-flex flex-column align-items-start">
-                <h2 className="h4 font-weight-bold">
-                  <a className="text-dark" href="#">
-                    Brain Stimulation Relieves Depression Symptoms
-                  </a>
-                </h2>
-                <p className="card-text">
-                  Researchers have found an effective target in the brain for
-                  electrical stimulation to improve mood in people suffering
-                  from depression.
-                </p>
-                <div>
-                  <small className="d-block">
-                    <a className="text-muted" href="./author.html">
-                      Favid Rick
-                    </a>
-                  </small>
-                  <small className="text-muted">Dec 12 · 5 min read</small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-6">
-            <div className="flex-md-row mb-4 box-shadow h-xl-300">
-              <div className="mb-3 d-flex align-items-center">
-                <img height="80" src="/assets/img/demo/blog4.jpg" />
-                <div className="pl-3">
-                  <h2 className="mb-2 h6 font-weight-bold">
-                    <a className="text-dark" href="./article.html">
-                      Nasa's IceSat space laser makes height maps of Earth
-                    </a>
-                  </h2>
-                  <div className="card-text text-muted small">
-                    Jake Bittle in LOVE/HATE
-                  </div>
-                  <small className="text-muted">Dec 12 · 5 min read</small>
-                </div>
-              </div>
-              <div className="mb-3 d-flex align-items-center">
-                <img height="80" src="/assets/img/demo/blog5.jpg" />
-                <div className="pl-3">
-                  <h2 className="mb-2 h6 font-weight-bold">
-                    <a className="text-dark" href="./article.html">
-                      Underwater museum brings hope to Lake Titicaca
-                    </a>
-                  </h2>
-                  <div className="card-text text-muted small">
-                    Jake Bittle in LOVE/HATE
-                  </div>
-                  <small className="text-muted">Dec 12 · 5 min read</small>
-                </div>
-              </div>
-              <div className="mb-3 d-flex align-items-center">
-                <img height="80" src="/assets/img/demo/blog6.jpg" />
-                <div className="pl-3">
-                  <h2 className="mb-2 h6 font-weight-bold">
-                    <a className="text-dark" href="./article.html">
-                      Sun-skimming probe starts calling home
-                    </a>
-                  </h2>
-                  <div className="card-text text-muted small">
-                    Jake Bittle in LOVE/HATE
-                  </div>
-                  <small className="text-muted">Dec 12 · 5 min read</small>
-                </div>
-              </div>
-            </div>
-          </div>
+          {readNextPost.map((post) => (
+            <NextPost key={post.id} post={post} />
+          ))}
         </div>
       </div>
     </>
