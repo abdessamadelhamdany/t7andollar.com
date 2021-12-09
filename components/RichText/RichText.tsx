@@ -1,9 +1,9 @@
 import 'draft-js/dist/Draft.css';
 import React, { FC, useRef, useState } from 'react';
 import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
-import CommandButton from './CommandButton';
-import classes from './rich-text.module.scss';
 import CommandLink from './CommandLink';
+import CommandButton from './CommandButton';
+import classes from './RichText.module.scss';
 
 const makeInitialState = (initialHTML = '') => {
   return EditorState.createWithContent(

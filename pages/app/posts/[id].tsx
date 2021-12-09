@@ -8,7 +8,7 @@ import FormHeader from '@/components/FormHeader';
 import FormSubmit from '@/components/FormSubmit';
 import { parseForm } from 'lib/helpers';
 
-const RichText = dynamic(() => import('@/components/RichText'), {
+const RichText = dynamic(() => import('@/components/RichText/RichText'), {
   ssr: false,
 });
 
