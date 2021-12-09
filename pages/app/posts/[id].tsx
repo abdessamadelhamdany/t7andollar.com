@@ -8,7 +8,7 @@ import FormHeader from '@/components/FormHeader';
 import FormSubmit from '@/components/FormSubmit';
 import { parseForm } from 'lib/helpers';
 
-const RichText = dynamic(() => import('@/components/RichText/RichText'), {
+const RichText = dynamic(() => import('@/components/RichText'), {
   ssr: false,
 });
 
@@ -36,7 +36,7 @@ const EditPost: NextPage<Props> = ({ post }) => {
 
         <FormBody>
           <Input type="text" name="title" placeholder="العنوان" />
-          <RichText dir="RTL" />
+          <RichText dir="RTL" initialHTML="<p>مرحبا بكم بجوجل</p>" />
         </FormBody>
       </form>
     </AppLayout>

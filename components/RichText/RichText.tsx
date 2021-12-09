@@ -1,15 +1,17 @@
 import 'draft-js/dist/Draft.css';
 import React, { FC, useRef, useState } from 'react';
-import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
-import CommandLink from './CommandLink';
+import {
+  Editor,
+  EditorState,
+  ContentState,
+  RichUtils,
+  CompositeDecorator,
+  DraftDecorator,
+  convertFromHTML,
+} from 'draft-js';
 import CommandButton from './CommandButton';
 import classes from './RichText.module.scss';
-
-const makeInitialState = (initialHTML = '') => {
-  return EditorState.createWithContent(
-    ContentState.createFromText(initialHTML)
-  );
-};
+import CommandLink, { linkDraftDecorator } from './CommandLink';
 
 interface Props {
   initialHTML?: string;
@@ -18,7 +20,9 @@ interface Props {
 
 const RichText: FC<Props> = ({ initialHTML, dir }) => {
   const editor = useRef<Editor>(null);
-  const [editorState, setEditorState] = useState(makeInitialState(initialHTML));
+  const [editorState, setEditorState] = useState(
+    makeInitialState(initialHTML, [linkDraftDecorator])
+  );
 
   const onChange = (editorState) => {
     setEditorState(editorState);
@@ -41,6 +45,29 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
     };
   };
 
+  const onCommandLinkEnter = (urlValue: string) => {
+    const contentState = editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity(
+      'LINK',
+      'MUTABLE',
+      { url: urlValue }
+    );
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const newEditorState = EditorState.set(editorState, {
+      currentContent: contentStateWithEntity,
+    });
+
+    setEditorState(
+      RichUtils.toggleLink(
+        newEditorState,
+        newEditorState.getSelection(),
+        entityKey
+      )
+    );
+
+    setTimeout(() => editor.current?.focus(), 0);
+  };
+
   return (
     <>
       <div className={classes.toolabr}>
@@ -59,11 +86,7 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
           />
         </div>
         <div className={classes.toolabarGroup}>
-          <CommandLink
-            onCommandLinkEnter={(href) => {
-              console.log('href:', href);
-            }}
-          />
+          <CommandLink onCommandLinkEnter={onCommandLinkEnter} />
         </div>
       </div>
       <div
@@ -81,6 +104,21 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
       </div>
     </>
   );
+};
+
+const makeInitialState = (
+  initialHTML = '',
+  draftDecorators: Array<DraftDecorator>
+) => {
+  const blocksFromHTML = convertFromHTML(initialHTML);
+  const contentState = ContentState.createFromBlockArray(
+    blocksFromHTML.contentBlocks,
+    blocksFromHTML.entityMap
+  );
+  const decorators = new CompositeDecorator(draftDecorators);
+  const editorState = EditorState.createWithContent(contentState, decorators);
+
+  return editorState;
 };
 
 export default RichText;

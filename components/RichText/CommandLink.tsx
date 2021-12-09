@@ -1,10 +1,14 @@
-import React, { MouseEvent, useEffect, useState } from 'react';
+import React, { FC, MouseEvent, useEffect, useState } from 'react';
 import Input from '../Input';
 import CommandButton from './CommandButton';
 import classes from './CommandLink.module.scss';
 
-const CommandLink = ({ onCommandLinkEnter }) => {
-  const [commandLinkHref, setCommandLinkHref] = useState('');
+interface Props {
+  onCommandLinkEnter(urlValue: string): void;
+}
+
+const CommandLink: FC<Props> = ({ onCommandLinkEnter }) => {
+  const [commandLinkUrlValue, setCommandLinkUrlValue] = useState('');
   const [commandLinkPopupOpen, setCommandLinkPopupOpen] = useState(false);
 
   const closeCommandLinkPopup = () => {
@@ -41,20 +45,41 @@ const CommandLink = ({ onCommandLinkEnter }) => {
           className={classes.commandLinkInput}
           type="text"
           placeholder="https://"
-          value={commandLinkHref}
+          value={commandLinkUrlValue}
           onKeyUp={(e) => {
             if (e.code === 'Enter') {
-              onCommandLinkEnter(commandLinkHref);
+              onCommandLinkEnter(commandLinkUrlValue);
+              setCommandLinkUrlValue('');
             }
           }}
           onChange={(e) => {
             e.preventDefault();
-            setCommandLinkHref(e.target.value);
+            setCommandLinkUrlValue(e.target.value);
           }}
         />
       </div>
     </div>
   );
+};
+
+export const Link = (props) => {
+  const { url } = props.contentState.getEntity(props.entityKey).getData();
+  return <a href={url}>{props.children}</a>;
+};
+
+export const findLinkEntities = (contentBlock, callback, contentState) => {
+  contentBlock.findEntityRanges((character) => {
+    const entityKey = character.getEntity();
+    return (
+      entityKey !== null &&
+      contentState.getEntity(entityKey).getType() === 'LINK'
+    );
+  }, callback);
+};
+
+export const linkDraftDecorator = {
+  strategy: findLinkEntities,
+  component: Link,
 };
 
 export default CommandLink;
