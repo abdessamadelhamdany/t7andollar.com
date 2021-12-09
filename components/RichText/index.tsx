@@ -59,7 +59,11 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
           />
         </div>
         <div className={classes.toolabarGroup}>
-          <CommandLink />
+          <CommandLink
+            onCommandLinkEnter={(href) => {
+              console.log('href:', href);
+            }}
+          />
         </div>
       </div>
       <div

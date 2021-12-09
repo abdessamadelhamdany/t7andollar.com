@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC, InputHTMLAttributes } from 'react';
 
-const Input = ({ ...props }) => {
+const Input: FC<InputHTMLAttributes<HTMLInputElement>> = ({ ...props }) => {
   return (
     <>
       <input {...props} />

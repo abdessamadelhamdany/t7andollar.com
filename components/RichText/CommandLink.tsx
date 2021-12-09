@@ -3,12 +3,14 @@ import Input from '../Input';
 import CommandButton from './CommandButton';
 import classes from './CommandLink.module.scss';
 
-const CommandLink = () => {
+const CommandLink = ({ onCommandLinkEnter }) => {
+  const [commandLinkHref, setCommandLinkHref] = useState('');
   const [commandLinkPopupOpen, setCommandLinkPopupOpen] = useState(false);
 
   const closeCommandLinkPopup = () => {
     setCommandLinkPopupOpen(false);
   };
+
   const openCommandLinkPopup = () => {
     setCommandLinkPopupOpen(true);
   };
@@ -39,6 +41,16 @@ const CommandLink = () => {
           className={classes.commandLinkInput}
           type="text"
           placeholder="https://"
+          value={commandLinkHref}
+          onKeyUp={(e) => {
+            if (e.code === 'Enter') {
+              onCommandLinkEnter(commandLinkHref);
+            }
+          }}
+          onChange={(e) => {
+            e.preventDefault();
+            setCommandLinkHref(e.target.value);
+          }}
         />
       </div>
     </div>
