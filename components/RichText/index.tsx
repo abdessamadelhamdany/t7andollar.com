@@ -41,42 +41,37 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
 
   return (
     <>
-      <div className="row justify-content-center">
-        <div className="toolabr col-md-8">
-          <div className="toolabr-group">
-            <CommandButton
-              icon="bold"
-              onClick={makeToggleInlineStyleHandler('BOLD')}
-            />
-            <CommandButton
-              icon="italic"
-              onClick={makeToggleInlineStyleHandler('ITALIC')}
-            />
-            <CommandButton
-              icon="underline"
-              onClick={makeToggleInlineStyleHandler('UNDERLINE')}
-            />
-          </div>
-          <div className="toolabr-group">
-            <CommandButton
-              icon="link"
-              onClick={makeToggleInlineStyleHandler('LINK')}
-            />
-          </div>
-        </div>
-        <div
-          className="editor-wrapper col-md-8"
-          onClick={() => editor.current?.focus()}
-        >
-          <Editor
-            ref={editor}
-            placeholder="مرحبا"
-            textDirectionality={dir}
-            onChange={onChange}
-            editorState={editorState}
-            handleKeyCommand={handleKeyCommand}
+      <div className="toolabr">
+        <div className="toolabr-group">
+          <CommandButton
+            icon="bold"
+            onClick={makeToggleInlineStyleHandler('BOLD')}
+          />
+          <CommandButton
+            icon="italic"
+            onClick={makeToggleInlineStyleHandler('ITALIC')}
+          />
+          <CommandButton
+            icon="underline"
+            onClick={makeToggleInlineStyleHandler('UNDERLINE')}
           />
         </div>
+        <div className="toolabr-group">
+          <CommandButton
+            icon="link"
+            onClick={makeToggleInlineStyleHandler('LINK')}
+          />
+        </div>
+      </div>
+      <div className="editor-wrapper" onClick={() => editor.current?.focus()}>
+        <Editor
+          ref={editor}
+          placeholder="مرحبا"
+          textDirectionality={dir}
+          onChange={onChange}
+          editorState={editorState}
+          handleKeyCommand={handleKeyCommand}
+        />
       </div>
 
       <style jsx>{`
@@ -96,6 +91,12 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
           border: 1px solid rgb(243, 243, 243);
           padding: 1rem 0.5rem;
           background: rgb(255, 255, 255);
+          min-height: 360px;
+        }
+
+        .editor-wrapper.focus {
+          outline: none;
+          border-color: #5da731;
         }
       `}</style>
     </>

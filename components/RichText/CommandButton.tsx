@@ -20,7 +20,7 @@ const CommandButton: FC<Props> = ({ icon, ...props }) => {
 
   return (
     <>
-      <button onMouseDown={(e) => e.preventDefault()} {...props}>
+      <button type="button" onMouseDown={(e) => e.preventDefault()} {...props}>
         <IconSvg />
       </button>
       <style jsx>
@@ -29,10 +29,11 @@ const CommandButton: FC<Props> = ({ icon, ...props }) => {
             padding: 0;
             width: 30px;
             height: 30px;
-            border-radius: 3px;
-            background-color: transparent;
+            border-radius: 10px;
             transition: all 0.15s;
+            background-color: transparent;
             border: 1px solid rgb(220, 220, 228);
+            box-shadow: 0 0 4px -3px rgba(0, 0, 0, 0.62);
           }
 
           button svg {
@@ -40,7 +41,8 @@ const CommandButton: FC<Props> = ({ icon, ...props }) => {
           }
 
           button:hover {
-            background-color: #f3f3f3;
+            border-color: #5da731;
+            box-shadow: 0 0 4px -3px rgba(0, 0, 0, 0.92);
           }
         `}
       </style>
