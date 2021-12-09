@@ -43,10 +43,26 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
     <>
       <div className="row justify-content-center">
         <div className="toolabr col-md-8">
-          <CommandButton
-            icon="bold"
-            onClick={makeToggleInlineStyleHandler('BOLD')}
-          />
+          <div className="toolabr-group">
+            <CommandButton
+              icon="bold"
+              onClick={makeToggleInlineStyleHandler('BOLD')}
+            />
+            <CommandButton
+              icon="italic"
+              onClick={makeToggleInlineStyleHandler('ITALIC')}
+            />
+            <CommandButton
+              icon="underline"
+              onClick={makeToggleInlineStyleHandler('UNDERLINE')}
+            />
+          </div>
+          <div className="toolabr-group">
+            <CommandButton
+              icon="link"
+              onClick={makeToggleInlineStyleHandler('LINK')}
+            />
+          </div>
         </div>
         <div
           className="editor-wrapper col-md-8"
@@ -65,10 +81,16 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
 
       <style jsx>{`
         .toolabr {
+          display: flex;
+          gap: 1rem;
           padding: 0.5rem;
           margin-bottom: 0.5rem;
           background: rgb(255, 255, 255);
           border: 1px solid rgb(243, 243, 243);
+        }
+        .toolabr-group {
+          display: flex;
+          gap: 0.5rem;
         }
         .editor-wrapper {
           border: 1px solid rgb(243, 243, 243);
