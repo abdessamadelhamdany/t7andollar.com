@@ -41,15 +41,15 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
 
   return (
     <>
-      <div>
-        <div className="toolabr rounded">
+      <div className="row justify-content-center">
+        <div className="toolabr col-md-8">
           <CommandButton
             icon="bold"
             onClick={makeToggleInlineStyleHandler('BOLD')}
           />
         </div>
         <div
-          className="editor-wrapper rounded"
+          className="editor-wrapper col-md-8"
           onClick={() => editor.current?.focus()}
         >
           <Editor
@@ -65,16 +65,15 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
 
       <style jsx>{`
         .toolabr {
-          padding: 0.5rem 1rem;
-          margin-bottom: 1rem;
+          padding: 0.5rem;
+          margin-bottom: 0.5rem;
           background: rgb(255, 255, 255);
-          box-shadow: rgb(33 33 52 / 10%) 0px 1px 4px;
+          border: 1px solid rgb(243, 243, 243);
         }
         .editor-wrapper {
           border: 1px solid rgb(243, 243, 243);
-          padding: 1rem 1.25rem 3rem;
+          padding: 1rem 0.5rem;
           background: rgb(255, 255, 255);
-          box-shadow: rgb(33 33 52 / 10%) 0px 1px 4px;
         }
       `}</style>
     </>
