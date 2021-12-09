@@ -2,6 +2,7 @@ import 'draft-js/dist/Draft.css';
 import React, { FC, useRef, useState } from 'react';
 import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
 import CommandButton from './CommandButton';
+import classes from './rich-text.module.scss';
 
 const makeInitialState = (initialHTML = '') => {
   return EditorState.createWithContent(
@@ -41,8 +42,8 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
 
   return (
     <>
-      <div className="toolabr">
-        <div className="toolabr-group">
+      <div className={classes.toolabr}>
+        <div className={classes.toolabarGroup}>
           <CommandButton
             icon="bold"
             onClick={makeToggleInlineStyleHandler('BOLD')}
@@ -56,14 +57,17 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
             onClick={makeToggleInlineStyleHandler('UNDERLINE')}
           />
         </div>
-        <div className="toolabr-group">
+        <div className={classes.toolabarGroup}>
           <CommandButton
             icon="link"
             onClick={makeToggleInlineStyleHandler('LINK')}
           />
         </div>
       </div>
-      <div className="editor-wrapper" onClick={() => editor.current?.focus()}>
+      <div
+        className={classes.editorWrapper}
+        onClick={() => editor.current?.focus()}
+      >
         <Editor
           ref={editor}
           placeholder="مرحبا"
@@ -73,32 +77,6 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
           handleKeyCommand={handleKeyCommand}
         />
       </div>
-
-      <style jsx>{`
-        .toolabr {
-          display: flex;
-          gap: 1rem;
-          padding: 0.5rem;
-          margin-bottom: 0.5rem;
-          background: rgb(255, 255, 255);
-          border: 1px solid rgb(243, 243, 243);
-        }
-        .toolabr-group {
-          display: flex;
-          gap: 0.5rem;
-        }
-        .editor-wrapper {
-          border: 1px solid rgb(243, 243, 243);
-          padding: 1rem 0.5rem;
-          background: rgb(255, 255, 255);
-          min-height: 360px;
-        }
-
-        .editor-wrapper.focus {
-          outline: none;
-          border-color: #5da731;
-        }
-      `}</style>
     </>
   );
 };
