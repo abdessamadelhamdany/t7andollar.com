@@ -1,0 +1,22 @@
+$gray-700: #495057 !default;
+
+.commandLink {
+  position: relative;
+}
+.commandLinkPopup {
+  top: 100%;
+  width: 200px;
+  position: absolute;
+  position: absolute;
+  margin-top: 0.5rem;
+}
+.commandLinkPopup input.commandLinkInput {
+  padding: 0.32rem 0.5rem;
+  color: $gray-700;
+  direction: ltr;
+  font-size: 0.875rem;
+  border-radius: 7px;
+  border: 1px solid rgb(220, 220, 228);
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 0 0 4px -3px rgba(0, 0, 0, 0.62);
+}

@@ -3,6 +3,7 @@ import React, { FC, useRef, useState } from 'react';
 import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
 import CommandButton from './CommandButton';
 import classes from './rich-text.module.scss';
+import CommandLink from './CommandLink';
 
 const makeInitialState = (initialHTML = '') => {
   return EditorState.createWithContent(
@@ -58,10 +59,7 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
           />
         </div>
         <div className={classes.toolabarGroup}>
-          <CommandButton
-            icon="link"
-            onClick={makeToggleInlineStyleHandler('LINK')}
-          />
+          <CommandLink />
         </div>
       </div>
       <div
