@@ -16,17 +16,26 @@ model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  name      String?
-  email     String   @unique
+  name      String
   image     String?
+  email     String   @unique
+  password  String
   role      Role     @default(USER)
   posts     Post[]
   profile   Profile?
+  tokens    Token[]
 }
 
 model Profile {
   id     Int    @id @default(autoincrement())
   bio    String
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int    @unique
+}
+
+model Token {
+  id     Int    @id @default(autoincrement())
+  token  String @unique
   user   User   @relation(fields: [userId], references: [id])
   userId Int    @unique
 }
