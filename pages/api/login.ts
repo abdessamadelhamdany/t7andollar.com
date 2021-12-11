@@ -3,14 +3,9 @@ import Cookies from 'cookies';
 import jwt from 'jsonwebtoken';
 import * as dateFn from 'date-fns';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-// import { NextFunction, Request, Response } from 'express';
-// import { jwtConfig } from '../../config';
-// import authService from './auth.service';
-// import AuthInterfaces from './auth.interfaces';
-// import usersService from '../users/users.service';
 import { User } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '../../lib/prisma';
+import prisma from 'lib/prisma';
 
 interface SafeUser extends Omit<User, 'password'> {}
 
@@ -26,24 +21,27 @@ const loginHandler = async (
   const { email, password, remember } = req.body;
 
   if (typeof email !== 'string' || typeof password !== 'string') {
-    return res.status(StatusCodes.BAD_REQUEST).json({
+    res.status(StatusCodes.BAD_REQUEST).json({
       error: ReasonPhrases.BAD_REQUEST,
     });
+    return;
   }
 
   try {
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user) {
-      return res.status(StatusCodes.NOT_FOUND).json({
+      res.status(StatusCodes.NOT_FOUND).json({
         error: ReasonPhrases.NOT_FOUND,
       });
+      return;
     }
 
     if (!bcrypt.compareSync(password, user.password)) {
-      return res.status(StatusCodes.UNAUTHORIZED).json({
+      res.status(StatusCodes.UNAUTHORIZED).json({
         error: ReasonPhrases.UNAUTHORIZED,
       });
+      return;
     }
 
     const jwtToken = jwt.sign({ _id: user.id }, process.env.JWT_SECRET, {
@@ -63,13 +61,14 @@ const loginHandler = async (
       expires: dateFn.addDays(new Date(), req.body.remember ? 7 : 1),
     });
 
-    return res.status(StatusCodes.OK).json({
+    res.status(StatusCodes.OK).json({
       data: {
         ...{ ...user, password: undefined },
       },
     });
+    return;
   } catch (error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: ReasonPhrases.INTERNAL_SERVER_ERROR,
     });
   }
