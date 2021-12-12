@@ -1,12 +1,14 @@
+import innertext from 'innertext';
+import readingTime from 'reading-time';
+import { Prisma, Post } from '@prisma/client';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import prisma from 'lib/prisma';
-import { Post } from '@prisma/client';
-import { authenticated } from 'middlewares';
 import { NextApiHandler } from 'interfaces';
+import { authenticated, updatePostValidator } from 'middlewares';
 
 type Data = {
   error?: string;
-  data?: number | Post;
+  data?: Post;
 };
 
 const getPostHandler: NextApiHandler<Data> = async (req, res) => {
@@ -24,6 +26,13 @@ const getPostHandler: NextApiHandler<Data> = async (req, res) => {
       where: { id: parseInt(id, 10) },
     });
 
+    if (!post) {
+      res.status(StatusCodes.NOT_FOUND).json({
+        error: ReasonPhrases.NOT_FOUND,
+      });
+      return;
+    }
+
     res.send({ data: post || undefined });
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -32,19 +41,48 @@ const getPostHandler: NextApiHandler<Data> = async (req, res) => {
   }
 };
 
-const updatePostHandler: NextApiHandler<Data> = async (req, res) => {
+const updatePostHandler: NextApiHandler = async (req, res) => {
   try {
-    const { id } = req.query;
+    const id = parseInt(Array.isArray(req.query.id) ? '0' : req.query.id, 10);
 
-    if (typeof id !== 'string') {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        error: ReasonPhrases.BAD_REQUEST,
+    const post = await prisma.post.findUnique({
+      where: { id },
+    });
+
+    if (!post) {
+      res.status(StatusCodes.NOT_FOUND).json({
+        error: ReasonPhrases.NOT_FOUND,
       });
       return;
     }
 
-    res.send({ data: parseInt(id, 10) });
-  } catch (error) {
+    if (req.validated.body) {
+      const stats = readingTime(innertext(req.validated.body));
+
+      if (stats.minutes >= 2) {
+        req.validated.readingTime = `${Math.round(stats.minutes)} دقائق`;
+      } else {
+        req.validated.readingTime = 'دقيقة';
+      }
+    }
+
+    const updatedPost = await prisma.post.update({
+      where: { id },
+      include: { categories: true, tags: true },
+      data: {
+        ...req.validated,
+        categories: Array.isArray(req.validated.categories)
+          ? { set: req.validated.categories.map((id) => ({ id })) }
+          : undefined,
+        tags: Array.isArray(req.validated.tags)
+          ? { set: req.validated.tags.map((id) => ({ id })) }
+          : undefined,
+      },
+    });
+
+    res.send({ data: updatedPost });
+  } catch (error: any) {
+    console.error(error.message);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: ReasonPhrases.INTERNAL_SERVER_ERROR,
     });
@@ -58,7 +96,7 @@ const handler: NextApiHandler = async (req, res) => {
   }
 
   if (req.method === 'PUT') {
-    authenticated(updatePostHandler)(req, res);
+    await authenticated(updatePostValidator(updatePostHandler))(req, res);
     return;
   }
 

@@ -42,6 +42,6 @@ export const authenticated: NextApiMiddleware = (handler) => {
 
     req.user = user;
 
-    return handler(req, res);
+    await handler(req, res);
   };
 };

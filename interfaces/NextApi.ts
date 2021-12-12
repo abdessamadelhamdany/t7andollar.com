@@ -2,7 +2,7 @@ import { User } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export declare type NextApiHandler<T = any> = (
-  req: NextApiRequest & { user: User | null },
+  req: NextApiRequest & { user: User; validated: any | null },
   res: NextApiResponse<T>
 ) => void | Promise<void>;
 

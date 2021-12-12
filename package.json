@@ -14,10 +14,13 @@
     "date-fns": "^2.27.0",
     "draft-js": "^0.11.7",
     "http-status-codes": "^2.1.4",
+    "innertext": "^1.0.3",
+    "joi": "^17.5.0",
     "jsonwebtoken": "^8.5.1",
     "next": "12.0.7",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "reading-time": "^1.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
