@@ -67,7 +67,8 @@ const loginHandler = async (
       },
     });
     return;
-  } catch (error) {
+  } catch (error: any) {
+    console.log(error.message);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: ReasonPhrases.INTERNAL_SERVER_ERROR,
     });

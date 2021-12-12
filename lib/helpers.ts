@@ -5,5 +5,6 @@ export function title(title, sep = '|', suffix = 'طحن الدولار') {
 }
 
 export function parseForm(e: FormEvent<HTMLFormElement>) {
-  return new FormData(e.currentTarget);
+  const formData = new FormData(e.currentTarget);
+  return Object.fromEntries(formData.entries());
 }

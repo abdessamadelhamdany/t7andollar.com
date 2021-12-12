@@ -116,6 +116,9 @@
   @include border-radius($navbar-toggler-border-radius);
 
   @include hover-focus {
+    outline: none;
+    box-shadow: 0 0 4px -3px rgba(0, 0, 0, 0.92);
+    border: $border-width solid #5da731 !important;
     text-decoration: none;
   }
 

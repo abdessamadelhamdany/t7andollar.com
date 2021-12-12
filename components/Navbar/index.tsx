@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
 import Link from 'next/link';
+import React, { FC } from 'react';
+import LogoutButton from '../LogoutButton';
 
 const index: FC = () => {
   return (
@@ -48,6 +49,9 @@ const index: FC = () => {
               <Link href="/category/latest-tech-news">
                 <a className="nav-link">أخبار تقنية</a>
               </Link>
+            </li>
+            <li className="nav-item">
+              <LogoutButton />
             </li>
           </ul>
         </div>

@@ -6,11 +6,18 @@ const Input: FC<InputHTMLAttributes<HTMLInputElement>> = ({ ...props }) => {
       <input {...props} />
       <style jsx>
         {`
-          input {
+          input[type='text'],
+          input[type='email'],
+          input[type='password'] {
             width: 100%;
+            margin-bottom: 0.5rem;
+          }
+          input[type='checkbox'] {
+            margin-left: 0.5rem;
+          }
+          input {
             display: flex;
             align-items: center;
-            margin-bottom: 0.5rem;
             padding: 0.75rem 0.5rem;
             background: rgb(255, 255, 255);
             border: 1px solid rgb(243, 243, 243);

@@ -21,6 +21,11 @@ export const authenticated: NextApiMiddleware = (handler) => {
     try {
       decoded = jwt.verify(jwtToken, process.env.JWT_SECRET) as JwtPayload;
     } catch (error) {
+      cookies.set('jwt-token', '', {
+        httpOnly: true,
+        expires: new Date('0000'),
+      });
+
       res.status(StatusCodes.UNAUTHORIZED).json({
         error: ReasonPhrases.UNAUTHORIZED,
       });
