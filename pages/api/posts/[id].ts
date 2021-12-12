@@ -1,6 +1,6 @@
 import innertext from 'innertext';
 import readingTime from 'reading-time';
-import { Prisma, Post } from '@prisma/client';
+import { Post } from '@prisma/client';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import prisma from 'lib/prisma';
 import { NextApiHandler } from 'interfaces';
@@ -89,6 +89,34 @@ const updatePostHandler: NextApiHandler = async (req, res) => {
   }
 };
 
+const deletePostHandler: NextApiHandler = async (req, res) => {
+  try {
+    const id = parseInt(Array.isArray(req.query.id) ? '0' : req.query.id, 10);
+
+    const post = await prisma.post.findUnique({
+      where: { id },
+    });
+
+    if (!post) {
+      res.status(StatusCodes.NOT_FOUND).json({
+        error: ReasonPhrases.NOT_FOUND,
+      });
+      return;
+    }
+
+    const deletedPost = await prisma.post.delete({
+      where: { id },
+    });
+
+    res.send({ data: deletedPost });
+  } catch (error: any) {
+    console.error(error.message);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: ReasonPhrases.INTERNAL_SERVER_ERROR,
+    });
+  }
+};
+
 const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'GET') {
     await getPostHandler(req, res);
@@ -97,6 +125,11 @@ const handler: NextApiHandler = async (req, res) => {
 
   if (req.method === 'PUT') {
     await authenticated(updatePostValidator(updatePostHandler))(req, res);
+    return;
+  }
+
+  if (req.method === 'DELETE') {
+    await authenticated(deletePostHandler)(req, res);
     return;
   }
 
