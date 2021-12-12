@@ -3,8 +3,9 @@ import boldSvg from './icons/bold.svg';
 import italicSvg from './icons/italic.svg';
 import underlineSvg from './icons/underline.svg';
 import linkSvg from './icons/link.svg';
+import imageSvg from './icons/image.svg';
 
-type Icon = 'bold' | 'italic' | 'underline' | 'link';
+type Icon = 'bold' | 'italic' | 'underline' | 'link' | 'image';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: Icon;
@@ -16,6 +17,7 @@ const CommandButton: FC<Props> = ({ icon, ...props }) => {
     italic: italicSvg,
     underline: underlineSvg,
     link: linkSvg,
+    image: imageSvg,
   }[icon];
 
   return (

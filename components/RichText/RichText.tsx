@@ -9,6 +9,7 @@ import {
   DraftDecorator,
   convertFromHTML,
 } from 'draft-js';
+import CommandImage from './CommandImage';
 import CommandButton from './CommandButton';
 import classes from './RichText.module.scss';
 import CommandLink, { linkDraftDecorator } from './CommandLink';
@@ -68,6 +69,10 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
     setTimeout(() => editor.current?.focus(), 0);
   };
 
+  const onCommandImageChosen = (base64: string) => {
+    console.log('base64:', base64);
+  };
+
   return (
     <>
       <div className={classes.toolabr}>
@@ -86,6 +91,7 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
           />
         </div>
         <div className={classes.toolabarGroup}>
+          <CommandImage onCommandImageChosen={onCommandImageChosen} />
           <CommandLink onCommandLinkEnter={onCommandLinkEnter} />
         </div>
       </div>

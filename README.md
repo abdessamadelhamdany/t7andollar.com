@@ -17,6 +17,7 @@
 
 - [Reading Time](https://www.npmjs.com/package/reading-time)
 - [Slugify](https://www.npmjs.com/package/slugify)
+- [isotope](https://isotope.metafizzy.co/)
 
 ### Notes
 
