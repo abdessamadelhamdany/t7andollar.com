@@ -1,6 +1,6 @@
-import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import React, { FormEvent } from 'react';
+import { GetServerSideProps, NextPage } from 'next';
 import Input from '@/components/Input';
 import FormBody from '@/components/FormBody';
 import AppLayout from '@/components/AppLayout';
@@ -12,11 +12,7 @@ const RichText = dynamic(() => import('@/components/RichText'), {
   ssr: false,
 });
 
-interface Props {
-  post: {
-    id: number;
-  };
-}
+interface Props extends ServerProps {}
 
 const EditPost: NextPage<Props> = ({ post }) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -24,8 +20,6 @@ const EditPost: NextPage<Props> = ({ post }) => {
     const data = parseForm(e);
     // TODO: save data
   };
-
-  console.log('post', post);
 
   return (
     <AppLayout>
@@ -35,7 +29,12 @@ const EditPost: NextPage<Props> = ({ post }) => {
         </FormHeader>
 
         <FormBody>
-          <Input type="text" name="title" placeholder="العنوان" />
+          <Input
+            type="text"
+            name="title"
+            defaultValue={post.title}
+            placeholder="العنوان"
+          />
           <RichText dir="RTL" initialHTML="<p>مرحبا بكم بجوجل</p>" />
         </FormBody>
       </form>
@@ -43,39 +42,25 @@ const EditPost: NextPage<Props> = ({ post }) => {
   );
 };
 
-export async function getStaticProps({ params }) {
-  if (params.id === 'new') {
-    const newPost = { id: 1 };
+interface ServerProps {
+  post: any;
+}
 
-    // TODO: create new post, and redirect to post detail
+export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
+  params,
+}) => {
+  const res = await fetch(`${process.env.APP_URL}/api/posts/${params?.id}`);
+  const { data: post, error } = await res.json();
 
-    return {
-      redirect: {
-        destination: `/app/posts/${newPost.id}`,
-        permanent: false,
-      },
-    };
+  if (error) {
+    throw Error(error);
   }
 
   return {
     props: {
-      post: {
-        id: 1,
-      },
+      post,
     },
   };
-}
-
-export async function getStaticPaths() {
-  const posts = [{ id: '1' }, { id: '2' }].concat({ id: 'new' });
-  const paths = posts.map(({ id }) => ({
-    params: { id },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-}
+};
 
 export default EditPost;

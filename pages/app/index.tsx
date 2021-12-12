@@ -13,7 +13,7 @@ const App: NextPage = () => {
       </Head>
 
       <div>
-        <Link href="/app/posts/0">
+        <Link href="/app/posts/new">
           <a>مقال جديد</a>
         </Link>
       </div>

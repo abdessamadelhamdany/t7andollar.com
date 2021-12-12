@@ -10,7 +10,7 @@ const FormError: FC = ({ children }) => {
             color: #ea2f65;
             text-align: right;
             font-size: 0.875rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
           }
         `}
       </style>

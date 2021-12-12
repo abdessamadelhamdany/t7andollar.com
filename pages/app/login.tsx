@@ -73,17 +73,20 @@ const App: NextPage<Props> = () => {
 
             {error && <FormError>{error}</FormError>}
 
-            <label>
+            <label className="remember-label">
               <Input type="checkbox" name="remember" value="true" />
               تذكرني
             </label>
 
-            <FormCardSubmit>تسجيل الدخول</FormCardSubmit>
+            <FormCardSubmit className="submit">تسجيل الدخول</FormCardSubmit>
           </div>
         </FormCard>
       </form>
       <style jsx>
         {`
+          form {
+            margin-top: 3rem;
+          }
           .input-wrapper {
             max-width: 80%;
             margin: 0 auto;
@@ -91,6 +94,9 @@ const App: NextPage<Props> = () => {
           .input-wrapper label {
             display: flex;
             align-items: center;
+          }
+          .remember-label {
+            margin-bottom: 2rem;
           }
         `}
       </style>
