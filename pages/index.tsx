@@ -1,30 +1,10 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { gql, useQuery } from '@apollo/client';
 import { title } from 'lib/helpers';
 import PostPreview from '@/components/PostPreview';
 import FeaturedPost from '@/components/FeaturedPost';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import { Post } from '../interfaces';
-
-const AllPostsQuery = gql`
-  query allPostsQuery($first: Int!, $after: Int) {
-    posts(first: $first, after: $after) {
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-      edges {
-        cursor
-        node {
-          id
-          title
-          slug
-        }
-      }
-    }
-  }
-`;
 
 const featuredPost: Post = {
   id: 1,
@@ -56,20 +36,6 @@ const allPosts = [
 ];
 
 const Home: NextPage = () => {
-  const { data, error, loading, fetchMore } = useQuery(AllPostsQuery, {
-    variables: { first: 1 },
-  });
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Something went wrong.</p>;
-  }
-
-  const { endCursor, hasNextPage } = data.posts.pageInfo;
-
   return (
     <>
       <Head>
@@ -105,35 +71,6 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
-
-      {/**
-<h2>Posts</h2>
-<ul>
-  {data.posts.edges.map(({ node }, idx) => (
-    <li key={node.id}>{node.title}</li>
-  ))}
-</ul>
-{hasNextPage ? (
-  <button
-    onClick={() => {
-      fetchMore({
-        variables: { after: endCursor },
-        updateQuery: (prevResult, { fetchMoreResult }) => {
-          fetchMoreResult.posts.edges = [
-            ...prevResult.posts.edges,
-            ...fetchMoreResult.posts.edges,
-          ];
-          return fetchMoreResult;
-        },
-      });
-    }}
-  >
-    Load More
-  </button>
-) : (
-  <p>You\'ve reached the end!</p>
-)}
-      */}
     </>
   );
 };

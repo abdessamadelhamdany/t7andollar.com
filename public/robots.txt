@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /app/
+
+Sitemap: https://t7andollar.com/sitemap.xml
+
