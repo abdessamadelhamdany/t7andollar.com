@@ -1,5 +1,6 @@
-import React, { FormEvent } from 'react';
 import Head from 'next/head';
+import router from 'next/router';
+import React, { FormEvent, useState } from 'react';
 import { NextPage, GetStaticPropsResult } from 'next';
 import { parseForm, title } from 'lib/helpers';
 import AppLayout from '@/components/AppLayout';
@@ -8,14 +9,17 @@ import FormCardSubmit from '@/components/FormCardSubmit';
 import FormCardTitle from '@/components/FormCardTitle';
 import FormCard from '@/components/FormCard';
 import Input from '@/components/Input';
+import FormError from '@/components/FormError';
 
-interface Props extends StaticProps {}
+interface Props {}
 
-const App: NextPage<Props> = ({ appUrl }) => {
+const App: NextPage<Props> = () => {
+  const [error, setError] = useState('');
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const parsedForm = parseForm(e);
-    const res = await fetch(`${appUrl}/api/login`, {
+    const res = await fetch('/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,7 +28,20 @@ const App: NextPage<Props> = ({ appUrl }) => {
     });
     const data = await res.json();
 
-    console.log(data);
+    if (data.error) {
+      setError(
+        {
+          Unauthorized: 'المعلومات غير صحيحة',
+          'Not Found': 'المستخدم غير مسجل',
+        }[data.error] || 'نعتذر حدث خطأ ما.'
+      );
+      return;
+    }
+
+    if (data.data) {
+      await router.push('/app');
+      return;
+    }
   };
 
   return (
@@ -54,6 +71,8 @@ const App: NextPage<Props> = ({ appUrl }) => {
               placeholder="كلمة السر"
             />
 
+            {error && <FormError>{error}</FormError>}
+
             <label>
               <Input type="checkbox" name="remember" value="true" />
               تذكرني
@@ -78,17 +97,5 @@ const App: NextPage<Props> = ({ appUrl }) => {
     </AppLayout>
   );
 };
-
-interface StaticProps {
-  appUrl: string;
-}
-
-export async function getStaticProps(): Promise<
-  GetStaticPropsResult<StaticProps>
-> {
-  return {
-    props: { appUrl: process.env.APP_URL },
-  };
-}
 
 export default App;
