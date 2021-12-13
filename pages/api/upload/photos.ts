@@ -72,7 +72,42 @@ const upload = multer({
 });
 
 /** Register midllewares */
-handler.use(upload.array('photos', 8));
+const multerWithErrorHandling = async (req, res, next) => {
+  const uploader = upload.array('photos', 8);
+  uploader(req as any, res as any, (error) => {
+    if (!Array.isArray(req.files)) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        error: 'The photos field is required.',
+      });
+      return;
+    }
+
+    if (req.files.length === 0) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        error: 'The photos field must be of type: jpeg, png, gif, webp',
+      });
+      return;
+    }
+
+    if (error instanceof multer.MulterError) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        error: error.message,
+      });
+      return;
+    }
+
+    if (error) {
+      console.error(error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: ReasonPhrases.INTERNAL_SERVER_ERROR,
+      });
+      return;
+    }
+
+    next(error);
+  });
+};
+handler.use(multerWithErrorHandling);
 
 /** Register handlers */
 handler.post(async (req, res) => {

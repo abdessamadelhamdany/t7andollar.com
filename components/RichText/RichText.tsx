@@ -137,7 +137,7 @@ const RichText: FC<Props> = ({ initialHTML, onChange, dir }) => {
       >
         <Editor
           ref={editor}
-          placeholder="مرحبا"
+          placeholder="محتوى المقال"
           textDirectionality={dir}
           onChange={_onChange}
           editorState={editorState}

@@ -20,6 +20,17 @@ const CommandImage: FC<Props> = ({ onCommandImageChosen }) => {
     const file = e.target.files[0];
     const urlValue = URL.createObjectURL(file);
 
+    var formData = new FormData();
+    formData.append('file', file);
+
+    const res = await fetch('/api/upload/photos', {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await res.json();
+
+    console.log(data);
+
     // TODO: upload to server, and send url instead
     onCommandImageChosen(urlValue);
   };
@@ -46,10 +57,9 @@ export const Image = (props) => {
       <style jsx>
         {`
           img {
-            width: 100%;
             margin: 0 auto;
             display: block;
-            max-width: 720px;
+            max-width: 100%;
           }
         `}
       </style>

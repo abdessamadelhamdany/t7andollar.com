@@ -80,7 +80,7 @@ model Tag {
 }
 
 model Upload {
-  id           Int    @id @default(autoincrement())
+  id           Int     @id @default(autoincrement())
   fieldname    String
   originalname String
   mimetype     String
@@ -88,4 +88,6 @@ model Upload {
   filename     String
   path         String
   size         Int
+  alt          String?
+  caption      String?
 }
