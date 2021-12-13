@@ -43,7 +43,11 @@ const EditPost: NextPage<Props> = ({ post }) => {
             defaultValue={post.title}
             placeholder="العنوان"
           />
-          <Editor initialHtml="" onChange={(html) => setBody(html)} />
+          <Editor
+            value={body}
+            onChange={(html) => setBody(html)}
+            placeholder={'Write something...'}
+          />
         </FormBody>
       </form>
     </AppLayout>

@@ -1,1 +1,11 @@
 @import './scss/main.scss';
+@import '~react-quill/dist/quill.snow.css';
+
+.ql-toolbar .ql-picker-label {
+  text-align: left;
+}
+
+.ql-editor {
+  direction: rtl;
+  text-align: right;
+}

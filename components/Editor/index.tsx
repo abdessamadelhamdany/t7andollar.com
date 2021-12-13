@@ -1,40 +1,65 @@
-import { debounce } from 'lodash';
 import React, { FC } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ReactQuill from 'react-quill';
 
 interface Props {
-  initialHtml?: string;
+  placeholder: string;
+  value: string;
   onChange: (html: string) => void;
 }
 
-const Editor: FC<Props> = ({ initialHtml, onChange }) => {
+const Editor: FC<Props> = ({ placeholder, value, onChange }) => {
   return (
-    <CKEditor
-      editor={ClassicEditor}
-      config={{
-        language: {
-          content: 'ar',
-          ui: 'en',
+    <ReactQuill
+      theme="snow"
+      onChange={onChange}
+      value={value}
+      modules={{
+        toolbar: [
+          [{ header: '1' }, { header: '2' }, { font: [] }],
+          [{ size: [] }],
+          [
+            'bold',
+            'italic',
+            'underline',
+            'strike',
+            'blockquote',
+            'code',
+            'code-block',
+          ],
+          [
+            { list: 'ordered' },
+            { list: 'bullet' },
+            { indent: '-1' },
+            { indent: '+1' },
+          ],
+          ['link', 'image', 'video'],
+          ['clean'],
+        ],
+        clipboard: {
+          // toggle to add extra line breaks when pasting HTML:
+          matchVisual: false,
         },
-        placeholder: 'محتوى المقال',
-        ckfinder: {
-          uploadUrl: '/api/upload/photo',
-        },
       }}
-      data={initialHtml || ''}
-      onReady={(editor) => {
-        console.log('Editor is ready to use!', editor);
-      }}
-      onChange={debounce((_event, editor) => {
-        onChange(editor.getData());
-      }, 500)}
-      onBlur={(event, editor) => {
-        console.log('Blur.', editor);
-      }}
-      onFocus={(event, editor) => {
-        console.log('Focus.', editor);
-      }}
+      formats={[
+        'header',
+        'font',
+        'size',
+        'bold',
+        'italic',
+        'underline',
+        'strike',
+        'blockquote',
+        'code',
+        'code-block',
+        'list',
+        'bullet',
+        'indent',
+        'link',
+        'image',
+        'video',
+      ]}
+      bounds={'.app'}
+      placeholder={placeholder}
     />
   );
 };
