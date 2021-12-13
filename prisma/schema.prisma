@@ -78,3 +78,14 @@ model Tag {
   name  String
   posts Post[] @relation(references: [id])
 }
+
+model Upload {
+  id           Int    @id @default(autoincrement())
+  fieldname    String
+  originalname String
+  mimetype     String
+  destination  String
+  filename     String
+  path         String
+  size         Int
+}

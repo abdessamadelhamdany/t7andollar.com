@@ -63,6 +63,8 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
   const { data: post, error } = await res.json();
 
   if (error) {
+    console.log('error:', error);
+
     throw Error(error);
   }
 
