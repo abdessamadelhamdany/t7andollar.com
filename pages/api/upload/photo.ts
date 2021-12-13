@@ -11,6 +11,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 interface Data {
   error?: string;
   url?: string;
+  uploaded?: boolean;
 }
 
 /** Setup next connect */
@@ -120,6 +121,7 @@ handler.post(async (req, res) => {
 
   res.json({
     url: `${process.env.APP_URL}${uploadedFile.path.replace('public', '')}`,
+    uploaded: true,
   });
 });
 

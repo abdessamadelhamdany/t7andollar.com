@@ -18,6 +18,9 @@ const Editor: FC<Props> = ({ initialHtml, onChange }) => {
           ui: 'en',
         },
         placeholder: 'محتوى المقال',
+        ckfinder: {
+          uploadUrl: '/api/upload/photo',
+        },
       }}
       data={initialHtml || ''}
       onReady={(editor) => {
