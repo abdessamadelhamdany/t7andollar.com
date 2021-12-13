@@ -13,32 +13,46 @@ const CommandImage: FC<Props> = ({ onCommandImageChosen }) => {
   };
 
   const onImageInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length !== 1) {
+    if (!e.target.files) {
+      console.warn('no file was chosen');
       return;
     }
 
-    const file = e.target.files[0];
-    const urlValue = URL.createObjectURL(file);
+    console.log('e.target.files', e.target.files);
+    console.log('e.target.files.length', e.target.files.length);
 
+    if (!e.target.files || e.target.files.length <= 0) {
+      return;
+    }
+
+    // TODO: upload to server, and send url instead
     var formData = new FormData();
-    formData.append('file', file);
+    for (let i = 0; i < e.target.files.length; i++) {
+      const file = e.target.files[i];
+      console.log(file);
+      formData.append('photos', file);
+    }
 
+    console.log('before');
     const res = await fetch('/api/upload/photos', {
       method: 'POST',
       body: formData,
     });
-    const data = await res.json();
+    const { data: uploadedPhotos } = await res.json();
+    console.log('after', uploadedPhotos);
 
-    console.log(data);
-
-    // TODO: upload to server, and send url instead
-    onCommandImageChosen(urlValue);
+    uploadedPhotos.forEach(({ path, alt } = { path: '', alt: '' }) => {
+      console.log('inside', path);
+      setTimeout(() => {
+        onCommandImageChosen(path.replace('public', ''));
+      }, 1000);
+    });
   };
 
   return (
     <>
       <CommandButton icon="image" onClick={onImageIconClick} />
-      <input ref={ref} type="file" onChange={onImageInputChange} />
+      <input ref={ref} type="file" multiple onChange={onImageInputChange} />
       <style jsx>
         {`
           input[type='file'] {

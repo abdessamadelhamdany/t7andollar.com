@@ -8,7 +8,7 @@ import FormHeader from '@/components/FormHeader';
 import FormSubmit from '@/components/FormSubmit';
 import { parseForm } from 'lib/helpers';
 
-const RichText = dynamic(() => import('@/components/RichText'), {
+const Editor = dynamic(() => import('@/components/Editor'), {
   ssr: false,
 });
 
@@ -27,6 +27,8 @@ const EditPost: NextPage<Props> = ({ post }) => {
     // TODO: save data
   };
 
+  console.log({ body });
+
   return (
     <AppLayout>
       <form onSubmit={handleSubmit}>
@@ -41,11 +43,7 @@ const EditPost: NextPage<Props> = ({ post }) => {
             defaultValue={post.title}
             placeholder="العنوان"
           />
-          <RichText
-            dir="RTL"
-            initialHTML="<p>مرحبا بكم بجوجل</p>"
-            onChange={(content) => setBody(content)}
-          />
+          <Editor initialHtml="" onChange={(html) => setBody(html)} />
         </FormBody>
       </form>
     </AppLayout>

@@ -81,6 +81,8 @@ const RichText: FC<Props> = ({ initialHTML, onChange, dir }) => {
   };
 
   const onCommandImageChosen = (urlValue: string) => {
+    console.log('urlValue', urlValue);
+
     const contentState = editorState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity(
       'IMAGE',

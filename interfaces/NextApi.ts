@@ -17,6 +17,7 @@ interface MulterFile {
 export interface NextApiRequest extends NextApiRequestBase {
   user: User;
   validated: any | null;
+  file: MulterFile;
   files: MulterFile[];
 }
 

@@ -18,6 +18,7 @@
 - [Reading Time](https://www.npmjs.com/package/reading-time)
 - [Slugify](https://www.npmjs.com/package/slugify)
 - [isotope](https://isotope.metafizzy.co/)
+- [CKEditor Docs](https://ckeditor.com/docs/ckeditor5/latest/api/module_core_editor_editorconfig-EditorConfig.html)
 
 ### Notes
 
