@@ -8,32 +8,43 @@ import {
   CompositeDecorator,
   DraftDecorator,
   convertFromHTML,
+  AtomicBlockUtils,
+  ContentBlock,
+  convertToRaw,
 } from 'draft-js';
-import CommandImage from './CommandImage';
+import draftToHtml from 'draftjs-to-html';
+import CommandImage, { Media } from './CommandImage';
 import CommandButton from './CommandButton';
 import classes from './RichText.module.scss';
 import CommandLink, { linkDraftDecorator } from './CommandLink';
 
 interface Props {
   initialHTML?: string;
+  onChange(content: string): void;
   dir?: 'LTR' | 'RTL' | 'NEUTRAL';
 }
 
-const RichText: FC<Props> = ({ initialHTML, dir }) => {
+const RichText: FC<Props> = ({ initialHTML, onChange, dir }) => {
   const editor = useRef<Editor>(null);
   const [editorState, setEditorState] = useState(
     makeInitialState(initialHTML, [linkDraftDecorator])
   );
 
-  const onChange = (editorState) => {
+  const _onChange = (editorState: EditorState) => {
+    const contentState = editorState.getCurrentContent();
+    const contentRaw = convertToRaw(contentState);
+    const contentHTML = draftToHtml(contentRaw);
+
     setEditorState(editorState);
+
+    onChange(contentHTML);
   };
 
   const handleKeyCommand = (command, editorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
 
     if (newState) {
-      onChange(newState);
+      _onChange(newState);
       return 'handled';
     }
 
@@ -42,7 +53,7 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
 
   const makeToggleInlineStyleHandler = (inlineStyle: string) => {
     return () => {
-      onChange(RichUtils.toggleInlineStyle(editorState, inlineStyle));
+      _onChange(RichUtils.toggleInlineStyle(editorState, inlineStyle));
     };
   };
 
@@ -69,8 +80,33 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
     setTimeout(() => editor.current?.focus(), 0);
   };
 
-  const onCommandImageChosen = (base64: string) => {
-    console.log('base64:', base64);
+  const onCommandImageChosen = (urlValue: string) => {
+    const contentState = editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity(
+      'IMAGE',
+      'IMMUTABLE',
+      { src: urlValue }
+    );
+
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const newEditorState = EditorState.set(editorState, {
+      currentContent: contentStateWithEntity,
+    });
+
+    setEditorState(
+      AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ')
+    );
+  };
+
+  const blockRendererFn = (block: ContentBlock) => {
+    if (block.getType() === 'atomic') {
+      return {
+        component: Media,
+        editable: false,
+      };
+    }
+
+    return null;
   };
 
   return (
@@ -103,8 +139,9 @@ const RichText: FC<Props> = ({ initialHTML, dir }) => {
           ref={editor}
           placeholder="مرحبا"
           textDirectionality={dir}
-          onChange={onChange}
+          onChange={_onChange}
           editorState={editorState}
+          blockRendererFn={blockRendererFn}
           handleKeyCommand={handleKeyCommand}
         />
       </div>

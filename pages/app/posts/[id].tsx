@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import Input from '@/components/Input';
 import FormBody from '@/components/FormBody';
@@ -15,9 +15,15 @@ const RichText = dynamic(() => import('@/components/RichText'), {
 interface Props extends ServerProps {}
 
 const EditPost: NextPage<Props> = ({ post }) => {
+  const [body, setBody] = useState('');
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = parseForm(e);
+    data.body = body;
+
+    console.log(data);
+
     // TODO: save data
   };
 
@@ -35,7 +41,11 @@ const EditPost: NextPage<Props> = ({ post }) => {
             defaultValue={post.title}
             placeholder="العنوان"
           />
-          <RichText dir="RTL" initialHTML="<p>مرحبا بكم بجوجل</p>" />
+          <RichText
+            dir="RTL"
+            initialHTML="<p>مرحبا بكم بجوجل</p>"
+            onChange={(content) => setBody(content)}
+          />
         </FormBody>
       </form>
     </AppLayout>

@@ -1400,13 +1400,20 @@
     "@types/keygrip" "*"
     "@types/node" "*"
 
-"@types/draft-js@^0.11.7":
+"@types/draft-js@*", "@types/draft-js@^0.11.7":
   version "0.11.7"
   resolved "https://registry.yarnpkg.com/@types/draft-js/-/draft-js-0.11.7.tgz#5870bfddb66c2ad0dd91c7293cad2793ff9920c1"
   integrity sha512-NeCRIPcfrlUItA46boNG2kxuVhohPdE4Plp3GcxEv11FXZ0kZFa6X8fNPpKrp8AEUqeAr/B0TsX/wp2sYZaK3w==
   dependencies:
     "@types/react" "*"
     immutable "~3.7.4"
+
+"@types/draftjs-to-html@^0.8.1":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@types/draftjs-to-html/-/draftjs-to-html-0.8.1.tgz#0800a4f6ff19ece49b6a337bfa8b39ed3d08a5fa"
+  integrity sha512-NBkphQs+qZ/sAz/j1pCUaxkPAOx00LTsE88aMSSfcvK+UfCpjHJDqIMCkm6wKotuJvY5w0BtdRazQ0sAaXzPdg==
+  dependencies:
+    "@types/draft-js" "*"
 
 "@types/express-serve-static-core@^4.17.18":
   version "4.17.26"
@@ -2423,6 +2430,11 @@ draft-js@^0.11.7:
     fbjs "^2.0.0"
     immutable "~3.7.4"
     object-assign "^4.1.1"
+
+draftjs-to-html@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/draftjs-to-html/-/draftjs-to-html-0.9.1.tgz#1c870fbb588d2390204cb4d0ee7e04ad0c709969"
+  integrity sha512-fFstE6+IayaVFBEvaFt/wN8vdj8FsTRzij7dy7LI9QIwf5LgfHFi9zSpvCg+feJ2tbYVqHxUkjcibwpsTpgFVQ==
 
 ecdsa-sig-formatter@1.0.11:
   version "1.0.11"

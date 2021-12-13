@@ -1,9 +1,8 @@
-import { fileToBase64 } from 'lib/helpers';
 import React, { ChangeEvent, FC, useRef } from 'react';
 import CommandButton from './CommandButton';
 
 interface Props {
-  onCommandImageChosen(base64: string): void;
+  onCommandImageChosen(urlValue: string): void;
 }
 
 const CommandImage: FC<Props> = ({ onCommandImageChosen }) => {
@@ -19,11 +18,10 @@ const CommandImage: FC<Props> = ({ onCommandImageChosen }) => {
     }
 
     const file = e.target.files[0];
-    const base64 = await fileToBase64(file);
+    const urlValue = URL.createObjectURL(file);
 
-    if (typeof base64 === 'string') {
-      onCommandImageChosen(base64);
-    }
+    // TODO: upload to server, and send url instead
+    onCommandImageChosen(urlValue);
   };
 
   return (
@@ -39,6 +37,36 @@ const CommandImage: FC<Props> = ({ onCommandImageChosen }) => {
       </style>
     </>
   );
+};
+
+export const Image = (props) => {
+  return (
+    <>
+      <img src={props.src} />
+      <style jsx>
+        {`
+          img {
+            width: 100%;
+            margin: 0 auto;
+            display: block;
+            max-width: 720px;
+          }
+        `}
+      </style>
+    </>
+  );
+};
+
+export const Media = ({ block, contentState }) => {
+  const entity = contentState.getEntity(block.getEntityAt(0));
+  const { src } = entity.getData();
+  const type = entity.getType();
+
+  if (type === 'IMAGE') {
+    return <Image src={src} />;
+  }
+
+  return null;
 };
 
 export default CommandImage;
