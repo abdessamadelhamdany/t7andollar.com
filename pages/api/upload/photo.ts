@@ -10,8 +10,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 interface Data {
   error?: string;
-  url?: string;
-  uploaded?: boolean;
+  location?: string;
 }
 
 /** Setup next connect */
@@ -73,12 +72,12 @@ const upload = multer({
 
 /** Register midllewares */
 const multerWithErrorHandling = async (req, res, next) => {
-  const uploader = upload.single('upload');
+  const uploader = upload.single('file');
 
   uploader(req as any, res as any, (error) => {
     if (!req.file) {
       res.status(StatusCodes.BAD_REQUEST).json({
-        error: 'The upload field is required.',
+        error: 'The file field is required.',
       });
       return;
     }
@@ -120,8 +119,10 @@ handler.post(async (req, res) => {
   });
 
   res.json({
-    url: `${process.env.APP_URL}${uploadedFile.path.replace('public', '')}`,
-    uploaded: true,
+    location: `${process.env.APP_URL}${uploadedFile.path.replace(
+      'public',
+      ''
+    )}`,
   });
 });
 

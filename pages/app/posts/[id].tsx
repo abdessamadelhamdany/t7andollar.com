@@ -8,7 +8,7 @@ import FormHeader from '@/components/FormHeader';
 import FormSubmit from '@/components/FormSubmit';
 import { parseForm } from 'lib/helpers';
 
-const Editor = dynamic(() => import('@/components/Editor'), {
+const TinyMCE = dynamic(() => import('@/components/TinyMCE'), {
   ssr: false,
 });
 
@@ -43,11 +43,7 @@ const EditPost: NextPage<Props> = ({ post }) => {
             defaultValue={post.title}
             placeholder="العنوان"
           />
-          <Editor
-            value={body}
-            onChange={(html) => setBody(html)}
-            placeholder={'Write something...'}
-          />
+          <TinyMCE value={body} onChange={(html) => setBody(html)} />
         </FormBody>
       </form>
     </AppLayout>
