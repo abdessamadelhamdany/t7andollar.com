@@ -1,7 +1,7 @@
 import 'quill/dist/quill.snow.css';
 import Quill from 'quill';
 import { debounce } from 'lodash';
-import React, { useEffect, useRef } from 'react';
+import React, { ChangeEvent, useEffect, useRef } from 'react';
 import { HLJS_LANGUAGES } from 'lib/constants';
 import classes from './quill.module.scss';
 
@@ -17,6 +17,37 @@ interface Props {
   setContent?: (content: string) => void;
 }
 
+const onImageInputChange = async (fileInput: HTMLInputElement) => {
+  if (!fileInput.files) {
+    console.warn('no file was chosen');
+    return;
+  }
+
+  if (!fileInput.files || fileInput.files.length <= 0) {
+    return;
+  }
+
+  var formData = new FormData();
+  for (let i = 0; i < fileInput.files.length; i++) {
+    const file = fileInput.files[i];
+    console.log(file);
+    formData.append('photos', file);
+  }
+
+  const res = await fetch('/api/upload/photos', {
+    method: 'POST',
+    body: formData,
+  });
+  const { data: uploadedPhotos } = await res.json();
+
+  // TODO: insert images to the editor
+  const range = quill.getSelection();
+  uploadedPhotos.forEach(({ path, alt } = { path: '', alt: '' }) => {
+    quill.insertEmbed(range.index, 'image', path.replace('public', ''));
+    quill.setSelection(range.index + 1, 0);
+  });
+};
+
 export default function W3Editor({ content, placeholder, setContent }: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const toolbarRef = useRef<HTMLDivElement | null>(null);
@@ -29,8 +60,25 @@ export default function W3Editor({ content, placeholder, setContent }: Props) {
         toolbar: {
           container: toolbarRef.current,
           handlers: {
+            link: function (value) {
+              if (value) {
+                var href = prompt('Enter the URL');
+                quill.format('link', href);
+              } else {
+                quill.format('link', false);
+              }
+            },
             image() {
-              console.log('image');
+              // TODO: add allowed extensions
+              const fileInput = document.createElement('input');
+              fileInput.setAttribute('type', 'file');
+              fileInput.setAttribute('name', 'file');
+              fileInput.setAttribute('accept', 'image/*');
+              fileInput.setAttribute('multiple', '');
+              fileInput.onchange = async () => {
+                await onImageInputChange(fileInput);
+              };
+              fileInput.click();
             },
           },
         },
