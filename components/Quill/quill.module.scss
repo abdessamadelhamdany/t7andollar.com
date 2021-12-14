@@ -1,0 +1,33 @@
+.editorWrapper {
+  direction: ltr;
+  background: rgb(255, 255, 255);
+  border: 1px solid rgb(243, 243, 243);
+}
+
+.editorToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editor {
+  p,
+  ol,
+  ul,
+  pre,
+  blockquote,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-align: right;
+    direction: rtl;
+  }
+
+  code {
+    text-align: left;
+    direction: ltr;
+  }
+}

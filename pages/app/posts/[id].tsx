@@ -8,14 +8,14 @@ import FormHeader from '@/components/FormHeader';
 import FormSubmit from '@/components/FormSubmit';
 import { parseForm } from 'lib/helpers';
 
-const TinyMCE = dynamic(() => import('@/components/TinyMCE'), {
+const Quill = dynamic(() => import('@/components/Quill'), {
   ssr: false,
 });
 
 interface Props extends ServerProps {}
 
 const EditPost: NextPage<Props> = ({ post }) => {
-  const [body, setBody] = useState('');
+  const [body, setBody] = useState('<p>السلام عليكم</p>');
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,7 +43,8 @@ const EditPost: NextPage<Props> = ({ post }) => {
             defaultValue={post.title}
             placeholder="العنوان"
           />
-          <TinyMCE value={body} onChange={(html) => setBody(html)} />
+
+          <Quill content={body} setContent={(content) => setBody(content)} />
         </FormBody>
       </form>
     </AppLayout>

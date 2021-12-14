@@ -1,11 +1,17 @@
-import '../styles/globals.scss';
+import { useEffect } from 'react';
 import Head from 'next/head';
+import hljs from 'highlight.js';
 import type { AppProps } from 'next/app';
 import { title } from 'lib/helpers';
 import Layout from '@/components/Layout';
 import MundanaScripts from '@/components/Meta/MundanaScripts';
+import 'styles/globals.scss';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    window.hljs = hljs;
+  }, []);
+
   return (
     <>
       <Head>
@@ -21,4 +27,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default App;
