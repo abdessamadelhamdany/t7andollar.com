@@ -7,7 +7,7 @@ const Navbar: FC = () => {
   const { authUser } = useUser();
 
   return (
-    <nav className="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom border-gray shadow-sm">
+    <nav className="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom border-gray">
       <div className="container">
         <Link href="/">
           <a className="navbar-brand">

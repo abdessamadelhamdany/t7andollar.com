@@ -4,9 +4,11 @@ import Slug from '@/components/Slug';
 import Input from '@/components/Input';
 import FormBody from '@/components/FormBody';
 import FormHeader from '@/components/FormHeader';
-import FormSubmit from '@/components/FormSubmit';
+import FormAction from '@/components/FormAction';
 import { usePost } from 'store/hooks';
 import { debounce } from 'lodash';
+import TextArea from '@/components/TextArea';
+import Label from '@/components/Label';
 
 const Quill = dynamic(() => import('@/components/Quill'), {
   ssr: false,
@@ -17,39 +19,70 @@ const EditPostForm = () => {
 
   return (
     <form
-      onSubmit={async () => {
-        // const data = parseForm(e);
-        await savePostFormChanges();
-        console.log('saved');
+      onSubmit={(e) => {
+        e.preventDefault();
+        savePostFormChanges();
       }}
     >
+      <FormHeader>
+        <div>
+          <FormAction type="button">حفظ</FormAction>
+        </div>
+        <div>
+          {postForm.published ? (
+            <FormAction type="button" variant="accent">
+              العودة إلى المسودة
+            </FormAction>
+          ) : (
+            <FormAction type="button" variant="accent">
+              نشر
+            </FormAction>
+          )}
+        </div>
+      </FormHeader>
+
       <FormBody>
+        <Slug
+          title={postForm.title}
+          visible={false}
+          onChange={debounce((slug) => {
+            setPostFormField({ slug });
+          }, 500)}
+        />
+
+        <Label htmlFor="title">العنوان</Label>
         <Input
+          id="title"
           type="text"
-          name="title"
-          value={postForm.title}
+          value={postForm.title || ''}
           onChange={({ target: { value } }) => {
             setPostFormField({ title: value });
           }}
           placeholder="العنوان"
         />
 
-        <Slug
-          title={postForm.title}
-          onChange={debounce((slug) => {
-            setPostFormField({ slug });
-          }, 500)}
-        />
-
+        <Label>المحتوى</Label>
         <Quill
+          placeholder="المحتوى"
           content={postForm.body || ''}
           setContent={(content) => setPostFormField({ body: content })}
         />
-      </FormBody>
 
-      <FormHeader>
-        <FormSubmit>حفظ</FormSubmit>
-      </FormHeader>
+        <Label htmlFor="excerpt">المقتبس</Label>
+        <TextArea
+          id="excerpt"
+          rows={3}
+          value={postForm.excerpt || ''}
+          onChange={({ target: { value } }) => {
+            setPostFormField({ excerpt: value });
+          }}
+          placeholder="المقتبس"
+        />
+
+        <Label htmlFor="keywords">الكلمات المفتاحية</Label>
+        <Label htmlFor="tags">الكلمات الدالية</Label>
+        <Label htmlFor="categories">التصنيفات</Label>
+      </FormBody>
     </form>
   );
 };

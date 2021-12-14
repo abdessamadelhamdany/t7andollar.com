@@ -8,7 +8,8 @@ const FormBody = ({ children }) => {
         {`
           .form-body {
             margin-bottom: 3rem;
-            padding: 1rem 0.5rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
           }
         `}
       </style>

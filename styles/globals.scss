@@ -1,7 +1,18 @@
 @import './scss/main.scss';
 
+.ql-toolbar.ql-snow {
+  border: none !important;
+  border-bottom: 1px solid #ccc !important;
+}
+
 .ql-container.ql-snow {
   font-size: 18px;
+  border: none !important;
+
+  .ql-editor {
+    text-align: right;
+    margin-bottom: 2rem;
+  }
 
   img {
     width: 100%;
