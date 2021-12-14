@@ -36,3 +36,8 @@ interface MiddlewareData {
 export declare type NextApiMiddleware = (
   handler: NextApiHandler<MiddlewareData>
 ) => NextApiHandler<MiddlewareData>;
+
+export interface ResponseData<T = any> {
+  error?: string;
+  data?: T;
+}

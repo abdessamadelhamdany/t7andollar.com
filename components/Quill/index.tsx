@@ -69,7 +69,6 @@ export default function W3Editor({ content, placeholder, setContent }: Props) {
               }
             },
             image() {
-              // TODO: add allowed extensions
               const fileInput = document.createElement('input');
               fileInput.setAttribute('type', 'file');
               fileInput.setAttribute('name', 'file');

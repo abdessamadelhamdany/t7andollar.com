@@ -61,6 +61,8 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
   const res = await fetch(`${process.env.APP_URL}/api/posts/${params?.id}`);
   const { data: post, error } = await res.json();
 
+  console.log({ post, error });
+
   if (error) {
     console.log('error:', error);
 

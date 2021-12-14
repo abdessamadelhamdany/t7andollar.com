@@ -1,5 +1,6 @@
 export * from './post';
-import { PostState } from '.';
+export * from './user';
+import { PostState, UserState } from '.';
 
 export interface Action {
   type: string;
@@ -8,4 +9,5 @@ export interface Action {
 
 export interface AppState {
   post: PostState;
+  user: UserState;
 }

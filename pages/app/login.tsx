@@ -1,46 +1,31 @@
 import Head from 'next/head';
 import router from 'next/router';
 import React, { FormEvent, useState } from 'react';
-import { NextPage, GetStaticPropsResult } from 'next';
+import { NextPage } from 'next';
 import { parseForm, title } from 'lib/helpers';
-import AppLayout from '@/components/AppLayout';
-import Link from 'next/link';
-import FormCardSubmit from '@/components/FormCardSubmit';
-import FormCardTitle from '@/components/FormCardTitle';
-import FormCard from '@/components/FormCard';
 import Input from '@/components/Input';
+import FormCard from '@/components/FormCard';
+import AppLayout from '@/components/AppLayout';
 import FormError from '@/components/FormError';
+import FormCardTitle from '@/components/FormCardTitle';
+import FormCardSubmit from '@/components/FormCardSubmit';
+import { useUser } from 'store/hooks';
 
 interface Props {}
 
-const App: NextPage<Props> = () => {
+const Login: NextPage<Props> = () => {
+  const { login } = useUser();
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const parsedForm = parseForm(e);
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(parsedForm),
-    });
-    const data = await res.json();
+    const { email, password, remember } = parseForm(e);
 
-    if (data.error) {
-      setError(
-        {
-          Unauthorized: 'المعلومات غير صحيحة',
-          'Not Found': 'المستخدم غير مسجل',
-        }[data.error] || 'نعتذر حدث خطأ ما.'
-      );
-      return;
-    }
-
-    if (data.data) {
+    try {
+      await login(email.toString(), password.toString(), remember?.toString());
       await router.push('/app');
-      return;
+    } catch (error: any) {
+      setError(error.message);
     }
   };
 
@@ -104,4 +89,4 @@ const App: NextPage<Props> = () => {
   );
 };
 
-export default App;
+export default Login;
