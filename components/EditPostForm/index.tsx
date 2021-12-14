@@ -1,11 +1,12 @@
+import React from 'react';
 import dynamic from 'next/dynamic';
-import React, { FormEvent, useState } from 'react';
+import Slug from '@/components/Slug';
 import Input from '@/components/Input';
 import FormBody from '@/components/FormBody';
 import FormHeader from '@/components/FormHeader';
 import FormSubmit from '@/components/FormSubmit';
-import { parseForm } from 'lib/helpers';
 import { usePost } from 'store/hooks';
+import { debounce } from 'lodash';
 
 const Quill = dynamic(() => import('@/components/Quill'), {
   ssr: false,
@@ -13,8 +14,6 @@ const Quill = dynamic(() => import('@/components/Quill'), {
 
 const EditPostForm = () => {
   const { postForm, setPostFormField, savePostFormChanges } = usePost();
-
-  console.log('EditPostForm', postForm);
 
   return (
     <form
@@ -28,8 +27,18 @@ const EditPostForm = () => {
         <Input
           type="text"
           name="title"
-          defaultValue={postForm.title}
+          value={postForm.title}
+          onChange={({ target: { value } }) => {
+            setPostFormField({ title: value });
+          }}
           placeholder="العنوان"
+        />
+
+        <Slug
+          title={postForm.title}
+          onChange={debounce((slug) => {
+            setPostFormField({ slug });
+          }, 500)}
         />
 
         <Quill
