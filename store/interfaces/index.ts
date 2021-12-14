@@ -1,6 +1,7 @@
+export * from './ui';
 export * from './post';
 export * from './user';
-import { PostState, UserState } from '.';
+import { UIState, PostState, UserState } from '.';
 
 export interface Action {
   type: string;
@@ -8,6 +9,7 @@ export interface Action {
 }
 
 export interface AppState {
+  ui: UIState;
   post: PostState;
   user: UserState;
 }

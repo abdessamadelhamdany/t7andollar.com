@@ -19,15 +19,16 @@ const initialState: PostState = {
 };
 
 const postReducer = (state = initialState, action: Action) => {
-  if (INITIALIZE_POST_FORM) {
-    return { ...state, postForm: action.payload };
-  }
+  switch (action.type) {
+    case INITIALIZE_POST_FORM:
+      return { ...state, postForm: action.payload };
 
-  if (SET_POST_FORM_FIELD) {
-    return { ...state, postForm: { ...state.postForm, ...action.payload } };
-  }
+    case SET_POST_FORM_FIELD:
+      return { ...state, postForm: { ...state.postForm, ...action.payload } };
 
-  return state;
+    default:
+      return state;
+  }
 };
 
 export default postReducer;

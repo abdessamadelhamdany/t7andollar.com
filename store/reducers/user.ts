@@ -5,12 +5,14 @@ const initialState: UserState = {
   authUser: null,
 };
 
-const postReducer = (state = initialState, action: Action) => {
-  if (INITIALIZE_AUTH_USER) {
-    return { ...state, authUser: action.payload };
-  }
+const userReducer = (state = initialState, action: Action) => {
+  switch (action.type) {
+    case INITIALIZE_AUTH_USER:
+      return { ...state, authUser: action.payload };
 
-  return state;
+    default:
+      return state;
+  }
 };
 
-export default postReducer;
+export default userReducer;
