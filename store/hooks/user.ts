@@ -35,12 +35,28 @@ export const useUser = () => {
     });
   };
 
-  const initializeAuthUser = (payload: AuthUser) => {
+  const logout = () => {
+    return new Promise<void>(async (resolve, reject) => {
+      const res = await fetch('/api/logout', { method: 'POST' });
+      const { error } = await res.json();
+      if (error) {
+        reject(error);
+        return;
+      }
+
+      initializeAuthUser(null);
+
+      resolve();
+    });
+  };
+
+  const initializeAuthUser = (payload: AuthUser | null) => {
     dispatch({ type: INITIALIZE_AUTH_USER, payload });
   };
 
   return {
     login,
+    logout,
     initializeAuthUser,
     authUser,
   };

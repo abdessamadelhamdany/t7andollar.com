@@ -1,10 +1,19 @@
 import router from 'next/router';
 import React, { MouseEvent } from 'react';
+import { useUser } from 'store/hooks';
 
 const LogoutButton = () => {
+  const { logout } = useUser();
+
   const handleLogout = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    await fetch('/api/logout', { method: 'POST' });
+
+    try {
+      await logout();
+    } catch (error) {
+      console.error(error);
+    }
+
     await router.push('/');
   };
 
@@ -16,7 +25,8 @@ const LogoutButton = () => {
       <style jsx>
         {`
           button {
-            padding: 0.8rem 1rem;
+            padding: 0.25rem 1rem;
+            font-size: 0.875rem;
             transition: all 0.15s;
             border: 1px solid #5da731;
             color: rgb(255, 255, 255);

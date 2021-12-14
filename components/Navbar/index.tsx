@@ -1,8 +1,11 @@
 import Link from 'next/link';
 import React, { FC } from 'react';
+import { useUser } from 'store/hooks';
 import LogoutButton from '../LogoutButton';
 
-const index: FC = () => {
+const Navbar: FC = () => {
+  const { authUser } = useUser();
+
   return (
     <nav className="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom border-gray shadow-sm">
       <div className="container">
@@ -16,14 +19,14 @@ const index: FC = () => {
           className="navbar-toggler collapsed"
           type="button"
           data-toggle="collapse"
-          data-target="#navbarColor02"
-          aria-controls="navbarColor02"
+          data-target="#main-navbar"
+          aria-controls="main-navbar"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="navbar-collapse collapse" id="navbarColor02">
+        <div className="navbar-collapse collapse" id="main-navbar">
           <ul className="navbar-nav mr-auto d-flex align-items-center">
             <li className="nav-item">
               <Link href="/category/freelancing">
@@ -50,9 +53,11 @@ const index: FC = () => {
                 <a className="nav-link">أخبار تقنية</a>
               </Link>
             </li>
-            <li className="nav-item">
-              <LogoutButton />
-            </li>
+            {authUser && (
+              <li className="nav-item">
+                <LogoutButton />
+              </li>
+            )}
           </ul>
         </div>
       </div>
@@ -60,4 +65,4 @@ const index: FC = () => {
   );
 };
 
-export default index;
+export default Navbar;
