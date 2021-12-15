@@ -15,10 +15,6 @@ const AppLayout: FC = ({ children }) => {
             min-height: 100vh;
             background: #ededed;
           }
-          .app-layout > .container {
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-          }
         `}
       </style>
     </>
