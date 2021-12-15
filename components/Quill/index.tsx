@@ -23,14 +23,14 @@ const onImageInputChange = async (fileInput: HTMLInputElement) => {
     return;
   }
 
-  if (!fileInput.files || fileInput.files.length <= 0) {
+  if (!fileInput.files || fileInput.files.length === 0) {
+    console.warn('files list is empty');
     return;
   }
 
   var formData = new FormData();
   for (let i = 0; i < fileInput.files.length; i++) {
     const file = fileInput.files[i];
-    console.log(file);
     formData.append('photos', file);
   }
 

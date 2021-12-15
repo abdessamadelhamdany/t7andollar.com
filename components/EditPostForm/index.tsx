@@ -72,9 +72,10 @@ const EditPostForm = () => {
         <Label htmlFor="thumbnail">الصورة المصغرة</Label>
         <PhotoUploader
           id="thumbnail"
+          name="photo"
           uploadUrl="/api/upload/photo"
-          onPhotoUploaded={(url) => {
-            console.log('uploaded:', url);
+          onPhotoUploaded={(uploadedPhoto) => {
+            console.log('uploaded:', uploadedPhoto);
           }}
         />
 

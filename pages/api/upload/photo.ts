@@ -7,10 +7,11 @@ import * as dateFn from 'date-fns';
 import prisma from 'lib/prisma';
 import { NextApiRequest, NextApiResponse } from 'interfaces';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { Upload } from '@prisma/client';
 
 interface Data {
   error?: string;
-  location?: string;
+  data?: Upload;
 }
 
 /** Setup next connect */
@@ -72,12 +73,12 @@ const upload = multer({
 
 /** Register midllewares */
 const multerWithErrorHandling = async (req, res, next) => {
-  const uploader = upload.single('file');
+  const uploader = upload.single('photo');
 
   uploader(req as any, res as any, (error) => {
     if (!req.file) {
       res.status(StatusCodes.BAD_REQUEST).json({
-        error: 'The file field is required.',
+        error: 'The photo field is required.',
       });
       return;
     }
@@ -119,10 +120,7 @@ handler.post(async (req, res) => {
   });
 
   res.json({
-    location: `${process.env.APP_URL}${uploadedFile.path.replace(
-      'public',
-      ''
-    )}`,
+    data: uploadedFile,
   });
 });
 
