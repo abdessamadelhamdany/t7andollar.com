@@ -84,11 +84,11 @@ const EditPostForm = () => {
         <TextArea
           id="excerpt"
           rows={3}
+          placeholder="المقتبس"
           value={postForm.excerpt || ''}
           onChange={({ target: { value } }) => {
             setPostFormField({ excerpt: value });
           }}
-          placeholder="المقتبس"
         />
 
         <Label htmlFor="keywords">الكلمات المفتاحية</Label>

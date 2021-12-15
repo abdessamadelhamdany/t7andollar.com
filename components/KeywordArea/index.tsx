@@ -46,7 +46,9 @@ const KeywordArea: FC<Props> = ({ keywords = [], onChange }) => {
       <style jsx>
         {`
           .keyword-area {
+            gap: 0.5rem;
             display: flex;
+            padding: 0.5rem;
             align-items: center;
             margin-bottom: 1rem;
             background: rgb(255, 255, 255);
@@ -54,6 +56,7 @@ const KeywordArea: FC<Props> = ({ keywords = [], onChange }) => {
           }
 
           .keyword-area-list {
+            gap: 0.5rem;
             display: flex;
             flex-wrap: wrap;
           }
@@ -61,6 +64,8 @@ const KeywordArea: FC<Props> = ({ keywords = [], onChange }) => {
           .keyword-area-list span {
             padding: 0.25rem;
             white-space: nowrap;
+            background-color: #ededed;
+            font-size: 0.8125rem;
           }
 
           textarea {
@@ -68,6 +73,7 @@ const KeywordArea: FC<Props> = ({ keywords = [], onChange }) => {
             resize: none;
             display: flex;
             min-width: 250px;
+            font-size: 1rem;
             align-items: center;
             padding: 0.75rem 0.5rem;
             border: 1px solid transparent;
