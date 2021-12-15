@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
-import posts from '../data/posts';
+import posts from 'data/posts';
 
 const prisma = new PrismaClient();
 

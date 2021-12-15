@@ -9,6 +9,7 @@ import { usePost } from 'store/hooks';
 import { debounce } from 'lodash';
 import TextArea from '@/components/TextArea';
 import Label from '@/components/Label';
+import PhotoUploader from '@/components/PhotoUploader';
 
 const Quill = dynamic(() => import('@/components/Quill'), {
   ssr: false,
@@ -66,6 +67,15 @@ const EditPostForm = () => {
           placeholder="المحتوى"
           content={postForm.body || ''}
           setContent={(content) => setPostFormField({ body: content })}
+        />
+
+        <Label htmlFor="thumbnail">الصورة المصغرة</Label>
+        <PhotoUploader
+          id="thumbnail"
+          uploadUrl="/api/upload/photo"
+          onPhotoUploaded={(url) => {
+            console.log('uploaded:', url);
+          }}
         />
 
         <Label htmlFor="excerpt">المقتبس</Label>

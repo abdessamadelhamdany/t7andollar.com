@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { FC } from 'react';
 import { useUser } from 'store/hooks';
-import LogoutButton from '../LogoutButton';
+import LogoutButton from '@/components/LogoutButton';
 
 const Navbar: FC = () => {
   const { authUser } = useUser();

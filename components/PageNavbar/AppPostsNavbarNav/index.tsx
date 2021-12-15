@@ -17,6 +17,7 @@ const AppPostsNavbarNav = () => {
           }
           a {
             font-size: 0.875rem;
+            border-bottom: 2px solid transparent;
           }
           a:hover,
           a.active {

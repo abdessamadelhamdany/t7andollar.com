@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import slugify from 'lib/slugify';
-import Input from '../Input';
+import Input from '@/components/Input';
 
 interface Props {
   title?: string;

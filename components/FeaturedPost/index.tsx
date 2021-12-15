@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import Link from 'next/link';
-import { Post } from '../../interfaces';
+import { Post } from 'interfaces';
 import classes from './featured-post.module.scss';
 
 interface Props {

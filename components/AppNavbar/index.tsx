@@ -49,6 +49,7 @@ const AppNavbar = () => {
           }
           .app-navbar a {
             font-size: 0.875rem;
+            border-bottom: 2px solid transparent;
           }
           .app-navbar a:hover,
           .app-navbar a.active {

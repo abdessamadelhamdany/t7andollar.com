@@ -12,6 +12,7 @@ const PageNavbar: FC = ({ children }) => {
             padding: 0.5rem 1rem;
             border-top: 5px solid #ededed !important;
             z-index: 10;
+            margin-bottom: 1rem;
           }
           .page-navbar-nav {
             display: flex;

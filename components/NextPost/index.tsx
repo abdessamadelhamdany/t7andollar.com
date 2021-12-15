@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React, { FC } from 'react';
-import { Post } from '../../interfaces';
+import { Post } from 'interfaces';
 
 interface Props {
   post: Post;

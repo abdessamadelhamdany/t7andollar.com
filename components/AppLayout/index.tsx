@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react';
 import AppNavbar from '@/components/AppNavbar';
-import PageNavbar from '../PageNavbar';
+import PageNavbar from '@/components/PageNavbar';
 
 interface Props {
   pageNavbarNav: ReactNode;
