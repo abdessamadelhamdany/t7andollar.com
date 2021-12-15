@@ -9,6 +9,7 @@ import { usePost } from 'store/hooks';
 import { debounce } from 'lodash';
 import TextArea from '@/components/TextArea';
 import Label from '@/components/Label';
+import KeywordArea from '@/components/KeywordArea';
 import PhotoUploader from '@/components/PhotoUploader';
 
 const Quill = dynamic(() => import('@/components/Quill'), {
@@ -91,6 +92,13 @@ const EditPostForm = () => {
         />
 
         <Label htmlFor="keywords">الكلمات المفتاحية</Label>
+        <KeywordArea
+          keywords={postForm.keywords}
+          onChange={(keywords) => {
+            setPostFormField({ keywords });
+          }}
+        />
+
         <Label htmlFor="tags">الكلمات الدالية</Label>
         <Label htmlFor="categories">التصنيفات</Label>
       </FormBody>

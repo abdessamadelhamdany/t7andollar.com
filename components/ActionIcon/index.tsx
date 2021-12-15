@@ -1,9 +1,8 @@
 import React, { FC, ButtonHTMLAttributes } from 'react';
 
-const ActionIcon: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
-  children,
-  ...props
-}) => (
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {}
+
+const ActionIcon: FC<Props> = ({ children, ...props }) => (
   <>
     <button type="button" {...props}>
       {children}

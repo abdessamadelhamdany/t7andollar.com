@@ -32,7 +32,7 @@ const PhotoUploader: FC<Props> = ({ id, name, uploadUrl, onPhotoUploaded }) => {
     formData.append('photo', file);
 
     try {
-      const res = await fetch('/api/upload/photo', {
+      const res = await fetch(uploadUrl, {
         method: 'POST',
         body: formData,
       });
@@ -140,8 +140,7 @@ const PhotoUploader: FC<Props> = ({ id, name, uploadUrl, onPhotoUploaded }) => {
           }
 
           .photo-uploader-control:hover {
-            border-color: #ededed;
-            background-color: #f5f5f5;
+            border-color: #5da731;
           }
 
           .photo-uploader-control svg {
