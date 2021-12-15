@@ -5,9 +5,6 @@ import { useRouter } from 'next/router';
 const AppNavbar = () => {
   const router = useRouter();
 
-  console.log(router.asPath);
-  console.log(router);
-
   return (
     <>
       <nav className="app-navbar bg-white border-bottom border-gray">

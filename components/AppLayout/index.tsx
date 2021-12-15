@@ -1,12 +1,21 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import AppNavbar from '@/components/AppNavbar';
+import PageNavbar from '../PageNavbar';
 
-const AppLayout: FC = ({ children }) => {
+interface Props {
+  pageNavbarNav: ReactNode;
+}
+
+const AppLayout: FC<Props> = ({ children, pageNavbarNav }) => {
   return (
     <>
       <div className="app-layout">
         <AppNavbar />
-        <div className="container">{children}</div>
+
+        <div className="container">
+          <PageNavbar>{pageNavbarNav}</PageNavbar>
+          {children}
+        </div>
       </div>
 
       <style jsx>
