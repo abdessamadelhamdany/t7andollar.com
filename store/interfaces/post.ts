@@ -1,18 +1,12 @@
-export interface PostForm {
-  id?: number;
-  createdAt?: string;
-  updatedAt?: string;
-  title?: string;
-  slug?: string;
-  excerpt?: string;
-  thumbnail?: string;
-  body?: string;
-  published?: boolean;
-  keywords?: string[];
-  categories?: number[];
-  tags?: number[];
+import { Category, Tag, Post } from '@prisma/client';
+
+export interface PostForm extends Partial<Post> {
+  categories?: Category[];
+  tags?: Tag[];
 }
 
 export interface PostState {
   postForm: PostForm;
+  categories: Category[];
+  tags: Tag[];
 }

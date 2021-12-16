@@ -35,6 +35,11 @@ const FormAction: FC<Props> = ({ children, variant, ...props }) => {
             box-shadow: 0 0 4px -3px rgba(0, 0, 0, 0.62);
           }
 
+          button:focus {
+            outline: none;
+          }
+
+          button:focus,
           button:hover {
             color: ${variantColors[variant].text.hover};
             background-color: ${variantColors[variant].bg.hover};

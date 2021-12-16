@@ -11,7 +11,6 @@ const Label: FC<LabelHTMLAttributes<HTMLLabelElement>> = ({
         {`
           label {
             display: block;
-            font-size: 0.875rem;
             font-weight: 700;
           }
         `}

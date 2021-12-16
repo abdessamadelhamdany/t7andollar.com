@@ -1,11 +1,13 @@
 import { Action, PostState } from 'store/interfaces';
-import { INITIALIZE_POST_FORM, SET_POST_FORM_FIELD } from 'store/types';
+import {
+  INITIALIZE_POST_DEPS,
+  INITIALIZE_POST_FORM,
+  SET_POST_FORM_FIELD,
+} from 'store/types';
 
 const initialState: PostState = {
   postForm: {
     id: 0,
-    createdAt: '',
-    updatedAt: '',
     title: '',
     slug: '',
     excerpt: '',
@@ -16,6 +18,8 @@ const initialState: PostState = {
     categories: [],
     tags: [],
   },
+  categories: [],
+  tags: [],
 };
 
 const postReducer = (state = initialState, action: Action) => {
@@ -24,7 +28,17 @@ const postReducer = (state = initialState, action: Action) => {
       return { ...state, postForm: action.payload };
 
     case SET_POST_FORM_FIELD:
-      return { ...state, postForm: { ...state.postForm, ...action.payload } };
+      const newFields = { ...action.payload };
+      const newPostForm = { ...state.postForm, ...newFields };
+
+      return { ...state, postForm: newPostForm };
+
+    case INITIALIZE_POST_DEPS:
+      return {
+        ...state,
+        categories: action.payload.categories,
+        tags: action.payload.tags,
+      };
 
     default:
       return state;

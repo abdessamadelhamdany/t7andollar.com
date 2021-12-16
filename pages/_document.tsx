@@ -6,7 +6,6 @@ import Document, {
   DocumentContext,
 } from 'next/document';
 import Favicon from '@/components/Meta/Favicon';
-import MundanaHead from '@/components/Meta/MundanaHead';
 import { AuthUser } from 'store/interfaces';
 import { parseCookies } from 'lib/helpers';
 
@@ -42,7 +41,6 @@ class MyDocument extends Document {
     return (
       <Html lang="ar" dir="rtl">
         <Head>
-          <MundanaHead />
           <Favicon />
         </Head>
         <body>

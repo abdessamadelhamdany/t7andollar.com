@@ -1,7 +1,7 @@
 import 'quill/dist/quill.snow.css';
-import Quill from 'quill';
 import { debounce } from 'lodash';
-import React, { ChangeEvent, useEffect, useRef } from 'react';
+import Quill from 'quill';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { HLJS_LANGUAGES } from 'lib/constants';
 import classes from './quill.module.scss';
 
@@ -13,8 +13,8 @@ window.hljs.configure({
 
 interface Props {
   content: string;
-  placeholder?: string;
   setContent?: (content: string) => void;
+  placeholder?: string;
 }
 
 const onImageInputChange = async (fileInput: HTMLInputElement) => {
@@ -40,7 +40,6 @@ const onImageInputChange = async (fileInput: HTMLInputElement) => {
   });
   const { data: uploadedPhotos } = await res.json();
 
-  // TODO: insert images to the editor
   const range = quill.getSelection();
   uploadedPhotos.forEach(({ path, alt } = { path: '', alt: '' }) => {
     quill.insertEmbed(range.index, 'image', path.replace('public', ''));
@@ -48,7 +47,7 @@ const onImageInputChange = async (fileInput: HTMLInputElement) => {
   });
 };
 
-export default function W3Editor({ content, placeholder, setContent }: Props) {
+export default function W3Editor({ content, setContent, placeholder }: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const toolbarRef = useRef<HTMLDivElement | null>(null);
 
@@ -91,7 +90,7 @@ export default function W3Editor({ content, placeholder, setContent }: Props) {
     /** Syncronize editor content state */
     quill.on(
       'text-change',
-      debounce(() => {
+      debounce(async () => {
         const html = quill.root.innerHTML;
         setContent && setContent(html);
       }, 500)

@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
-import ActionIcon from '@/components/ActionIcon';
-import { XIcon } from '@heroicons/react/solid';
+import AreaList from '@/components/AreaList';
 
 interface Props {
   keywords?: string[];
@@ -13,25 +12,18 @@ const KeywordArea: FC<Props> = ({ keywords = [], onChange }) => {
   return (
     <>
       <div className="keyword-area">
-        <div className="keyword-area-list">
-          {keywords.map((keyword, idx) => (
-            <span key={idx}>
-              {keyword}
-              <ActionIcon
-                onClick={(e) => {
-                  e.preventDefault();
-                  onChange(keywords.filter((k) => k !== keyword));
-                }}
-              >
-                <XIcon height={18} />
-              </ActionIcon>
-            </span>
-          ))}
-        </div>
+        <AreaList
+          items={keywords}
+          onItemRemoved={(keyword) => {
+            onChange(keywords.filter((k) => k !== keyword));
+          }}
+        />
+
         <textarea
           rows={1}
           value={value}
           placeholder="الكلمة المفتاحية"
+          autoComplete="off"
           onKeyDown={(e) => {
             if (e.code === 'Enter') {
               e.preventDefault();
@@ -53,19 +45,6 @@ const KeywordArea: FC<Props> = ({ keywords = [], onChange }) => {
             margin-bottom: 1rem;
             background: rgb(255, 255, 255);
             border: 1px solid rgb(243, 243, 243);
-          }
-
-          .keyword-area-list {
-            gap: 0.5rem;
-            display: flex;
-            flex-wrap: wrap;
-          }
-
-          .keyword-area-list span {
-            padding: 0.25rem;
-            white-space: nowrap;
-            background-color: #ededed;
-            font-size: 0.8125rem;
           }
 
           textarea {

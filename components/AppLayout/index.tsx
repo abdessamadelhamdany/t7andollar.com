@@ -3,7 +3,7 @@ import AppNavbar from '@/components/AppNavbar';
 import PageNavbar from '@/components/PageNavbar';
 
 interface Props {
-  pageNavbarNav: ReactNode;
+  pageNavbarNav?: ReactNode;
 }
 
 const AppLayout: FC<Props> = ({ children, pageNavbarNav }) => {
@@ -13,7 +13,7 @@ const AppLayout: FC<Props> = ({ children, pageNavbarNav }) => {
         <AppNavbar />
 
         <div className="container">
-          <PageNavbar>{pageNavbarNav}</PageNavbar>
+          {pageNavbarNav && <PageNavbar>{pageNavbarNav}</PageNavbar>}
           {children}
         </div>
       </div>

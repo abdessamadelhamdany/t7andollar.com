@@ -48,7 +48,6 @@ const AppNavbar = () => {
             flex-wrap: wrap;
           }
           .app-navbar a {
-            font-size: 0.875rem;
             border-bottom: 2px solid transparent;
           }
           .app-navbar a:hover,

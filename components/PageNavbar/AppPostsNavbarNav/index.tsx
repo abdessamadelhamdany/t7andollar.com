@@ -1,22 +1,24 @@
 import React from 'react';
 import Link from 'next/link';
+import { PlusIcon } from '@heroicons/react/solid';
 
 const AppPostsNavbarNav = () => {
   return (
     <>
       <Link href="/app/posts/new">
         <a>
-          <i className="fa fa-plus" aria-hidden="true"></i>
+          <span className="plus-icon">
+            <PlusIcon height={18} />
+          </span>
           مقال جديد
         </a>
       </Link>
       <style jsx>
         {`
-          .fa-plus {
+          .plus-icon {
             margin-left: 0.5rem;
           }
           a {
-            font-size: 0.875rem;
             border-bottom: 2px solid transparent;
           }
           a:hover,

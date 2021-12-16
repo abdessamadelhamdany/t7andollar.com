@@ -17,6 +17,12 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
+        <meta charSet="utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
+          name="viewport"
+        />
         <title>{title('تعرف على طرق الربح من الانترنت')}</title>
       </Head>
 

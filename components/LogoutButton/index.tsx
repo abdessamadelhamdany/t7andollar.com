@@ -26,7 +26,6 @@ const LogoutButton = () => {
         {`
           button {
             padding: 0.25rem 1rem;
-            font-size: 0.875rem;
             transition: all 0.15s;
             border: 1px solid #5da731;
             color: rgb(255, 255, 255);
