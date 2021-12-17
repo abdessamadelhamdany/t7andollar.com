@@ -1,6 +1,6 @@
 import innertext from 'innertext';
 import readingTime from 'reading-time';
-import { Post } from '@prisma/client';
+import { Post, Prisma } from '@prisma/client';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import prisma from 'lib/prisma';
 import { NextApiHandler } from 'interfaces';
@@ -83,6 +83,15 @@ const updatePostHandler: NextApiHandler = async (req, res) => {
     res.send({ data: updatedPost });
   } catch (error: any) {
     console.error(error.message);
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        res.status(StatusCodes.BAD_REQUEST).json({
+          error: ReasonPhrases.BAD_REQUEST,
+        });
+        return;
+      }
+    }
+
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: ReasonPhrases.INTERNAL_SERVER_ERROR,
     });

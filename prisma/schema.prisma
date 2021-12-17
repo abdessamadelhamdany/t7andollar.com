@@ -63,12 +63,14 @@ model Comment {
 model Category {
   id    Int    @id @default(autoincrement())
   name  String
+  slug  String @unique
   posts Post[] @relation(references: [id])
 }
 
 model Tag {
   id    Int    @id @default(autoincrement())
   name  String
+  slug  String @unique
   posts Post[] @relation(references: [id])
 }
 

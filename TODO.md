@@ -1,4 +1,7 @@
 [x] Add thumbnail uploader
 [x] Add Keywords component
-[] Add Categories/Tags management page
-[] Add Categories/Tags dropdown to post form
+[x] Add Tags dropdown to post form
+[x] Add Categories dropdown to post form
+[x] Add Categories management page
+[] Add Tags management page
+[] Change Excerpt to description and generate excerpts using https://www.npmjs.com/package/excerpt

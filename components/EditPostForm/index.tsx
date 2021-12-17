@@ -136,8 +136,11 @@ const EditPostForm = () => {
                 options={tags}
                 placeholder="الكلمات الدالية"
                 selectedOptions={postForm.tags}
-                selectedOptionsChange={(tags) => {
-                  setPostFormField({ tags });
+                selectedOptionsChange={(options) => {
+                  const tagIds = options.map((opt) => opt.id);
+                  setPostFormField({
+                    tags: tags.filter((tag) => tagIds.includes(tag.id)),
+                  });
                 }}
               />
             </>
@@ -150,8 +153,13 @@ const EditPostForm = () => {
                 options={categories}
                 placeholder="التصنيفات"
                 selectedOptions={postForm.categories}
-                selectedOptionsChange={(categories) => {
-                  setPostFormField({ categories });
+                selectedOptionsChange={(options) => {
+                  const categoryIds = options.map((opt) => opt.id);
+                  setPostFormField({
+                    categories: categories.filter((category) =>
+                      categoryIds.includes(category.id)
+                    ),
+                  });
                 }}
               />
             </>
