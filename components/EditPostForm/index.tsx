@@ -146,7 +146,7 @@ const EditPostForm = () => {
             </>
           )}
 
-          {tags.length > 0 && (
+          {categories.length > 0 && (
             <>
               <Label htmlFor="categories">التصنيفات</Label>
               <ManyRelationArea
