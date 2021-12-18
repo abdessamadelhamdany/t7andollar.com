@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { Post } from '../interfaces';
+import { Post } from 'interfaces';
 import NextPost from '@/components/NextPost';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import { title } from 'lib/helpers';

@@ -2,7 +2,21 @@ import Cookies from 'cookies';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import prisma from 'lib/prisma';
-import { NextApiMiddleware } from 'interfaces';
+import { NextApiMiddleware, NextApiResponse, ResponseData } from 'interfaces';
+
+const unauthorizedResponse = (
+  res: NextApiResponse<ResponseData>,
+  cookies: Cookies
+) => {
+  cookies.set('jwt-token', '', {
+    httpOnly: true,
+    expires: new Date('0000'),
+  });
+
+  res.status(StatusCodes.UNAUTHORIZED).json({
+    error: ReasonPhrases.UNAUTHORIZED,
+  });
+};
 
 export const authenticated: NextApiMiddleware = (handler) => {
   return async (req, res) => {
@@ -10,9 +24,7 @@ export const authenticated: NextApiMiddleware = (handler) => {
     const jwtToken = cookies.get('jwt-token');
 
     if (!jwtToken) {
-      res.status(StatusCodes.UNAUTHORIZED).json({
-        error: ReasonPhrases.UNAUTHORIZED,
-      });
+      unauthorizedResponse(res, cookies);
       return;
     }
 
@@ -21,27 +33,24 @@ export const authenticated: NextApiMiddleware = (handler) => {
     try {
       decoded = jwt.verify(jwtToken, process.env.JWT_SECRET) as JwtPayload;
     } catch (error) {
-      cookies.set('jwt-token', '', {
-        httpOnly: true,
-        expires: new Date('0000'),
-      });
+      unauthorizedResponse(res, cookies);
 
-      res.status(StatusCodes.UNAUTHORIZED).json({
-        error: ReasonPhrases.UNAUTHORIZED,
-      });
       return;
     }
 
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
       where: {
         id: decoded._id,
+        tokens: {
+          some: {
+            token: jwtToken,
+          },
+        },
       },
     });
 
     if (!user) {
-      res.status(StatusCodes.NOT_FOUND).json({
-        error: ReasonPhrases.NOT_FOUND,
-      });
+      unauthorizedResponse(res, cookies);
       return;
     }
 

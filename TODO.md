@@ -1,24 +1,13 @@
-- RichText editor
+[x] Add thumbnail uploader
+[x] Add Keywords component
+[x] Add Tags dropdown to post form
+[x] Add Categories dropdown to post form
+[x] Add Categories management page
+[x] Add Tags management page
+[x] Update Post on database
+[] Change Excerpt to description and generate excerpts using https://www.npmjs.com/package/excerpt
+[] Add table content to articles
 
-  1. UL
-  2. OL
-  3. Strikethrought
-  4. Code
-  5. Inline Code
-  6. Image
-  7. Quote
-  8. Heading
+# Not crucial
 
-- Mutations
-
-  1. Login user
-  1. Create new empty post
-  1. Save post changes
-  1. Delete post
-  1. Media library
-  1. Handle image upload (CommandImage)
-
-- Authentication
-  1. Use Auth0 to authenticate as an admin
-  2. Add ability to add editors
-  3. Editor can only manage his posts
+[] Make service for crud operations

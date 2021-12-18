@@ -12,8 +12,8 @@ const FormCard: FC<{ maxWidth?: string }> = ({
           div {
             padding: 3rem 1rem;
             text-align: center;
-            background-color: white;
             margin: 0 auto;
+            background-color: white;
             max-width: ${maxWidth};
           }
         `}

@@ -1,43 +1,42 @@
 import Cookies from 'cookies';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import prisma from 'lib/prisma';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { NextApiHandler } from 'interfaces';
+import { authenticated } from 'middlewares';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  switch (req.method) {
-    case 'POST':
-      const cookies = new Cookies(req, res);
-      const jwtToken = cookies.get('jwt-token');
+const logoutHandler: NextApiHandler = async (req, res) => {
+  try {
+    const cookies = new Cookies(req, res);
+    const jwtToken = cookies.get('jwt-token');
 
-      if (!jwtToken) {
-        res.status(StatusCodes.UNAUTHORIZED).json({
-          error: ReasonPhrases.UNAUTHORIZED,
-        });
-        return;
-      }
+    await prisma.token.deleteMany({
+      where: {
+        token: jwtToken,
+        userId: req.user?.id,
+      },
+    });
 
-      const decoded = jwt.verify(
-        jwtToken,
-        process.env.JWT_SECRET
-      ) as JwtPayload;
+    cookies.set('jwt-token', '', {
+      httpOnly: true,
+      expires: new Date('0000'),
+    });
 
-      await prisma.token.deleteMany({
-        where: {
-          token: jwtToken,
-          userId: decoded._id,
-        },
-      });
-
-      cookies.set('jwt-token', '', {
-        httpOnly: true,
-        expires: new Date('0000'),
-      });
-
-      res.json({});
-      break;
-    default:
-      res.setHeader('Allow', ['GET', 'PUT']);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
+    res.json({});
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: ReasonPhrases.INTERNAL_SERVER_ERROR,
+    });
   }
 };
+
+const handler: NextApiHandler = async (req, res) => {
+  if (req.method === 'POST') {
+    await authenticated(logoutHandler)(req, res);
+    return;
+  }
+
+  res.setHeader('Allow', ['GET', 'PUT']);
+  res.status(405).end(`Method ${req.method} Not Allowed`);
+};
+
+export default handler;

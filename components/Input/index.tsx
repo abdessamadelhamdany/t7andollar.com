@@ -10,7 +10,7 @@ const Input: FC<InputHTMLAttributes<HTMLInputElement>> = ({ ...props }) => {
           input[type='email'],
           input[type='password'] {
             width: 100%;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
           }
           input[type='checkbox'] {
             margin-left: 0.5rem;

@@ -1,7 +1,12 @@
+import { HLJSApi } from 'highlight.js';
 import { PrismaClient } from '@prisma/client';
 
 declare global {
   var prisma: PrismaClient | undefined;
+
+  interface Window {
+    hljs: HLJSApi;
+  }
 
   namespace NodeJS {
     interface ProcessEnv {

@@ -4,7 +4,7 @@ import { title } from 'lib/helpers';
 import PostPreview from '@/components/PostPreview';
 import FeaturedPost from '@/components/FeaturedPost';
 import AdPlaceholder from '@/components/AdPlaceholder';
-import { Post } from '../interfaces';
+import { Post } from 'interfaces';
 
 const featuredPost: Post = {
   id: 1,

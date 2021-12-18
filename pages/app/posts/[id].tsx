@@ -1,81 +1,58 @@
-import { NextPage } from 'next';
-import dynamic from 'next/dynamic';
-import React, { FormEvent } from 'react';
-import Input from '@/components/Input';
-import FormBody from '@/components/FormBody';
+import React, { useEffect, useState } from 'react';
+import { GetServerSideProps, NextPage } from 'next';
+import { usePost } from 'store/hooks';
+import { InitialPostState, PostForm } from 'store/interfaces';
 import AppLayout from '@/components/AppLayout';
-import FormHeader from '@/components/FormHeader';
-import FormSubmit from '@/components/FormSubmit';
-import { parseForm } from 'lib/helpers';
+import EditPostForm from '@/components/EditPostForm';
 
-const RichText = dynamic(() => import('@/components/RichText'), {
-  ssr: false,
-});
+interface Props extends ServerProps {}
 
-interface Props {
-  post: {
-    id: number;
-  };
-}
+const EditPost: NextPage<Props> = ({ initialState }) => {
+  const { postForm, initializePostSate } = usePost();
 
-const EditPost: NextPage<Props> = ({ post }) => {
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const data = parseForm(e);
-    // TODO: save data
-  };
+  useEffect(() => {
+    initializePostSate(initialState);
+  }, []);
 
-  console.log('post', post);
-
-  return (
-    <AppLayout>
-      <form onSubmit={handleSubmit}>
-        <FormHeader>
-          <FormSubmit>حفظ</FormSubmit>
-        </FormHeader>
-
-        <FormBody>
-          <Input type="text" name="title" placeholder="العنوان" />
-          <RichText dir="RTL" initialHTML="<p>مرحبا بكم بجوجل</p>" />
-        </FormBody>
-      </form>
-    </AppLayout>
-  );
+  return <AppLayout>{!!postForm.id ? <EditPostForm /> : null}</AppLayout>;
 };
 
-export async function getStaticProps({ params }) {
-  if (params.id === 'new') {
-    const newPost = { id: 1 };
+interface ServerProps {
+  initialState: InitialPostState;
+}
 
-    // TODO: create new post, and redirect to post detail
+export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
+  params,
+}) => {
+  const postRes = await fetch(`${process.env.APP_URL}/api/posts/${params?.id}`);
+  const { data: post, error: postError } = await postRes.json();
 
-    return {
-      redirect: {
-        destination: `/app/posts/${newPost.id}`,
-        permanent: false,
-      },
-    };
+  const categoriesRes = await fetch(`${process.env.APP_URL}/api/categories`);
+  const { data: categories, error: categoriesError } =
+    await categoriesRes.json();
+
+  const tagsRes = await fetch(`${process.env.APP_URL}/api/tags`);
+  const { data: tags, error: tagsError } = await tagsRes.json();
+
+  if (postError || categoriesError | tagsError) {
+    const error = `
+    postError: ${postError}
+    categoriesError: ${categoriesError}
+    tagsError: ${tagsError}
+    `;
+    console.error(error);
+    throw Error(error);
   }
 
   return {
     props: {
-      post: {
-        id: 1,
+      initialState: {
+        post,
+        categories,
+        tags,
       },
     },
   };
-}
-
-export async function getStaticPaths() {
-  const posts = [{ id: '1' }, { id: '2' }].concat({ id: 'new' });
-  const paths = posts.map(({ id }) => ({
-    params: { id },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-}
+};
 
 export default EditPost;

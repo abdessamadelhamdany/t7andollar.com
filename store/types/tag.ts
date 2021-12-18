@@ -1,0 +1,5 @@
+export const INITIALIZE_TAGS = 'INITIALIZE_TAGS';
+export const INITIALIZE_TAG_FORM = 'INITIALIZE_TAG_FORM';
+export const SET_TAG_FORM_FIELD = 'SET_TAG_FORM_FIELD';
+export const UPDATE_TAG = 'UPDATE_TAG';
+export const DELETE_TAG = 'DELETE_TAG';

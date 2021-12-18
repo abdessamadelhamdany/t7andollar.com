@@ -6,8 +6,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { User } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import prisma from 'lib/prisma';
-
-interface SafeUser extends Omit<User, 'password'> {}
+import { SafeUser } from 'interfaces/User';
 
 type Data = {
   error?: string;

@@ -1,30 +1,32 @@
-import React, { FormEvent } from 'react';
 import Head from 'next/head';
-import { NextPage, GetStaticPropsResult } from 'next';
+import router from 'next/router';
+import React, { FormEvent, useState } from 'react';
+import { NextPage } from 'next';
 import { parseForm, title } from 'lib/helpers';
-import AppLayout from '@/components/AppLayout';
-import Link from 'next/link';
-import FormCardSubmit from '@/components/FormCardSubmit';
-import FormCardTitle from '@/components/FormCardTitle';
-import FormCard from '@/components/FormCard';
 import Input from '@/components/Input';
+import FormCard from '@/components/FormCard';
+import AppLayout from '@/components/AppLayout';
+import FormError from '@/components/FormError';
+import FormCardTitle from '@/components/FormCardTitle';
+import FormCardSubmit from '@/components/FormCardSubmit';
+import { useUser } from 'store/hooks';
 
-interface Props extends StaticProps {}
+interface Props {}
 
-const App: NextPage<Props> = ({ appUrl }) => {
+const Login: NextPage<Props> = () => {
+  const { login } = useUser();
+  const [error, setError] = useState('');
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const parsedForm = parseForm(e);
-    const res = await fetch(`${appUrl}/api/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(parsedForm),
-    });
-    const data = await res.json();
+    const { email, password, remember } = parseForm(e);
 
-    console.log(data);
+    try {
+      await login(email.toString(), password.toString(), remember?.toString());
+      await router.push('/app');
+    } catch (error: any) {
+      setError(error.message);
+    }
   };
 
   return (
@@ -54,17 +56,22 @@ const App: NextPage<Props> = ({ appUrl }) => {
               placeholder="كلمة السر"
             />
 
-            <label>
+            {error && <FormError>{error}</FormError>}
+
+            <label className="remember-label">
               <Input type="checkbox" name="remember" value="true" />
               تذكرني
             </label>
 
-            <FormCardSubmit>تسجيل الدخول</FormCardSubmit>
+            <FormCardSubmit className="submit">تسجيل الدخول</FormCardSubmit>
           </div>
         </FormCard>
       </form>
       <style jsx>
         {`
+          form {
+            margin-top: 3rem;
+          }
           .input-wrapper {
             max-width: 80%;
             margin: 0 auto;
@@ -73,22 +80,13 @@ const App: NextPage<Props> = ({ appUrl }) => {
             display: flex;
             align-items: center;
           }
+          .remember-label {
+            margin-bottom: 2rem;
+          }
         `}
       </style>
     </AppLayout>
   );
 };
 
-interface StaticProps {
-  appUrl: string;
-}
-
-export async function getStaticProps(): Promise<
-  GetStaticPropsResult<StaticProps>
-> {
-  return {
-    props: { appUrl: process.env.APP_URL },
-  };
-}
-
-export default App;
+export default Login;
