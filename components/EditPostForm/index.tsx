@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { usePost } from 'store/hooks';
 import { debounce } from 'lodash';
+import { updatedDiff } from 'deep-object-diff';
+import React, { useEffect, useState } from 'react';
+import { usePost } from 'store/hooks';
 import Slug from '@/components/Slug';
 import Label from '@/components/Label';
 import Input from '@/components/Input';
@@ -12,6 +13,7 @@ import FormAction from '@/components/FormAction';
 import KeywordArea from '@/components/KeywordArea';
 import PhotoUploader from '@/components/PhotoUploader';
 import ManyRelationArea from '@/components/ManyRelationArea';
+import { PostForm } from 'store/interfaces';
 
 const Quill = dynamic(() => import('@/components/Quill'), {
   ssr: false,
@@ -19,25 +21,41 @@ const Quill = dynamic(() => import('@/components/Quill'), {
 
 const EditPostForm = () => {
   const [autoSaveTracker, setAutoSaveTracker] = useState<NodeJS.Timeout>();
-  const { postForm, categories, tags, setPostFormField, savePostFormChanges } =
-    usePost();
+  const {
+    postForm,
+    post,
+    categories,
+    tags,
+    setPostFormField,
+    savePostFormChanges,
+  } = usePost();
 
   // Autosave after 5s when no changes and onAutoSave was provided
   useEffect(() => {
     autoSaveTracker && clearTimeout(autoSaveTracker);
     setAutoSaveTracker(
       setTimeout(async () => {
-        await savePostFormChanges();
-      }, 1000)
+        await savePost();
+      }, 5000)
     );
   }, [postForm]);
+
+  const savePost = async () => {
+    const data: Partial<PostForm> = updatedDiff(post, postForm);
+    if (!post.id || Object.keys(data).length === 0) {
+      return;
+    }
+
+    return savePostFormChanges(post.id, data);
+  };
 
   return (
     <>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          await savePostFormChanges();
+          autoSaveTracker && clearTimeout(autoSaveTracker);
+          await savePost();
         }}
       >
         <FormHeader>
@@ -52,7 +70,8 @@ const EditPostForm = () => {
                 onClick={async (e) => {
                   e.preventDefault();
                   setPostFormField({ published: false });
-                  await savePostFormChanges();
+                  autoSaveTracker && clearTimeout(autoSaveTracker);
+                  await savePost();
                 }}
               >
                 العودة إلى المسودة
@@ -64,7 +83,8 @@ const EditPostForm = () => {
                 onClick={async (e) => {
                   e.preventDefault();
                   setPostFormField({ published: true });
-                  await savePostFormChanges();
+                  autoSaveTracker && clearTimeout(autoSaveTracker);
+                  await savePost();
                 }}
               >
                 نشر

@@ -1,32 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import { usePost } from 'store/hooks';
-import { PostForm } from 'store/interfaces';
+import { InitialPostState, PostForm } from 'store/interfaces';
 import AppLayout from '@/components/AppLayout';
 import EditPostForm from '@/components/EditPostForm';
-import { Category, Tag } from '@prisma/client';
 
 interface Props extends ServerProps {}
 
-const EditPost: NextPage<Props> = ({ post, categories, tags }) => {
-  const { initializePostForm, initializePostDeps } = usePost();
+const EditPost: NextPage<Props> = ({ initialState }) => {
+  const { postForm, initializePostSate } = usePost();
 
   useEffect(() => {
-    initializePostForm(post);
-    initializePostDeps(categories, tags);
+    initializePostSate(initialState);
   }, []);
 
-  return (
-    <AppLayout>
-      <EditPostForm />
-    </AppLayout>
-  );
+  return <AppLayout>{!!postForm.id ? <EditPostForm /> : null}</AppLayout>;
 };
 
 interface ServerProps {
-  post: PostForm;
-  categories: Category[];
-  tags: Tag[];
+  initialState: InitialPostState;
 }
 
 export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
@@ -54,9 +46,11 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
 
   return {
     props: {
-      post,
-      categories,
-      tags,
+      initialState: {
+        post,
+        categories,
+        tags,
+      },
     },
   };
 };

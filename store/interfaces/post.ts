@@ -6,7 +6,14 @@ export interface PostForm extends Partial<Post> {
 }
 
 export interface PostState {
+  post: PostForm;
   postForm: PostForm;
+  categories: Category[];
+  tags: Tag[];
+}
+
+export interface InitialPostState {
+  post: PostForm;
   categories: Category[];
   tags: Tag[];
 }

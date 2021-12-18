@@ -10,7 +10,9 @@ type Data = {
 
 const getPostsHandler: NextApiHandler<Data> = async (req, res) => {
   try {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+      include: { tags: true, categories: true },
+    });
     res.send({ data: posts });
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

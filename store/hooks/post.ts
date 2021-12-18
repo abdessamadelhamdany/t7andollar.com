@@ -1,48 +1,64 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  INITIALIZE_POST_DEPS,
-  INITIALIZE_POST_FORM,
+  INITIALIZE_POST_STATE,
   SET_POST_FORM_FIELD,
+  UPDATE_POST,
 } from 'store/types';
-import { AppState, PostForm } from 'store/interfaces';
-import { Category, Tag } from '@prisma/client';
+import { AppState, InitialPostState, PostForm } from 'store/interfaces';
 
 export const usePost = () => {
   const dispatch = useDispatch();
-  const { postForm, categories, tags } = useSelector(
+  const { post, postForm, categories, tags } = useSelector(
     ({ post }: AppState) => post
   );
 
-  const initializePostForm = (postForm: PostForm) => {
-    dispatch({ type: INITIALIZE_POST_FORM, payload: postForm });
+  const initializePostSate = (initialState: InitialPostState) => {
+    dispatch({ type: INITIALIZE_POST_STATE, payload: initialState });
   };
 
   const setPostFormField = (postFormPartial: Partial<PostForm>) => {
     dispatch({ type: SET_POST_FORM_FIELD, payload: postFormPartial });
   };
 
-  const saveEditorContent = async () => {};
+  const savePostFormChanges = async (id: number, data: Partial<PostForm>) => {
+    return new Promise<void>(async (resolve, reject) => {
+      if (!id) {
+        console.warn('ignored: no id was provided');
+        return;
+      }
 
-  const savePostFormChanges = async () => {
-    console.log('savePostFormChanges:', postForm.body);
-  };
+      const res = await fetch(`/api/posts/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(data),
+      });
+      const { data: updatedPost, error } = await res.json();
 
-  const initializePostDeps = (categories: Category[], tags: Tag[]) => {
-    dispatch({
-      type: INITIALIZE_POST_DEPS,
-      payload: {
-        categories,
-        tags,
-      },
+      console.log({ updatedPost });
+
+      if (error) {
+        console.error(error);
+        reject(Error(error));
+        return;
+      }
+
+      dispatch({ type: UPDATE_POST, payload: updatedPost });
+      resolve(updatedPost);
     });
+
+    console.log({ data });
   };
+
   return {
+    post,
     postForm,
     categories,
     tags,
-    initializePostForm,
+    initializePostSate,
     setPostFormField,
     savePostFormChanges,
-    initializePostDeps,
   };
 };

@@ -24,6 +24,7 @@ const getPostHandler: NextApiHandler<Data> = async (req, res) => {
   try {
     const post = await prisma.post.findUnique({
       where: { id: parseInt(id, 10) },
+      include: { categories: true, tags: true },
     });
 
     if (!post) {

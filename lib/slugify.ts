@@ -1,5 +1,5 @@
 export default function slugify(str?: string) {
-  if (!str) return '';
+  if (!str) return null;
 
   let urlFriendlyString = '';
 
