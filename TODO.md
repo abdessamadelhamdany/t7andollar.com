@@ -5,3 +5,8 @@
 [x] Add Categories management page
 [] Add Tags management page
 [] Change Excerpt to description and generate excerpts using https://www.npmjs.com/package/excerpt
+[] Add table content to articles
+
+# Not crucial
+
+[] Make service for crud operations
