@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
+import { Post } from 'store/interfaces';
 import AppPost from './AppPost';
-import { Post } from '@prisma/client';
 
 interface Props {
   posts: Post[];

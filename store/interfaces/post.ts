@@ -1,12 +1,15 @@
-import { Category, Tag, Post } from '@prisma/client';
+import { Category, Tag, Post as PrismaPost } from '@prisma/client';
 
-export interface PostForm extends Partial<Post> {
+export interface PostForm extends Partial<PrismaPost> {
   categories?: Category[];
   tags?: Tag[];
 }
 
+export type Post = PostForm;
+
 export interface PostState {
-  post: PostForm;
+  post: Post;
+  posts: Post[];
   postForm: PostForm;
   categories: Category[];
   tags: Tag[];

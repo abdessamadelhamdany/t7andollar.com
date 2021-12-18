@@ -7,7 +7,7 @@ const schema = Joi.object({
   title: Joi.string().max(255),
   slug: Joi.string().max(255),
   excerpt: Joi.string().max(255),
-  thumbnail: Joi.string().max(255),
+  thumbnail: Joi.string().allow(null).max(255),
   body: Joi.string(),
   published: Joi.boolean(),
   keywords: Joi.array().items(Joi.string()),

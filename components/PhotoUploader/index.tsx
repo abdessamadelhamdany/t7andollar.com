@@ -7,13 +7,12 @@ interface Props {
   id: string;
   name: string;
   uploadUrl: string;
-  onPhotoUploaded: (upload: Upload) => void;
+  value?: string | null;
+  onChange: (url: string | null) => void;
 }
 
-const PhotoUploader: FC<Props> = ({ id, name, uploadUrl, onPhotoUploaded }) => {
-  const [thumbnail, setThumbnail] = useState<Upload | null>(null);
-
-  const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
+const PhotoUploader: FC<Props> = ({ id, name, value, uploadUrl, onChange }) => {
+  const handleOnChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const fileInput = e.target;
 
     if (!fileInput.files) {
@@ -42,8 +41,7 @@ const PhotoUploader: FC<Props> = ({ id, name, uploadUrl, onPhotoUploaded }) => {
         console.error(error);
       }
 
-      setThumbnail(data);
-      onPhotoUploaded(data);
+      data && onChange(data.path || null);
     } catch (error) {
       console.error(error);
     }
@@ -59,7 +57,7 @@ const PhotoUploader: FC<Props> = ({ id, name, uploadUrl, onPhotoUploaded }) => {
             type="file"
             accept="image/*"
             tabIndex={-1}
-            onChange={onChange}
+            onChange={handleOnChange}
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -78,20 +76,7 @@ const PhotoUploader: FC<Props> = ({ id, name, uploadUrl, onPhotoUploaded }) => {
           <span>رفع الصورة</span>
         </label>
         <div className="photo-uploader-preview border-right border-gray">
-          {thumbnail ? (
-            <>
-              <div className="photo-uploader-preview-corner">
-                <ActionIcon
-                  onClick={() => {
-                    setThumbnail(null);
-                  }}
-                >
-                  <XIcon height={18} />
-                </ActionIcon>
-              </div>
-              <img src={thumbnail.path.replace('public', '')} />
-            </>
-          ) : (
+          {!value ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -105,6 +90,19 @@ const PhotoUploader: FC<Props> = ({ id, name, uploadUrl, onPhotoUploaded }) => {
                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
+          ) : (
+            <>
+              <div className="photo-uploader-preview-corner">
+                <ActionIcon
+                  onClick={() => {
+                    onChange(null);
+                  }}
+                >
+                  <XIcon height={18} />
+                </ActionIcon>
+              </div>
+              <img src={value.replace('public', '')} />
+            </>
           )}
         </div>
       </div>

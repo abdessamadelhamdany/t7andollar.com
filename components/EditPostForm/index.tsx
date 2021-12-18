@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import { debounce } from 'lodash';
-import { updatedDiff } from 'deep-object-diff';
 import React, { useEffect, useState } from 'react';
 import { usePost } from 'store/hooks';
 import Slug from '@/components/Slug';
@@ -13,7 +12,6 @@ import FormAction from '@/components/FormAction';
 import KeywordArea from '@/components/KeywordArea';
 import PhotoUploader from '@/components/PhotoUploader';
 import ManyRelationArea from '@/components/ManyRelationArea';
-import { PostForm } from 'store/interfaces';
 
 const Quill = dynamic(() => import('@/components/Quill'), {
   ssr: false,
@@ -21,41 +19,26 @@ const Quill = dynamic(() => import('@/components/Quill'), {
 
 const EditPostForm = () => {
   const [autoSaveTracker, setAutoSaveTracker] = useState<NodeJS.Timeout>();
-  const {
-    postForm,
-    post,
-    categories,
-    tags,
-    setPostFormField,
-    savePostFormChanges,
-  } = usePost();
+  const { postForm, post, categories, tags, setPostFormField, updatePost } =
+    usePost();
 
   // Autosave after 5s when no changes and onAutoSave was provided
-  useEffect(() => {
-    autoSaveTracker && clearTimeout(autoSaveTracker);
-    setAutoSaveTracker(
-      setTimeout(async () => {
-        await savePost();
-      }, 5000)
-    );
-  }, [postForm]);
-
-  const savePost = async () => {
-    const data: Partial<PostForm> = updatedDiff(post, postForm);
-    if (!post.id || Object.keys(data).length === 0) {
-      return;
-    }
-
-    return savePostFormChanges(post.id, data);
-  };
+  // useEffect(() => {
+  //   autoSaveTracker && clearTimeout(autoSaveTracker);
+  //   setAutoSaveTracker(
+  //     setTimeout(async () => {
+  //       console.log('auto save');
+  //       await updatePost();
+  //     }, 3000)
+  //   );
+  // }, [postForm]);
 
   return (
     <>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          autoSaveTracker && clearTimeout(autoSaveTracker);
-          await savePost();
+          await updatePost();
         }}
       >
         <FormHeader>
@@ -69,9 +52,7 @@ const EditPostForm = () => {
                 variant="accent"
                 onClick={async (e) => {
                   e.preventDefault();
-                  setPostFormField({ published: false });
-                  autoSaveTracker && clearTimeout(autoSaveTracker);
-                  await savePost();
+                  await updatePost({ published: false });
                 }}
               >
                 العودة إلى المسودة
@@ -82,9 +63,7 @@ const EditPostForm = () => {
                 variant="accent"
                 onClick={async (e) => {
                   e.preventDefault();
-                  setPostFormField({ published: true });
-                  autoSaveTracker && clearTimeout(autoSaveTracker);
-                  await savePost();
+                  await updatePost({ published: true });
                 }}
               >
                 نشر
@@ -124,9 +103,10 @@ const EditPostForm = () => {
           <PhotoUploader
             id="thumbnail"
             name="photo"
+            value={postForm.thumbnail}
             uploadUrl="/api/upload/photo"
-            onPhotoUploaded={(uploadedPhoto) => {
-              console.log('uploaded:', uploadedPhoto);
+            onChange={(thumbnail) => {
+              setPostFormField({ thumbnail });
             }}
           />
 

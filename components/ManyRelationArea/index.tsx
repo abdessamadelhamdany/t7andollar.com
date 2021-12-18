@@ -30,7 +30,7 @@ const ManyRelationArea: FC<Props> = ({
           opt.name.toLowerCase().indexOf(value.toLowerCase().trim()) !== -1
       )
     );
-  }, [value]);
+  }, [value, selectedOptions]);
 
   return (
     <>

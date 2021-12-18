@@ -1,18 +1,15 @@
 import Link from 'next/link';
-import React, { FC, MouseEvent } from 'react';
-import { Post } from '@prisma/client';
+import React, { FC } from 'react';
 import { TrashIcon, PencilIcon } from '@heroicons/react/solid';
+import { usePost } from 'store/hooks';
+import { Post } from 'store/interfaces';
 
 interface Props {
   post: Post;
 }
 
 const AppPost: FC<Props> = ({ post }) => {
-  const deletePost = (e: MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-
-    console.log('delete:', post.id);
-  };
+  const { deletePost } = usePost();
 
   return (
     <>
@@ -26,7 +23,14 @@ const AppPost: FC<Props> = ({ post }) => {
               <PencilIcon height={18} />
             </a>
           </Link>
-          <a href="#" className="app-post-delete-action" onClick={deletePost}>
+          <a
+            href="#"
+            className="app-post-delete-action"
+            onClick={async (e) => {
+              e.preventDefault();
+              await deletePost(post.id);
+            }}
+          >
             <TrashIcon height={18} />
           </a>
         </div>
