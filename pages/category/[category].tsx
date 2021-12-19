@@ -4,6 +4,7 @@ import PostPreview from '@/components/PostPreview';
 import FeaturedPost from '@/components/FeaturedPost';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import { Post } from 'store/interfaces';
+import prisma from 'lib/prisma';
 
 const featuredPost: any = {
   id: 1,
@@ -79,7 +80,19 @@ interface ServerProps {
 export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
   params,
 }) => {
-  const category = params ? params.category?.toString() ?? '' : '';
+  const category = params
+    ? await prisma.category.findUnique({
+        where: {
+          slug: params.category?.toString(),
+        },
+      })
+    : null;
+
+  if (!category) {
+    return {
+      notFound: true,
+    };
+  }
 
   let posts: Post[] = [],
     featuredPost: Post | null = null,
@@ -88,7 +101,9 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
     error: string;
 
   res = await fetch(
-    encodeURI(`${process.env.APP_URL}/api/public/posts?category=${category}`)
+    encodeURI(
+      `${process.env.APP_URL}/api/public/posts?category=${category.slug}`
+    )
   );
   data = await res.json();
 
@@ -101,7 +116,7 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
 
   res = await fetch(
     encodeURI(
-      `${process.env.APP_URL}/api/public/posts/featured-at-home?category=${category}`
+      `${process.env.APP_URL}/api/public/posts/featured-at-home?category=${category.slug}`
     )
   );
   data = await res.json();
