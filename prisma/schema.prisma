@@ -34,22 +34,24 @@ model Token {
 }
 
 model Post {
-  id          Int        @id @default(autoincrement())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  title       String?
-  slug        String?
-  excerpt     String?
-  thumbnail   String?
-  body        String?
-  published   Boolean    @default(false)
-  author      User       @relation(fields: [authorId], references: [id])
-  authorId    Int
-  readingTime String?
-  keywords    String[]
-  comments    Comment[]
-  categories  Category[] @relation(references: [id])
-  tags        Tag[]      @relation(references: [id])
+  id                 Int        @id @default(autoincrement())
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  title              String?
+  slug               String?    @unique
+  excerpt            String?
+  thumbnail          String?
+  body               String?
+  published          Boolean    @default(false)
+  author             User       @relation(fields: [authorId], references: [id])
+  authorId           Int
+  readingTime        String?
+  featuredAtHome     Boolean    @default(false)
+  featuredAtCategory Int?       @unique
+  keywords           String[]
+  comments           Comment[]
+  categories         Category[] @relation(references: [id])
+  tags               Tag[]      @relation(references: [id])
 }
 
 model Comment {

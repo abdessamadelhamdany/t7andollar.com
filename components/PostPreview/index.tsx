@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React, { FC } from 'react';
-import { Post } from 'interfaces';
+import { Post } from '../../store/interfaces';
 import classes from './post-review.module.scss';
 
 interface Props {
@@ -10,12 +10,15 @@ interface Props {
 const index: FC<Props> = ({ post }) => {
   return (
     <div className="mb-3 d-flex flex-column flex-md-row justify-content-between">
-      <img
-        className={classes.thumbnail}
-        height="150"
-        src={post.thumbnail}
-        alt={post.title}
-      />
+      {post.thumbnail && (
+        <img
+          className={classes.thumbnail}
+          height="150"
+          src={post.thumbnail.replace('public', '')}
+          alt={post.title || undefined}
+        />
+      )}
+
       <div className="pt-3 pt-md-0 pr-md-3">
         <h2 className="mb-1 h4 font-weight-bold">
           <Link href={`/${post.slug}`}>
@@ -24,16 +27,18 @@ const index: FC<Props> = ({ post }) => {
         </h2>
         <p>{post.excerpt}</p>
         <div className="card-text text-muted small">
-          <Link href={`/authors/${post.author.username}`}>
-            <a>{post.author.name}</a>
-          </Link>
+          <a href="#" onClick={(e) => e.preventDefault()}>
+            {post.author.name}
+          </a>
           <span> في </span>
-          <Link href={`/category/${post.category.slug}`}>
-            <a>{post.category.name}</a>
-          </Link>
+          {post.categories?.map((category) => (
+            <Link key={category.id} href={`/category/${category.slug}`}>
+              <a>{category.name}</a>
+            </Link>
+          ))}
         </div>
         <small className="text-muted">
-          {post.publishedAt} &middot; {post.readingTime}
+          {post.createdAt} &middot; {post.readingTime}
         </small>
       </div>
     </div>

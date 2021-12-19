@@ -1,4 +1,4 @@
-import { Action, PostState } from 'store/interfaces';
+import { Action, Post, PostState } from 'store/interfaces';
 import {
   SET_POST_FORM_FIELD,
   INITIALIZE_POST_STATE,
@@ -7,7 +7,7 @@ import {
   INITIALIZE_POSTS,
 } from 'store/types';
 
-const initialPost = {
+const initialPost: Post = {
   id: 0,
   title: null,
   slug: null,
@@ -16,6 +16,7 @@ const initialPost = {
   body: null,
   published: false,
   authorId: 0,
+  author: { name: '' },
   readingTime: null,
   keywords: [],
   categories: [],
@@ -36,13 +37,22 @@ const postReducer = (state = initialState, action: Action) => {
       return { ...state, posts: action.payload };
 
     case INITIALIZE_POST_STATE:
-      return {
-        ...state,
-        post: action.payload.post,
-        postForm: action.payload.post,
-        categories: action.payload.categories,
-        tags: action.payload.tags,
-      };
+      const newState = { ...state };
+
+      if (action.payload.post) {
+        newState.post = action.payload.post;
+        newState.postForm = action.payload.post;
+      }
+
+      if (action.payload.categories) {
+        newState.categories = action.payload.categories;
+      }
+
+      if (action.payload.tags) {
+        newState.tags = action.payload.tags;
+      }
+
+      return newState;
 
     case SET_POST_FORM_FIELD:
       const newFields = { ...action.payload };

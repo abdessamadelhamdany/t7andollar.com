@@ -23,9 +23,7 @@ const AppNavbar = () => {
               </a>
             </Link>
             <Link href="/app/tags">
-              <a
-                className={router.asPath === '/app/categories' ? 'active' : ''}
-              >
+              <a className={router.asPath === '/app/tags' ? 'active' : ''}>
                 الكلمات الدالية
               </a>
             </Link>

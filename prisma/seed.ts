@@ -1,22 +1,61 @@
 import bcrypt from 'bcrypt';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient, User } from '@prisma/client';
 import posts from '../data/posts';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.user.create({
-    data: {
-      name: 'admin',
-      email: 'admin@gmail.com',
-      password: bcrypt.hashSync('password', 10),
+  const users: Prisma.UserCreateInput[] = [
+    {
+      name: 'عبدالصمد الحمداني',
+      email: 'abdessamadelhamdany@gmail.com',
+      password: bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'password', 10),
       role: 'ADMIN',
     },
-  });
+  ];
 
-  await prisma.post.createMany({
-    data: posts,
-  });
+  for (const user of users) {
+    const exists = await prisma.user.count({
+      where: { email: user.email },
+    });
+
+    if (exists === 0) {
+      await prisma.user.create({
+        data: user,
+      });
+    }
+  }
+
+  const categories: Prisma.CategoryCreateInput[] = [
+    {
+      name: 'العمل على الإنترنت',
+      slug: 'العمل-على-الإنترنت',
+    },
+    {
+      name: 'تحسين محركات البحث',
+      slug: 'تحسين-محركات-البحث',
+    },
+    {
+      name: 'انشاء المواقع الالكترونية',
+      slug: 'انشاء-المواقع-الالكترونية',
+    },
+    {
+      name: 'أخبار تقنية',
+      slug: 'أخبار-تقنية',
+    },
+  ];
+
+  for (const category of categories) {
+    const exists = await prisma.category.count({
+      where: { slug: category.slug },
+    });
+
+    if (exists === 0) {
+      await prisma.category.create({
+        data: category,
+      });
+    }
+  }
 }
 
 main()

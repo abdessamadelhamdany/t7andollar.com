@@ -23,7 +23,15 @@ function App({ Component, pageProps }: AppProps) {
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
           name="viewport"
         />
-        <title>{title('تعرف على طرق الربح من الانترنت')}</title>
+        <meta
+          name="description"
+          content="طحن الدولار هو موقع إلكتروني لتعلم طرق العمل على الإنترنت في شتى المجالات كما تعليم الأدوات مثل ووردبريس، بلوجر، تطوير مواقع الويب والعديد من المصادر التعليمية."
+        />
+        <meta
+          name="keywords"
+          content="العمل على الإنترنت, تحسين محركات البحث, انشاء المواقع الالكترونية, أخبار تقنية"
+        />
+        <title>{title('تعرف على طرق طرق العمل على الإنترنت')}</title>
       </Head>
 
       <Provider store={store}>

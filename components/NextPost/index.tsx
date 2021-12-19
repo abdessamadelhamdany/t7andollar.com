@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React, { FC } from 'react';
-import { Post } from 'interfaces';
+import { Post } from 'store/interfaces';
 
 interface Props {
   post: Post;
@@ -14,27 +14,27 @@ const index: FC<Props> = ({ post }) => {
           style={{
             height: '150px',
             backgroundSize: 'cover',
-            backgroundImage: `url(${post.thumbnail})`,
+            backgroundImage: `url(${post.thumbnail?.replace('public', '')})`,
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
           }}
         ></div>
         <div className="card-body px-0 pb-0 d-flex flex-column align-items-start">
           <h2 className="h4 font-weight-bold">
-            <a className="text-dark" href="#">
-              {post.title}
-            </a>
+            <Link href={`/${post.slug}`}>
+              <a className="text-dark">{post.title}</a>
+            </Link>
           </h2>
-          <p className="card-text">{post.excerpt}</p>
+          {post.excerpt && <p className="card-text">{post.excerpt}</p>}
 
           <div>
             <small className="d-block">
-              <Link href={`/authors/${post.author.username}`}>
-                <a>{post.author.name}</a>
-              </Link>
+              <a href="#" onClick={(e) => e.preventDefault()}>
+                {post.author.name}
+              </a>
             </small>
             <small className="text-muted">
-              {post.publishedAt} &middot; {post.readingTime}
+              {post.createdAt} &middot; {post.readingTime}
             </small>
           </div>
         </div>

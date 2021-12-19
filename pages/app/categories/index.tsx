@@ -6,6 +6,7 @@ import AppCategoriesNavbarNav from '@/components/PageNavbar/AppCategoriesNavbarN
 import AppCategoriesList from '@/components/AppCategoriesList';
 import AppPageTitle from '@/components/AppPageTitle';
 import { useCategory } from 'store/hooks';
+import { parseCookies } from '../../../lib/helpers';
 
 interface Props extends ServerProps {}
 
@@ -30,9 +31,15 @@ interface ServerProps {
 }
 
 export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
-  params,
+  req,
 }) => {
-  const res = await fetch(`${process.env.APP_URL}/api/categories`);
+  const res = await fetch(`${process.env.APP_URL}/api/categories`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Cookie: parseCookies({ ['jwt-token']: req.cookies['jwt-token'] }),
+    },
+  });
   const { data: categories, error } = await res.json();
 
   if (error) {

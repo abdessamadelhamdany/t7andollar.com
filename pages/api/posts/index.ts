@@ -1,7 +1,8 @@
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-import type { NextApiHandler } from 'next';
 import prisma from 'lib/prisma';
 import { Post } from '@prisma/client';
+import { authenticated } from '../../../middlewares';
+import { NextApiHandler } from '../../../interfaces';
 
 type Data = {
   error?: string;
@@ -23,7 +24,7 @@ const getPostsHandler: NextApiHandler<Data> = async (req, res) => {
 
 const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'GET') {
-    await getPostsHandler(req, res);
+    await authenticated(getPostsHandler)(req, res);
     return;
   }
 

@@ -12,6 +12,7 @@ import FormAction from '@/components/FormAction';
 import KeywordArea from '@/components/KeywordArea';
 import PhotoUploader from '@/components/PhotoUploader';
 import ManyRelationArea from '@/components/ManyRelationArea';
+import FeaturedPostToggler from '../FeaturedPostToggler';
 
 const Quill = dynamic(() => import('@/components/Quill'), {
   ssr: false,
@@ -146,7 +147,7 @@ const EditPostForm = () => {
             </>
           )}
 
-          {tags.length > 0 && (
+          {categories.length > 0 && (
             <>
               <Label htmlFor="categories">التصنيفات</Label>
               <ManyRelationArea
@@ -164,6 +165,18 @@ const EditPostForm = () => {
               />
             </>
           )}
+
+          <FeaturedPostToggler
+            featuredAtHome={postForm.featuredAtHome}
+            onFeaturedAtHomeChange={(featuredAtHome) => {
+              setPostFormField({ featuredAtHome });
+            }}
+            featuredAtCategory={postForm.featuredAtCategory}
+            onFeaturedAtCategoryChange={(categoryId) => {
+              setPostFormField({ featuredAtCategory: categoryId });
+            }}
+            categories={categories}
+          />
         </FormBody>
       </form>
     </>

@@ -12,6 +12,7 @@ import Label from '@/components/Label';
 import Input from '@/components/Input';
 import Slug from '@/components/Slug';
 import FormError from '@/components/FormError';
+import { parseCookies } from '../../../lib/helpers';
 
 interface Props extends ServerProps {}
 
@@ -93,9 +94,17 @@ interface ServerProps {
 
 export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
   params,
+  req,
 }) => {
   const res = await fetch(
-    `${process.env.APP_URL}/api/categories/${params?.id}`
+    `${process.env.APP_URL}/api/categories/${params?.id}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Cookie: parseCookies({ ['jwt-token']: req.cookies['jwt-token'] }),
+      },
+    }
   );
   const { data: category, error } = await res.json();
 

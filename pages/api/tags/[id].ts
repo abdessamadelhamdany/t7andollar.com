@@ -102,7 +102,7 @@ const deletePostHandler: NextApiHandler = async (req, res) => {
 
 const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'GET') {
-    await getTagHandler(req, res);
+    await authenticated(getTagHandler)(req, res);
     return;
   }
 
