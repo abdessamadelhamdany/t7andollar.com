@@ -31,7 +31,7 @@ const index: FC<Props> = ({ post }) => {
             {post.author.name}
           </a>
           <span> في </span>
-          {post.categories?.map((category, idx) => (
+          {post.categories?.map((category) => (
             <Link key={category.id} href={`/category/${category.slug}`}>
               <a>{category.name}</a>
             </Link>

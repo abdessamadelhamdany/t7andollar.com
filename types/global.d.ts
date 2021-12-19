@@ -13,6 +13,7 @@ declare global {
       APP_URL: string;
       JWT_SECRET: string;
       DATABASE_URL: string;
+      ADMIN_PASSWORD: string;
     }
   }
 }

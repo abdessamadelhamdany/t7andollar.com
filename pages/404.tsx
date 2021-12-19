@@ -1,10 +1,9 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import { title } from 'lib/helpers';
-import { Post } from '../store/interfaces';
 import Link from 'next/link';
 
-const Home: NextPage = () => {
+const NotFound: NextPage = () => {
   return (
     <>
       <Head>
@@ -48,4 +47,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default NotFound;

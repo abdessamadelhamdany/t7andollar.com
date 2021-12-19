@@ -89,16 +89,13 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
     : null;
 
   if (!category) {
-    return {
-      notFound: true,
-    };
+    return { notFound: true };
   }
 
   let posts: Post[] = [],
     featuredPost: Post | null = null,
     res: Response,
-    data: any,
-    error: string;
+    data: any;
 
   res = await fetch(
     encodeURI(
