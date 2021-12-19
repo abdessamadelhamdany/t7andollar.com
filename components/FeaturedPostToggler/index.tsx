@@ -1,17 +1,18 @@
 import { Category } from '@prisma/client';
 import React, { FC, useEffect, useState } from 'react';
+import Label from '../Label';
 
 interface Props {
-  featured?: boolean;
-  onFeaturedChange: (featured: boolean) => void;
+  featuredAtHome?: boolean;
+  onFeaturedAtHomeChange: (featured: boolean) => void;
   featuredAtCategory?: number | null;
   onFeaturedAtCategoryChange: (categoryId?: number | null) => void;
   categories: Category[];
 }
 
 const FeaturedPostToggler: FC<Props> = ({
-  featured,
-  onFeaturedChange,
+  featuredAtHome,
+  onFeaturedAtHomeChange,
   featuredAtCategory,
   onFeaturedAtCategoryChange,
   categories,
@@ -41,66 +42,67 @@ const FeaturedPostToggler: FC<Props> = ({
         <label className="featured-checkbox">
           <input
             type="checkbox"
-            checked={featured}
+            checked={featuredAtHome}
             onChange={(e) => {
-              onFeaturedChange(e.target.checked);
-              onFeaturedAtCategoryChange(null);
+              onFeaturedAtHomeChange(e.target.checked);
             }}
           />
-          مميزة
+          مميزة في الصفحة الرئيسية
         </label>
 
-        <div className="featured-post-category">
-          <textarea
-            rows={1}
-            value={value}
-            placeholder="مميزة في"
-            autoComplete="off"
-            onKeyDown={(e) => {
-              if (e.code === 'Enter') {
-                e.preventDefault();
+        <label className="featured-post-category-wrapper">
+          مميزة في التصنيف
+          <div className="featured-post-category">
+            <textarea
+              rows={1}
+              value={value}
+              placeholder="اختر التصنيف"
+              autoComplete="off"
+              onKeyDown={(e) => {
+                if (e.code === 'Enter') {
+                  e.preventDefault();
 
-                const match = matches.find(
-                  (match) =>
-                    match.name.toLowerCase() === value.toLowerCase().trim()
-                );
+                  const match = matches.find(
+                    (match) =>
+                      match.name.toLowerCase() === value.toLowerCase().trim()
+                  );
 
-                if (match) {
-                  onFeaturedAtCategoryChange(match.id);
-                  setValue(match.name);
-                }
-                return;
-              }
-            }}
-            onChange={(e) => setValue(e.target.value)}
-          ></textarea>
-
-          {matches.length > 0 && (
-            <div className="featured-post-category-dropdown">
-              {matches.map((match) => (
-                <button
-                  key={match.id}
-                  onMouseDown={(e) => e.preventDefault()}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onFeaturedChange(true);
+                  if (match) {
                     onFeaturedAtCategoryChange(match.id);
                     setValue(match.name);
-                  }}
-                >
-                  {match.name}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+                  }
+                  return;
+                }
+              }}
+              onChange={(e) => setValue(e.target.value)}
+            ></textarea>
+
+            {matches.length > 0 && (
+              <div className="featured-post-category-dropdown">
+                {matches.map((match) => (
+                  <button
+                    key={match.id}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onFeaturedAtCategoryChange(match.id);
+                      setValue(match.name);
+                    }}
+                  >
+                    {match.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </label>
       </div>
       <style jsx>{`
         .featured-post-toggler {
           gap: 0.5rem;
           display: flex;
+          flex-direction: column;
           padding: 0.5rem;
-          align-items: center;
           margin-bottom: 1rem;
           background: rgb(255, 255, 255);
           border: 1px solid rgb(243, 243, 243);
@@ -109,6 +111,12 @@ const FeaturedPostToggler: FC<Props> = ({
         .featured-checkbox {
           gap: 0.5rem;
           margin: 0;
+          display: flex;
+          align-items: center;
+        }
+
+        .featured-post-category-wrapper {
+          gap: 0.25rem;
           display: flex;
           align-items: center;
         }

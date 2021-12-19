@@ -167,9 +167,9 @@ const EditPostForm = () => {
           )}
 
           <FeaturedPostToggler
-            featured={postForm.featured}
-            onFeaturedChange={(featured) => {
-              setPostFormField({ featured });
+            featuredAtHome={postForm.featuredAtHome}
+            onFeaturedAtHomeChange={(featuredAtHome) => {
+              setPostFormField({ featuredAtHome });
             }}
             featuredAtCategory={postForm.featuredAtCategory}
             onFeaturedAtCategoryChange={(categoryId) => {
