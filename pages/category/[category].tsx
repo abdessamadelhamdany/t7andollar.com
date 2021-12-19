@@ -1,8 +1,9 @@
 import React from 'react';
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import PostPreview from '@/components/PostPreview';
 import FeaturedPost from '@/components/FeaturedPost';
 import AdPlaceholder from '@/components/AdPlaceholder';
+import { Post } from 'store/interfaces';
 
 const featuredPost: any = {
   id: 1,
@@ -26,52 +27,98 @@ const featuredPost: any = {
   publishedAt: 'السبت 1 يناير 2022',
 };
 
-const categoryPosts = [
-  { ...featuredPost, id: 2 },
-  { ...featuredPost, id: 3 },
-  { ...featuredPost, id: 4 },
-  { ...featuredPost, id: 5 },
-];
-
 const category = {
   name: 'ربح المال من الانترنت',
   slug: 'ربح-المال-من-الانترنت',
 };
 
-const Category: NextPage = () => {
+const Category: NextPage<ServerProps> = ({ featuredPost, posts }) => {
   return (
     <>
-      <div className="container my-3 homepage">
-        <h5 className="font-weight-bold spanborder">
-          <span>مميزة في {category.name}</span>
-        </h5>
+      {featuredPost && (
+        <div className="container mt-3 homepage">
+          <h5 className="font-weight-bold spanborder">
+            <span>مميزة في {category.name}</span>
+          </h5>
+          <FeaturedPost post={featuredPost} />
+        </div>
+      )}
 
-        <FeaturedPost post={featuredPost} />
-      </div>
-
-      <div className="container py-4 mb-3">
+      {/* <div className="container py-4 mb-3">
         <div className="row">
           <div className="col-lg-12">
             <AdPlaceholder width={1170} height={280} />
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="container">
+      <div className="container mt-3">
         <div className="row justify-content-between">
           <div className="col-md-12">
             <h5 className="font-weight-bold spanborder">
               <span>كل المقالات في {category.name}</span>
             </h5>
 
-            {categoryPosts.map((post) => (
-              <PostPreview key={post.id} post={post} />
-            ))}
+            {posts.length > 0 ? (
+              posts.map((post) => <PostPreview key={post.id} post={post} />)
+            ) : (
+              <h3>لا توجد مقالات</h3>
+            )}
           </div>
         </div>
       </div>
     </>
   );
+};
+
+interface ServerProps {
+  posts: Post[];
+  featuredPost: Post | null;
+}
+
+export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
+  params,
+}) => {
+  const category = params ? params.category?.toString() ?? '' : '';
+
+  let posts: Post[] = [],
+    featuredPost: Post | null = null,
+    res: Response,
+    data: any,
+    error: string;
+
+  res = await fetch(
+    encodeURI(`${process.env.APP_URL}/api/public/posts?category=${category}`)
+  );
+  data = await res.json();
+
+  if (data.error) {
+    console.error(data.error);
+    throw Error(data.error);
+  }
+
+  posts = data.data;
+
+  res = await fetch(
+    encodeURI(
+      `${process.env.APP_URL}/api/public/posts/featured-at-home?category=${category}`
+    )
+  );
+  data = await res.json();
+
+  if (data.error) {
+    console.error(data.error);
+    throw Error(data.error);
+  }
+
+  featuredPost = data.data;
+
+  return {
+    props: {
+      posts,
+      featuredPost,
+    },
+  };
 };
 
 export default Category;

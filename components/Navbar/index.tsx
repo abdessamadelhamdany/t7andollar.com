@@ -11,7 +11,7 @@ const Navbar: FC = () => {
   const activeLinkClasses = (href: string) => {
     let classes = ['nav-link'];
 
-    if (router.asPath === href) {
+    if (decodeURI(router.asPath) === href) {
       classes.push('active');
     }
 
@@ -41,13 +41,11 @@ const Navbar: FC = () => {
         <div className="navbar-collapse collapse" id="main-navbar">
           <ul className="navbar-nav mr-auto d-flex align-items-center">
             <li className="nav-item">
-              <Link href="/category/جني-المال-من-الإنترنت">
+              <Link href="/category/العمل-على-الإنترنت">
                 <a
-                  className={activeLinkClasses(
-                    '/category/جني-المال-من-الإنترنت'
-                  )}
+                  className={activeLinkClasses('/category/العمل-على-الإنترنت')}
                 >
-                  جني المال من الإنترنت
+                  العمل على الإنترنت
                 </a>
               </Link>
             </li>

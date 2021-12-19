@@ -1,6 +1,6 @@
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import prisma from 'lib/prisma';
-import { Post } from '@prisma/client';
+import { Post, Prisma } from '@prisma/client';
 import { NextApiHandler } from '../../../../interfaces';
 
 type Data = {
@@ -10,8 +10,40 @@ type Data = {
 
 const getPostsHandler: NextApiHandler<Data> = async (req, res) => {
   try {
+    let where: Prisma.PostWhereInput = {};
+
+    if (typeof req.query.category === 'string') {
+      const category = await prisma.category.findUnique({
+        where: {
+          slug: req.query.category,
+        },
+      });
+
+      if (!category) {
+        res.send({ data: [] });
+        return;
+      }
+
+      where = {
+        published: true,
+        featuredAtCategory: {
+          not: category.id,
+        },
+        categories: {
+          some: {
+            slug: req.query.category,
+          },
+        },
+      };
+    } else {
+      where = {
+        published: true,
+        featuredAtHome: false,
+      };
+    }
+
     const posts = await prisma.post.findMany({
-      where: { published: true, featuredAtHome: false },
+      where,
       include: {
         tags: true,
         categories: true,

@@ -23,13 +23,13 @@ const Home: NextPage<ServerProps> = ({ featuredPost, posts }) => {
         </div>
       )}
 
-      <div className="container py-4 mb-3">
+      {/* <div className="container py-4 mb-3">
         <div className="row">
           <div className="col-lg-12">
             <AdPlaceholder width={1170} height={280} />
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="container">
         <div className="row justify-content-between">
@@ -38,9 +38,11 @@ const Home: NextPage<ServerProps> = ({ featuredPost, posts }) => {
               <span>كل المقالات</span>
             </h5>
 
-            {posts.map((post) => (
-              <PostPreview key={post.id} post={post} />
-            ))}
+            {posts.length > 0 ? (
+              posts.map((post) => <PostPreview key={post.id} post={post} />)
+            ) : (
+              <h3>لا توجد مقالات</h3>
+            )}
           </div>
         </div>
       </div>

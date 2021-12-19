@@ -101,19 +101,19 @@ const Article: NextPage = () => {
               <div className="sharethis-inline-share-buttons"></div>
             </div>
           </div>
-          <div className="col-lg-4 col-xl-3 mb-3">
+          {/* <div className="col-lg-4 col-xl-3 mb-3">
             <AdPlaceholder width={224} height={600} />
-          </div>
+          </div> */}
         </div>
       </div>
 
-      <div className="container py-4 mb-3">
+      {/* <div className="container py-4 mb-3">
         <div className="row">
           <div className="col-lg-12">
             <AdPlaceholder width={1170} height={280} />
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="container pt-4 pb-4">
         <h5 className="font-weight-bold spanborder">

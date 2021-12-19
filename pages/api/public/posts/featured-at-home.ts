@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import prisma from 'lib/prisma';
 import { NextApiHandler } from '../../../../interfaces';
@@ -10,8 +11,33 @@ type Data = {
 
 const getPostsHandler: NextApiHandler<Data> = async (req, res) => {
   try {
+    let where: Prisma.PostWhereInput = {};
+
+    if (typeof req.query.category === 'string') {
+      const category = await prisma.category.findUnique({
+        where: {
+          slug: req.query.category,
+        },
+      });
+
+      if (!category) {
+        res.send({ data: null });
+        return;
+      }
+
+      where = {
+        published: true,
+        featuredAtCategory: category.id,
+      };
+    } else {
+      where = {
+        published: true,
+        featuredAtHome: true,
+      };
+    }
+
     const featuredPostAtHome = await prisma.post.findFirst({
-      where: { published: true, featuredAtHome: true },
+      where,
       include: {
         tags: true,
         categories: true,
