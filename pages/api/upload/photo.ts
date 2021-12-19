@@ -8,6 +8,7 @@ import prisma from 'lib/prisma';
 import { NextApiRequest, NextApiResponse } from 'interfaces';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { Upload } from '@prisma/client';
+import { authenticated } from '../../../middlewares';
 
 interface Data {
   error?: string;
@@ -104,7 +105,7 @@ const multerWithErrorHandling = async (req, res, next) => {
 handler.use(multerWithErrorHandling);
 
 /** Register handlers */
-handler.post(async (req, res) => {
+const uploadPhotoHandler = async (req, res) => {
   const file = req.file;
 
   const uploadedFile = await prisma.upload.create({
@@ -122,6 +123,10 @@ handler.post(async (req, res) => {
   res.json({
     data: uploadedFile,
   });
+};
+
+handler.post(async (req, res) => {
+  await authenticated(uploadPhotoHandler)(req, res);
 });
 
 export const config = {
