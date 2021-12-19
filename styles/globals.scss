@@ -1,1 +1,6 @@
 @import './scss/main.scss';
+
+a[href='#']:hover {
+  color: $success;
+  text-decoration: none;
+}

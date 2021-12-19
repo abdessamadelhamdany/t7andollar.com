@@ -2,6 +2,9 @@
 // Global Imports
 //====================================
 
+// 0- Import Fonts
+@import '0-fonts/index';
+
 // 1- Import bootstrap framework
 @import '1-frameworks/index';
 
@@ -190,6 +193,7 @@ a.text-dark:hover {
   box-shadow: 0 0px 1px 0 rgba(0, 0, 0, 0.05);
   transition: all 0.08s;
   font-weight: $font-weight-normal;
+  min-height: 69.75px;
 }
 .navbar-brand {
   font-size: 1.25rem;
