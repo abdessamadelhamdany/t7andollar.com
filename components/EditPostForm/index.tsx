@@ -12,6 +12,7 @@ import FormAction from '@/components/FormAction';
 import KeywordArea from '@/components/KeywordArea';
 import PhotoUploader from '@/components/PhotoUploader';
 import ManyRelationArea from '@/components/ManyRelationArea';
+import FeaturedPostToggler from '../FeaturedPostToggler';
 
 const Quill = dynamic(() => import('@/components/Quill'), {
   ssr: false,
@@ -164,6 +165,18 @@ const EditPostForm = () => {
               />
             </>
           )}
+
+          <FeaturedPostToggler
+            featured={postForm.featured}
+            onFeaturedChange={(featured) => {
+              setPostFormField({ featured });
+            }}
+            featuredAtCategory={postForm.featuredAtCategory}
+            onFeaturedAtCategoryChange={(categoryId) => {
+              setPostFormField({ featuredAtCategory: categoryId });
+            }}
+            categories={categories}
+          />
         </FormBody>
       </form>
     </>

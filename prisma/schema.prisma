@@ -34,34 +34,24 @@ model Token {
 }
 
 model Post {
-  id            Int             @id @default(autoincrement())
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  title         String?
-  slug          String?
-  excerpt       String?
-  thumbnail     String?
-  body          String?
-  published     Boolean         @default(false)
-  author        User            @relation(fields: [authorId], references: [id])
-  authorId      Int
-  readingTime   String?
-  keywords      String[]
-  comments      Comment[]
-  categories    Category[]      @relation(references: [id])
-  tags          Tag[]           @relation(references: [id])
-  featuredPosts FeaturedPosts[]
-}
-
-model FeaturedPosts {
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  post       Post     @relation(fields: [postId], references: [id])
-  postId     Int
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId Int
-
-  @@id([postId, categoryId])
+  id                 Int        @id @default(autoincrement())
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  title              String?
+  slug               String?
+  excerpt            String?
+  thumbnail          String?
+  body               String?
+  published          Boolean    @default(false)
+  author             User       @relation(fields: [authorId], references: [id])
+  authorId           Int
+  readingTime        String?
+  featured           Boolean    @default(false)
+  featuredAtCategory Int?       @unique
+  keywords           String[]
+  comments           Comment[]
+  categories         Category[] @relation(references: [id])
+  tags               Tag[]      @relation(references: [id])
 }
 
 model Comment {
@@ -73,11 +63,10 @@ model Comment {
 }
 
 model Category {
-  id            Int             @id @default(autoincrement())
-  name          String
-  slug          String          @unique
-  posts         Post[]          @relation(references: [id])
-  featuredPosts FeaturedPosts[]
+  id    Int    @id @default(autoincrement())
+  name  String
+  slug  String @unique
+  posts Post[] @relation(references: [id])
 }
 
 model Tag {

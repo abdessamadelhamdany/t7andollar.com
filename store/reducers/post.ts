@@ -36,13 +36,22 @@ const postReducer = (state = initialState, action: Action) => {
       return { ...state, posts: action.payload };
 
     case INITIALIZE_POST_STATE:
-      return {
-        ...state,
-        post: action.payload.post,
-        postForm: action.payload.post,
-        categories: action.payload.categories,
-        tags: action.payload.tags,
-      };
+      const newState = { ...state };
+
+      if (action.payload.post) {
+        newState.post = action.payload.post;
+        newState.postForm = action.payload.post;
+      }
+
+      if (action.payload.categories) {
+        newState.categories = action.payload.categories;
+      }
+
+      if (action.payload.tags) {
+        newState.tags = action.payload.tags;
+      }
+
+      return newState;
 
     case SET_POST_FORM_FIELD:
       const newFields = { ...action.payload };

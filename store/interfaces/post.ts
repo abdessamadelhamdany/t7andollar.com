@@ -16,7 +16,7 @@ export interface PostState {
 }
 
 export interface InitialPostState {
-  post: PostForm;
-  categories: Category[];
-  tags: Tag[];
+  post?: PostForm;
+  categories?: Category[];
+  tags?: Tag[];
 }

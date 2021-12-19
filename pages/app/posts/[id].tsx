@@ -8,10 +8,10 @@ import EditPostForm from '@/components/EditPostForm';
 interface Props extends ServerProps {}
 
 const EditPost: NextPage<Props> = ({ initialState }) => {
-  const { postForm, initializePostSate } = usePost();
+  const { postForm, initializePostState } = usePost();
 
   useEffect(() => {
-    initializePostSate(initialState);
+    initializePostState(initialState);
   }, []);
 
   return <AppLayout>{!!postForm.id ? <EditPostForm /> : null}</AppLayout>;

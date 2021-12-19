@@ -19,7 +19,7 @@ export const usePost = () => {
     dispatch({ type: INITIALIZE_POSTS, payload: initialPosts });
   };
 
-  const initializePostSate = (initialState: InitialPostState) => {
+  const initializePostState = (initialState: InitialPostState) => {
     dispatch({ type: INITIALIZE_POST_STATE, payload: initialState });
   };
 
@@ -112,7 +112,7 @@ export const usePost = () => {
     categories,
     tags,
     initializePosts,
-    initializePostSate,
+    initializePostState,
     setPostFormField,
     updatePost,
     deletePost,
