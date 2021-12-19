@@ -1,41 +1,12 @@
 import Head from 'next/head';
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { title } from 'lib/helpers';
 import PostPreview from '@/components/PostPreview';
 import FeaturedPost from '@/components/FeaturedPost';
 import AdPlaceholder from '@/components/AdPlaceholder';
-import { Post } from 'interfaces';
+import { Post } from '../store/interfaces';
 
-const featuredPost: Post = {
-  id: 1,
-  title: 'مجموعة تطبيقات ستمكنك من ربح المال من الانترنت',
-  category: {
-    name: 'ربح المال من الانترنت',
-    slug: 'ربح-المال-من-الانترنت',
-  },
-  slug: 'مجموعة-تطبيقات-ستمكنك-من-ربح-المال-من-الانترنت',
-  excerpt:
-    'هل تبحث عن تطبيقات تساعدك على جني المال من الانترنت؟ هذه التطبيقات ستمكنك من ربح المال من الانترنت في اوقات الفراغ، يمكنك استعمالها عندما تكون جالس ولا تفعل اي شئ او وانت تنتظر في مكان ما. انها سهلة الإستعمال وسريعة التحميل.',
-  thumbnail: '/images/blog/01-01-2022/make-money-apps.jpg',
-  source: 'https://dopedollar.com/apps-that-pay-you-money/',
-  body: '',
-  author: {
-    name: 'عبد الصمد الحمداني',
-    username: 'عبد-الصمد-الحمداني',
-    avatar: '/images/avatars/abdessamadelhamdany.jpg',
-  },
-  readingTime: '5 دقائق',
-  publishedAt: 'السبت 1 يناير 2022',
-};
-
-const allPosts = [
-  { ...featuredPost, id: 2 },
-  { ...featuredPost, id: 3 },
-  { ...featuredPost, id: 4 },
-  { ...featuredPost, id: 5 },
-];
-
-const Home: NextPage = () => {
+const Home: NextPage<ServerProps> = ({ featuredPost, posts }) => {
   return (
     <>
       <Head>
@@ -46,9 +17,11 @@ const Home: NextPage = () => {
         />
       </Head>
 
-      <div className="container my-5 homepage">
-        <FeaturedPost post={featuredPost} />
-      </div>
+      {featuredPost && (
+        <div className="container my-5 homepage">
+          <FeaturedPost post={featuredPost} />
+        </div>
+      )}
 
       <div className="container py-4 mb-3">
         <div className="row">
@@ -65,7 +38,7 @@ const Home: NextPage = () => {
               <span>كل المقالات</span>
             </h5>
 
-            {allPosts.map((post) => (
+            {posts.map((post) => (
               <PostPreview key={post.id} post={post} />
             ))}
           </div>
@@ -73,6 +46,46 @@ const Home: NextPage = () => {
       </div>
     </>
   );
+};
+
+interface ServerProps {
+  posts: Post[];
+  featuredPost: Post | null;
+}
+
+export const getServerSideProps: GetServerSideProps<ServerProps> = async () => {
+  let posts: Post[] = [],
+    featuredPost: Post | null = null,
+    res: Response,
+    data: any,
+    error: string;
+
+  res = await fetch(`${process.env.APP_URL}/api/public/posts`);
+  data = await res.json();
+
+  if (data.error) {
+    console.error(data.error);
+    throw Error(data.error);
+  }
+
+  posts = data.data;
+
+  res = await fetch(`${process.env.APP_URL}/api/public/posts/featured-at-home`);
+  data = await res.json();
+
+  if (data.error) {
+    console.error(data.error);
+    throw Error(data.error);
+  }
+
+  featuredPost = data.data;
+
+  return {
+    props: {
+      posts,
+      featuredPost,
+    },
+  };
 };
 
 export default Home;

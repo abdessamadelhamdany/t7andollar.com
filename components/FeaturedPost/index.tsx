@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Link from 'next/link';
-import { Post } from 'interfaces';
 import classes from './featured-post.module.scss';
+import { Post } from '../../store/interfaces';
 
 interface Props {
   post: Post;
@@ -22,26 +22,30 @@ const index: FC<Props> = ({ post }) => {
               >
                 {post.title}
               </h1>
-              <img
-                className="mb-3 w-100 d-block d-lg-none"
-                src={post.thumbnail}
-                alt={post.title}
-              />
+              {post.thumbnail && (
+                <img
+                  className="mb-3 w-100 d-block d-lg-none"
+                  src={post.thumbnail.replace('public', '')}
+                  alt={post.title || undefined}
+                />
+              )}
             </a>
           </Link>
           <p className="text-justify m-0">{post.excerpt}</p>
         </div>
-        <div className="d-none d-lg-block col-lg-6">
-          <Link href={`/${post.slug}`}>
-            <a>
-              <img
-                className={classes.desktopThumbnail}
-                src={post.thumbnail}
-                alt={post.title}
-              />
-            </a>
-          </Link>
-        </div>
+        {post.thumbnail && (
+          <div className="d-none d-lg-block col-lg-6">
+            <Link href={`/${post.slug}`}>
+              <a>
+                <img
+                  className={classes.desktopThumbnail}
+                  src={post.thumbnail.replace('public', '')}
+                  alt={post.title || undefined}
+                />
+              </a>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

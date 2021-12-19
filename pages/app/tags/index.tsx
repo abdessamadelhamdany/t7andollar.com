@@ -6,6 +6,7 @@ import AppTagsList from '@/components/AppTagsList';
 import AppPageTitle from '@/components/AppPageTitle';
 import AppTagsNavbarNav from '@/components/PageNavbar/AppTagsNavbarNav';
 import { useTag } from 'store/hooks';
+import { parseCookies } from '../../../lib/helpers';
 
 interface Props extends ServerProps {}
 
@@ -30,9 +31,15 @@ interface ServerProps {
 }
 
 export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
-  params,
+  req,
 }) => {
-  const res = await fetch(`${process.env.APP_URL}/api/tags`);
+  const res = await fetch(`${process.env.APP_URL}/api/tags`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Cookie: parseCookies({ ['jwt-token']: req.cookies['jwt-token'] }),
+    },
+  });
   const { data: tags, error } = await res.json();
 
   if (error) {

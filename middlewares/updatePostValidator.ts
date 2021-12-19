@@ -10,7 +10,7 @@ const schema = Joi.object({
   thumbnail: Joi.string().allow(null).max(255),
   body: Joi.string(),
   published: Joi.boolean(),
-  featured: Joi.boolean(),
+  featuredAtHome: Joi.boolean(),
   featuredAtCategory: Joi.number().allow(null),
   keywords: Joi.array().items(Joi.string()),
   categories: Joi.array().items(Joi.number()).external(isValidCategories),
