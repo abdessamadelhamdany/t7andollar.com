@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React, { FC } from 'react';
-import { Post } from 'interfaces';
+import { Post } from 'store/interfaces';
 
 interface Props {
   post: Post;
@@ -29,12 +29,12 @@ const index: FC<Props> = ({ post }) => {
 
           <div>
             <small className="d-block">
-              <Link href={`/authors/${post.author.username}`}>
+              <Link href={`/authors/${post.author.name}`}>
                 <a>{post.author.name}</a>
               </Link>
             </small>
             <small className="text-muted">
-              {post.publishedAt} &middot; {post.readingTime}
+              {post.createdAt} &middot; {post.readingTime}
             </small>
           </div>
         </div>

@@ -2,12 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { Post } from 'interfaces';
+import { Post } from 'store/interfaces';
 import NextPost from '@/components/NextPost';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import { title } from 'lib/helpers';
 
-const post: Post = {
+const post: any = {
   id: 1,
   title: 'مجموعة تطبيقات ستمكنك من ربح المال من الانترنت',
   category: {
@@ -37,8 +37,6 @@ const post: Post = {
   `,
   author: {
     name: 'عبد الصمد الحمداني',
-    username: 'عبد-الصمد-الحمداني',
-    avatar: '/images/avatars/abdessamadelhamdany.jpg',
   },
   readingTime: '5 دقائق',
   publishedAt: 'السبت 1 يناير 2022',

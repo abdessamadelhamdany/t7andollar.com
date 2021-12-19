@@ -71,7 +71,7 @@ export const usePost = () => {
     });
   };
 
-  const deletePost = async (id: number) => {
+  const deletePost = async (id?: number) => {
     return new Promise<void>(async (resolve, reject) => {
       if (!id) {
         console.warn('ignored: no id was provided');

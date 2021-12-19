@@ -3,9 +3,8 @@ import type { NextPage } from 'next';
 import PostPreview from '@/components/PostPreview';
 import FeaturedPost from '@/components/FeaturedPost';
 import AdPlaceholder from '@/components/AdPlaceholder';
-import { Post } from 'interfaces';
 
-const featuredPost: Post = {
+const featuredPost: any = {
   id: 1,
   title: 'مجموعة تطبيقات ستمكنك من ربح المال من الانترنت',
   category: {

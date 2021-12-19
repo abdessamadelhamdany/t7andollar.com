@@ -1,4 +1,4 @@
-import { Action, PostState } from 'store/interfaces';
+import { Action, Post, PostState } from 'store/interfaces';
 import {
   SET_POST_FORM_FIELD,
   INITIALIZE_POST_STATE,
@@ -7,7 +7,7 @@ import {
   INITIALIZE_POSTS,
 } from 'store/types';
 
-const initialPost = {
+const initialPost: Post = {
   id: 0,
   title: null,
   slug: null,
@@ -16,6 +16,7 @@ const initialPost = {
   body: null,
   published: false,
   authorId: 0,
+  author: { name: '' },
   readingTime: null,
   keywords: [],
   categories: [],

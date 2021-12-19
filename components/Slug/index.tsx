@@ -13,7 +13,7 @@ const Slug: FC<Props> = ({ defaultValue, title, visible = true, onChange }) => {
   const [slug, setSlug] = useState(defaultValue || '');
 
   useEffect(() => {
-    const generatedSlug = slugify(title);
+    const generatedSlug = slugify(title) || '';
     setSlug(generatedSlug);
     onChange(generatedSlug);
   }, [title]);
