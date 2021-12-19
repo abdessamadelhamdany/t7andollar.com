@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import type { GetServerSideProps, NextPage } from 'next';
-import { title } from 'lib/helpers';
+import { formatDate, title } from 'lib/helpers';
 import PostPreview from '@/components/PostPreview';
 import FeaturedPost from '@/components/FeaturedPost';
 import AdPlaceholder from '@/components/AdPlaceholder';
@@ -70,7 +70,10 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async () => {
     throw Error(data.error);
   }
 
-  posts = data.data;
+  posts = data.data.map((post) => ({
+    ...post,
+    createdAt: formatDate(post.createdAt),
+  }));
 
   res = await fetch(`${process.env.APP_URL}/api/public/posts/featured-at-home`);
   data = await res.json();
@@ -80,7 +83,12 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async () => {
     throw Error(data.error);
   }
 
-  featuredPost = data.data;
+  featuredPost = data.data
+    ? {
+        ...data.data,
+        createdAt: formatDate(data.data.createdAt),
+      }
+    : null;
 
   return {
     props: {

@@ -5,14 +5,21 @@ import type { GetServerSideProps, NextPage } from 'next';
 import { Post } from 'store/interfaces';
 import NextPost from '@/components/NextPost';
 import AdPlaceholder from '@/components/AdPlaceholder';
-import { title } from 'lib/helpers';
+import { formatDate, title } from 'lib/helpers';
 import { ReasonPhrases } from 'http-status-codes';
 
 const Article: NextPage<ServerProps> = ({ post, nextPosts }) => {
+  if (post.createdAt) {
+    console.log();
+  }
+
   return (
     <>
       <Head>
         <title>{title(post.title)}</title>
+        {post.keywords && post.keywords.length > 0 && (
+          <meta name="keywords" content={post.keywords.join(', ')} />
+        )}
         {post.excerpt && <meta name="description" content={post.excerpt} />}
       </Head>
       <div className="container">
@@ -39,7 +46,9 @@ const Article: NextPage<ServerProps> = ({ post, nextPosts }) => {
                 />
               )}
               <small>
-                <span>{post.author.name}</span>
+                <a href="#" onClick={(e) => e.preventDefault()}>
+                  {post.author.name}
+                </a>
                 <span className="text-muted d-block">
                   {post.createdAt} &middot; {post.readingTime}
                 </span>
@@ -51,7 +60,7 @@ const Article: NextPage<ServerProps> = ({ post, nextPosts }) => {
 
       <div className="container py-4">
         <div className="row justify-content-center">
-          <div className="col-lg-8 col-xl-7">
+          <div className="col-lg-9 col-xl-8">
             {post.thumbnail && (
               <img
                 className="mb-3"
@@ -70,7 +79,7 @@ const Article: NextPage<ServerProps> = ({ post, nextPosts }) => {
               <div className="sharethis-inline-share-buttons"></div>
             </div>
           </div>
-          {/* <div className="col-lg-4 col-xl-3 mb-3">
+          {/* <div className="col-lg-3 col-xl-4 mb-3">
             <AdPlaceholder width={224} height={600} />
           </div> */}
         </div>
@@ -124,10 +133,20 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
     throw Error(data.error);
   }
 
+  const post: Post = {
+    ...data.data.post,
+    createdAt: formatDate(data.data.post.createdAt),
+  };
+
+  const nextPosts: Post[] = data.data.nextPosts.map((post) => ({
+    ...post,
+    createdAt: formatDate(post.createdAt),
+  }));
+
   return {
     props: {
-      post: data.data.post,
-      nextPosts: data.data.nextPosts,
+      post,
+      nextPosts,
     },
   };
 };

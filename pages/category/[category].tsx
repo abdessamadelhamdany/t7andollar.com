@@ -5,6 +5,7 @@ import FeaturedPost from '@/components/FeaturedPost';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import { Post } from 'store/interfaces';
 import prisma from 'lib/prisma';
+import { formatDate } from 'lib/helpers';
 
 const featuredPost: any = {
   id: 1,
@@ -109,7 +110,10 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
     throw Error(data.error);
   }
 
-  posts = data.data;
+  posts = data.data.map((post) => ({
+    ...post,
+    createdAt: formatDate(post.createdAt),
+  }));
 
   res = await fetch(
     encodeURI(
@@ -123,7 +127,12 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
     throw Error(data.error);
   }
 
-  featuredPost = data.data;
+  featuredPost = data.data
+    ? {
+        ...data.data,
+        createdAt: formatDate(data.data.createdAt),
+      }
+    : null;
 
   return {
     props: {
