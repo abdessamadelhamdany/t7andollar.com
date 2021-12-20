@@ -6,14 +6,14 @@ const guestUrls = ['/app/login'];
 export function middleware(req: NextRequest) {
   const jwtToken = req.cookies['jwt-token'];
 
-  if (!jwtToken && !guestUrls.includes(req.url)) {
+  if (!jwtToken && !guestUrls.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect('/app/login');
   }
 
   if (jwtToken) {
     try {
       jwt.verify(jwtToken, process.env.JWT_SECRET) as JwtPayload;
-      if (guestUrls.includes(req.url)) {
+      if (guestUrls.includes(req.nextUrl.pathname)) {
         return NextResponse.redirect('/app');
       }
     } catch (error: any) {
