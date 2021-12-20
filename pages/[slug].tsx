@@ -9,10 +9,6 @@ import { formatDate, title } from 'lib/helpers';
 import { ReasonPhrases } from 'http-status-codes';
 
 const Article: NextPage<ServerProps> = ({ post, nextPosts }) => {
-  if (post.createdAt) {
-    console.log();
-  }
-
   return (
     <>
       <Head>

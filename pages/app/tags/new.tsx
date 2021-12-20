@@ -26,6 +26,7 @@ const NewTag: NextPage = () => {
           setLoading(true);
           try {
             await createNewTag();
+            setTagFormField({ name: '', slug: '' });
             await router.push('/app/tags');
           } catch (error: any) {
             setError(

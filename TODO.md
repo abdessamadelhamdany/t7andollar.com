@@ -9,7 +9,7 @@
 [x] Move public/uploads to public/static
 [x] Make menu hide after page change
 [x] duplicate slug page as a preview page for auth users
-[] clear input after adding new tag, category
+[x] clear input after adding new tag, category
 [] show tags in post detail
 [] Change Excerpt to description and generate excerpts using https://www.npmjs.com/package/excerpt
 [] Add table content to articles
