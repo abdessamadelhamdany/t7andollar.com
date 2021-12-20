@@ -2,9 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import type { GetServerSideProps, NextPage } from 'next';
-import { InitialPostState, Post } from 'store/interfaces';
-import { formatDate, parseCookies, title } from 'lib/helpers';
-import { ReasonPhrases } from 'http-status-codes';
+import { Post } from 'store/interfaces';
+import { parseCookies, title } from 'lib/helpers';
 
 const Article: NextPage<ServerProps> = ({ post }) => {
   return (

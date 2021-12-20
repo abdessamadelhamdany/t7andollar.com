@@ -10,13 +10,6 @@ const Navbar: FC = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
   const navbarTogglerRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    document.addEventListener('click', hideNavbar);
-    return () => {
-      document.removeEventListener('click', hideNavbar);
-    };
-  }, []);
-
   const activeLinkClasses = (href: string) => {
     let classes = ['nav-link'];
 
@@ -37,23 +30,8 @@ const Navbar: FC = () => {
     navbarTogglerRef.current?.setAttribute('aria-expanded', 'false');
   };
 
-  const showNavbar = () => {
-    navbarRef.current?.classList.add('show');
-    navbarRef.current?.classList.add('collapsing');
-    setTimeout(() => {
-      navbarRef.current?.classList.remove('collapsing');
-    }, 300);
-
-    navbarTogglerRef.current?.setAttribute('aria-expanded', 'true');
-  };
-
   return (
-    <nav
-      className="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom border-gray"
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
-    >
+    <nav className="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom border-gray">
       <div className="container">
         <Link href="/">
           <a className="navbar-brand">
@@ -63,9 +41,6 @@ const Navbar: FC = () => {
 
         <button
           ref={navbarTogglerRef}
-          onClick={(e) => {
-            showNavbar();
-          }}
           className="navbar-toggler collapsed"
           type="button"
           data-toggle="collapse"

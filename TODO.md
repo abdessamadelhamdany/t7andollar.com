@@ -10,6 +10,7 @@
 [x] Make menu hide after page change
 [x] duplicate slug page as a preview page for auth users
 [x] clear input after adding new tag, category
+[x] serve files through nginx
 [] show tags in post detail
 [] Change Excerpt to description and generate excerpts using https://www.npmjs.com/package/excerpt
 [] Add table content to articles

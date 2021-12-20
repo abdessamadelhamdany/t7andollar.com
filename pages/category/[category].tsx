@@ -6,35 +6,9 @@ import AdPlaceholder from '@/components/AdPlaceholder';
 import { Post } from 'store/interfaces';
 import prisma from 'lib/prisma';
 import { formatDate } from 'lib/helpers';
+import { Category } from '@prisma/client';
 
-const featuredPost: any = {
-  id: 1,
-  title: 'مجموعة تطبيقات ستمكنك من ربح المال من الانترنت',
-  category: {
-    name: 'ربح المال من الانترنت',
-    slug: 'ربح-المال-من-الانترنت',
-  },
-  slug: 'مجموعة-تطبيقات-ستمكنك-من-ربح-المال-من-الانترنت',
-  excerpt:
-    'هل تبحث عن تطبيقات تساعدك على جني المال من الانترنت؟ هذه التطبيقات ستمكنك من ربح المال من الانترنت في اوقات الفراغ، يمكنك استعمالها عندما تكون جالس ولا تفعل اي شئ او وانت تنتظر في مكان ما. انها سهلة الإستعمال وسريعة التحميل.',
-  thumbnail: '/images/blog/01-01-2022/make-money-apps.jpg',
-  source: 'https://dopedollar.com/apps-that-pay-you-money/',
-  body: '',
-  author: {
-    name: 'عبد الصمد الحمداني',
-    username: 'عبد-الصمد-الحمداني',
-    avatar: '/images/avatars/abdessamadelhamdany.jpg',
-  },
-  readingTime: '5 دقائق',
-  publishedAt: 'السبت 1 يناير 2022',
-};
-
-const category = {
-  name: 'ربح المال من الانترنت',
-  slug: 'ربح-المال-من-الانترنت',
-};
-
-const Category: NextPage<ServerProps> = ({ featuredPost, posts }) => {
+const Category: NextPage<ServerProps> = ({ featuredPost, category, posts }) => {
   return (
     <>
       {featuredPost && (
@@ -75,6 +49,7 @@ const Category: NextPage<ServerProps> = ({ featuredPost, posts }) => {
 
 interface ServerProps {
   posts: Post[];
+  category: Category;
   featuredPost: Post | null;
 }
 
@@ -137,6 +112,7 @@ export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
   return {
     props: {
       posts,
+      category,
       featuredPost,
     },
   };
