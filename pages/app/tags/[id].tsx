@@ -39,6 +39,7 @@ const EditTag: NextPage<Props> = ({ tag }) => {
           setLoading(true);
           try {
             await updateTag();
+            setTagFormField({ name: '', slug: '' });
             await router.push('/app/tags');
           } catch (error: any) {
             setError(

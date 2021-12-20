@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import { debounce } from 'lodash';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { usePost } from 'store/hooks';
 import Slug from '@/components/Slug';
@@ -19,6 +20,8 @@ const Quill = dynamic(() => import('@/components/Quill'), {
 });
 
 const EditPostForm = () => {
+  const router = useRouter();
+
   const [autoSaveTracker, setAutoSaveTracker] = useState<NodeJS.Timeout>();
   const { postForm, post, categories, tags, setPostFormField, updatePost } =
     usePost();
@@ -43,8 +46,20 @@ const EditPostForm = () => {
         }}
       >
         <FormHeader>
-          <div>
+          <div className="form-header__action-wrapper">
             <FormAction type="submit">حفظ</FormAction>
+            <FormAction
+              type="button"
+              onClick={async (e) => {
+                e.preventDefault();
+                const aLink = document.createElement('a');
+                aLink.target = '_blank';
+                aLink.href = `/app/preview/${postForm.id}`;
+                aLink.click();
+              }}
+            >
+              معاينة
+            </FormAction>
           </div>
           <div>
             {postForm.published ? (
@@ -179,6 +194,15 @@ const EditPostForm = () => {
           />
         </FormBody>
       </form>
+      <style jsx>
+        {`
+          .form-header__action-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+          }
+        `}
+      </style>
     </>
   );
 };

@@ -52,7 +52,7 @@ const upload = multer({
 
     destination(_, __, cb) {
       const today = dateFn.format(Date.now(), 'dd-MM-Y');
-      const dest = `public/uploads/${today}`;
+      const dest = `public/static/${today}`;
 
       const destPath = path.join(process.cwd(), dest);
       if (!fs.existsSync(destPath)) {

@@ -27,6 +27,7 @@ const NewCategory: NextPage = () => {
           setLoading(true);
           try {
             await createNewCategory();
+            setCategoryFormField({ name: '', slug: '' });
             await router.push('/app/categories');
           } catch (error: any) {
             setError(

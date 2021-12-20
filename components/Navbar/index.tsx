@@ -1,12 +1,21 @@
 import Link from 'next/link';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { useUser } from 'store/hooks';
 import LogoutButton from '@/components/LogoutButton';
 import { useRouter } from 'next/router';
 
 const Navbar: FC = () => {
-  const { authUser } = useUser();
   const router = useRouter();
+  const { authUser } = useUser();
+  const navbarRef = useRef<HTMLDivElement>(null);
+  const navbarTogglerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    document.addEventListener('click', hideNavbar);
+    return () => {
+      document.removeEventListener('click', hideNavbar);
+    };
+  }, []);
 
   const activeLinkClasses = (href: string) => {
     let classes = ['nav-link'];
@@ -18,8 +27,33 @@ const Navbar: FC = () => {
     return classes.join(' ');
   };
 
+  const hideNavbar = () => {
+    navbarRef.current?.classList.remove('show');
+    navbarRef.current?.classList.add('collapsing');
+    setTimeout(() => {
+      navbarRef.current?.classList.remove('collapsing');
+    }, 300);
+
+    navbarTogglerRef.current?.setAttribute('aria-expanded', 'false');
+  };
+
+  const showNavbar = () => {
+    navbarRef.current?.classList.add('show');
+    navbarRef.current?.classList.add('collapsing');
+    setTimeout(() => {
+      navbarRef.current?.classList.remove('collapsing');
+    }, 300);
+
+    navbarTogglerRef.current?.setAttribute('aria-expanded', 'true');
+  };
+
   return (
-    <nav className="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom border-gray">
+    <nav
+      className="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom border-gray"
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <div className="container">
         <Link href="/">
           <a className="navbar-brand">
@@ -28,6 +62,10 @@ const Navbar: FC = () => {
         </Link>
 
         <button
+          ref={navbarTogglerRef}
+          onClick={(e) => {
+            showNavbar();
+          }}
           className="navbar-toggler collapsed"
           type="button"
           data-toggle="collapse"
@@ -38,12 +76,19 @@ const Navbar: FC = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="navbar-collapse collapse" id="main-navbar">
+        <div
+          ref={navbarRef}
+          className="navbar-collapse collapse"
+          id="main-navbar"
+        >
           <ul className="navbar-nav mr-auto d-flex align-items-center">
             <li className="nav-item">
               <Link href="/category/العمل-على-الإنترنت">
                 <a
                   className={activeLinkClasses('/category/العمل-على-الإنترنت')}
+                  onClick={(e) => {
+                    hideNavbar();
+                  }}
                 >
                   العمل على الإنترنت
                 </a>
@@ -53,6 +98,9 @@ const Navbar: FC = () => {
               <Link href="/category/تحسين-محركات-البحث">
                 <a
                   className={activeLinkClasses('/category/تحسين-محركات-البحث')}
+                  onClick={(e) => {
+                    hideNavbar();
+                  }}
                 >
                   تحسين محركات البحث
                 </a>
@@ -64,6 +112,9 @@ const Navbar: FC = () => {
                   className={activeLinkClasses(
                     '/category/انشاء-المواقع-الالكترونية'
                   )}
+                  onClick={(e) => {
+                    hideNavbar();
+                  }}
                 >
                   انشاء المواقع الالكترونية
                 </a>
@@ -71,7 +122,12 @@ const Navbar: FC = () => {
             </li>
             <li className="nav-item">
               <Link href="/category/أخبار-تقنية">
-                <a className={activeLinkClasses('/category/أخبار-تقنية')}>
+                <a
+                  className={activeLinkClasses('/category/أخبار-تقنية')}
+                  onClick={(e) => {
+                    hideNavbar();
+                  }}
+                >
                   أخبار تقنية
                 </a>
               </Link>

@@ -44,6 +44,7 @@ const EditCategory: NextPage<Props> = ({ category }) => {
           setLoading(true);
           try {
             await updateCategory();
+            setCategoryFormField({ name: '', slug: '' });
             await router.push('/app/categories');
           } catch (error: any) {
             setError(

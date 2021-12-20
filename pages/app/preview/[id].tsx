@@ -2,13 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import type { GetServerSideProps, NextPage } from 'next';
-import { Post } from 'store/interfaces';
-import NextPost from '@/components/NextPost';
-import AdPlaceholder from '@/components/AdPlaceholder';
-import { formatDate, title } from 'lib/helpers';
+import { InitialPostState, Post } from 'store/interfaces';
+import { formatDate, parseCookies, title } from 'lib/helpers';
 import { ReasonPhrases } from 'http-status-codes';
 
-const Article: NextPage<ServerProps> = ({ post, nextPosts }) => {
+const Article: NextPage<ServerProps> = ({ post }) => {
   return (
     <>
       <Head>
@@ -70,79 +68,41 @@ const Article: NextPage<ServerProps> = ({ post, nextPosts }) => {
               className="article-post"
               dangerouslySetInnerHTML={{ __html: post.body || '' }}
             ></article>
-            <div className="mt-4">
-              <div className="text-muted text-center mb-3">شارك المقالة</div>
-              <div className="sharethis-inline-share-buttons"></div>
-            </div>
           </div>
-          {/* <div className="col-lg-3 col-xl-4 mb-3">
-            <AdPlaceholder width={224} height={600} />
-          </div> */}
         </div>
       </div>
-
-      {/* <div className="container py-4 mb-3">
-        <div className="row">
-          <div className="col-lg-12">
-            <AdPlaceholder width={1170} height={280} />
-          </div>
-        </div>
-      </div> */}
-
-      {nextPosts.length > 0 && (
-        <div className="container pt-4 pb-4">
-          <h5 className="font-weight-bold spanborder">
-            <span>اقرأ المزيد</span>
-          </h5>
-          <div className="row">
-            {nextPosts.map((post) => (
-              <NextPost key={post.id} post={post} />
-            ))}
-          </div>
-        </div>
-      )}
     </>
   );
 };
 
 interface ServerProps {
   post: Post;
-  nextPosts: Post[];
 }
 
 export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
   params,
+  req,
 }) => {
-  const slug = params ? params.slug : '';
-
   const res = await fetch(
-    encodeURI(`${process.env.APP_URL}/api/public/posts/${slug?.toString()}`)
-  );
-  const data = await res.json();
-
-  if (data.error) {
-    if (data.error === ReasonPhrases.NOT_FOUND) {
-      return { notFound: true };
+    `${process.env.APP_URL}/api/posts/preview/${params?.id}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Cookie: parseCookies({ ['jwt-token']: req.cookies['jwt-token'] }),
+      },
     }
+  );
+  const { data: post, error } = await res.json();
 
-    console.error(data.error);
-    throw Error(data.error);
+  if (error) {
+    console.error(error);
+    throw Error(error);
   }
-
-  const post: Post = {
-    ...data.data.post,
-    createdAt: formatDate(data.data.post.createdAt),
-  };
-
-  const nextPosts: Post[] = data.data.nextPosts.map((post) => ({
-    ...post,
-    createdAt: formatDate(post.createdAt),
-  }));
 
   return {
     props: {
       post,
-      nextPosts,
     },
   };
 };
