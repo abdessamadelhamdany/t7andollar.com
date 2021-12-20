@@ -18,7 +18,7 @@ const Home: NextPage<ServerProps> = ({ featuredPost, posts }) => {
       </Head>
 
       {featuredPost && (
-        <div className="container my-5 homepage">
+        <div className="container mt-5 homepage">
           <FeaturedPost post={featuredPost} />
         </div>
       )}
@@ -31,7 +31,7 @@ const Home: NextPage<ServerProps> = ({ featuredPost, posts }) => {
         </div>
       </div> */}
 
-      <div className="container">
+      <div className="container mt-5">
         <div className="row justify-content-between">
           <div className="col-md-12">
             <h5 className="font-weight-bold spanborder">
