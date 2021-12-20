@@ -5,6 +5,13 @@
 [x] Add Categories management page
 [x] Add Tags management page
 [x] Update Post on database
+[x] hide AppNavbar from login page, when unauthenticated
+[] Move public/uploads to public/static
+[] Make menu hide after page change
+[] duplicate slug page as a preview page for auth users
+[] add feedback to actions
+[] clear input after adding new tag, category
+[] show tags in post detail
 [] Change Excerpt to description and generate excerpts using https://www.npmjs.com/package/excerpt
 [] Add table content to articles
 

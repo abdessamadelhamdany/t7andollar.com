@@ -1,16 +1,19 @@
 import React, { FC, ReactNode } from 'react';
 import AppNavbar from '@/components/AppNavbar';
 import PageNavbar from '@/components/PageNavbar';
+import { useUser } from 'store/hooks';
 
 interface Props {
   pageNavbarNav?: ReactNode;
 }
 
 const AppLayout: FC<Props> = ({ children, pageNavbarNav }) => {
+  const { authUser } = useUser();
+
   return (
     <>
       <div className="app-layout">
-        <AppNavbar />
+        {authUser && <AppNavbar />}
 
         <div className="container">
           {pageNavbarNav && <PageNavbar>{pageNavbarNav}</PageNavbar>}

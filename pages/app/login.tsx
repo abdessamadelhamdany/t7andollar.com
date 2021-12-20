@@ -70,7 +70,7 @@ const Login: NextPage<Props> = () => {
       <style jsx>
         {`
           form {
-            margin-top: 3rem;
+            padding-top: 3rem;
           }
           .input-wrapper {
             max-width: 80%;
