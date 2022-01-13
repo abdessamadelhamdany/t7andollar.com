@@ -5,9 +5,10 @@ import Document, {
   NextScript,
   DocumentContext,
 } from 'next/document';
-import Favicon from '@/components/Meta/Favicon';
 import { AuthUser } from 'store/interfaces';
 import { parseCookies } from 'lib/helpers';
+import Favicon from '@/components/Meta/Favicon';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -42,6 +43,12 @@ class MyDocument extends Document {
       <Html lang="ar" dir="rtl">
         <Head>
           <Favicon />
+
+          {process.env.NODE_ENV === 'production' && (
+            <GoogleAnalytics
+              measurementId={process.env.ANALYTICS_MEASUREMENT_ID || ''}
+            />
+          )}
         </Head>
         <body>
           <Main />
